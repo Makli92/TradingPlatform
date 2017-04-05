@@ -22,7 +22,7 @@
 	<!-- original
 	<parent>
 		
-		test2
+		test3
 	
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
