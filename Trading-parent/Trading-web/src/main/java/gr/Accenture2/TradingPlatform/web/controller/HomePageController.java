@@ -26,7 +26,7 @@ public class HomePageController {
 		
 		LOGGER.debug("This is a test debug log");
 		
-        return "home";
+        return "index";
     }
 	
 }
