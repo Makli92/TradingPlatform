@@ -6,9 +6,6 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>Trading-persistence</artifactId>
-  <properties>
-		<hibernate.version>5.2.9.Final</hibernate.version>
-  </properties>
   <dependencies>
 		<dependency>
   			<groupId>gr.AccentureTradingPlatform</groupId>
@@ -31,7 +28,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>${hibernate.version}</version>
+			<version>5.2.9.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
