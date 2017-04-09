@@ -1,4 +1,4 @@
-package gr.Accenture2.TradingPlatform.models;
+package gr.Accenture2.TradingPlatform.persistence.models;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,8 +9,9 @@ import javax.persistence.Table;
 @Entity
 @Table
 public class Order {
+
 	@Id
-	@GeneratedValue( strategy = GenerationType.AUTO )
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	public Order() {
@@ -28,5 +29,5 @@ public class Order {
 
 	public void setId(int id) {
 		this.id = id;
-	}
+	}	
 }
