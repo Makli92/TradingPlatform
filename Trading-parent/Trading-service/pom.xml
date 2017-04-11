@@ -10,7 +10,7 @@
   <dependencies>
 		<dependency>
   			<groupId>gr.AccentureTradingPlatform</groupId>
-  			<artifactId>Trading-persistence</artifactId>
+  			<artifactId>Trading-repository</artifactId>
   	 		<version>0.0.1-SNAPSHOT</version>
   		</dependency>
   </dependencies>
