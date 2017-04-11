@@ -28,5 +28,30 @@ public class HomePageController {
 		
         return "home";
     }
+
+	@RequestMapping("/login")
+	public String showLogin( Model model) {
+		
+        return "login";
+    }
+	
+	
+	@RequestMapping("/Autologin")
+	public String showAutologin( Model model) {
+		
+		LOGGER.debug("showAutologin");
+
+        return "login";
+    }
+	
+	
+	
+	@RequestMapping("/dashboard")
+	public String showDashboard( Model model) {
+	
+		
+        return "dashboard";
+    }
+	
 	
 }
