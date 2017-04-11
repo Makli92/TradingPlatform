@@ -49,13 +49,39 @@ public class WebServiceController {
 		
 		securityService.autologin(username, password);
 		
-		response.setResponseStatusMessage(RestResponseStatus.OK.getName());
+		response.setResponseStatus(RestResponseStatus.OK.getName());
 
 		response.setItem(new AuthenticationResponse(AuthenticationResponse.Status.OK.getStatus(), null));
 
         return response;
     }
 
+	@RequestMapping(value = "/private", method = RequestMethod.GET)
+	@ResponseBody
+	public GenericRestResponse showPrivate( Model model, @RequestParam("username") final String username, @RequestParam("password") final String password) throws TradingPlatformAuthenticationException {
+		
+		final GenericResponse response = new GenericResponse();
+		
+		securityService.autologin(username, password);
+		
+		response.setResponseStatus(RestResponseStatus.OK.getName());
+
+		response.setItem(new AuthenticationResponse(AuthenticationResponse.Status.OK.getStatus(), null));
+
+        return response;
+    }
+	
+	@RequestMapping(value = "/unauthorize", method = RequestMethod.GET)
+	@ResponseBody
+	public GenericRestResponse showUnauthorize(Model model) throws TradingPlatformAuthenticationException {
+		
+		final GenericResponse response = new GenericResponse();
+		
+		response.setResponseStatus(RestResponseStatus.UNAUTHORIZED.getName());
+
+        return response;
+    }
+	
 	/**
 	 * Handle exceptions of the following types:<br>
 	 * <ul>
