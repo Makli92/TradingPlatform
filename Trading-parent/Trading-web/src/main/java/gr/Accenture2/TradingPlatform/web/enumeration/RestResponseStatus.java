@@ -8,8 +8,9 @@ public enum RestResponseStatus {
 	/**
 	 * The ERROR status. Used when there is a generated exception or logic error in specific business logic.
 	 */
-	ERROR("ERROR");
+	ERROR("ERROR"),
 
+	UNAUTHORIZED("UNAUTHORIZED");
 
 	/** The name of the status - useful to use as return object. */
 	private final String name;
