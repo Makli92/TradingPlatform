@@ -24,10 +24,6 @@
 </dependencyManagement>
   
   <modules>
-  	<module>Trading-persistence</module>
-  	<module>Trading-repository</module>
-  	<module>Trading-service</module>
 	<module>Trading-web</module>
-	<module>Trading-core</module>
   </modules>
 </project>

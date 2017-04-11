@@ -7,6 +7,6 @@
     <link rel="stylesheet" type="text/css" href="resources/css/test.css">
 </head>
 <body>
-    <h2 class="testHello"" >Hello world ${username!"No mouse."}!</h2>
+    <h2 class="testHello"" >Logout</h2>
 </body>
 </html>
