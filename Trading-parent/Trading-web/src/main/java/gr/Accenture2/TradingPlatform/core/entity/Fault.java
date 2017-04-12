@@ -1,6 +1,6 @@
 package gr.Accenture2.TradingPlatform.core.entity;
 
-import gr.Accenture2.TradingPlatform.core.enumaration.FaultId;
+import gr.Accenture2.TradingPlatform.core.enumeration.FaultId;
 
 import java.io.Serializable;
 

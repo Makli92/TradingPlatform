@@ -3,9 +3,9 @@ package gr.Accenture2.TradingPlatform.web.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import gr.Accenture2.TradingPlatform.core.entity.Fault;
-import gr.Accenture2.TradingPlatform.core.enumaration.BundleKey;
-import gr.Accenture2.TradingPlatform.core.enumaration.StringEnumeration;
-import gr.Accenture2.TradingPlatform.core.enumaration.SupportedLanguage;
+import gr.Accenture2.TradingPlatform.core.enumeration.BundleKey;
+import gr.Accenture2.TradingPlatform.core.enumeration.StringEnumeration;
+import gr.Accenture2.TradingPlatform.core.enumeration.SupportedLanguage;
 import gr.Accenture2.TradingPlatform.core.exception.TradingPlatformAuthenticationException;
 import gr.Accenture2.TradingPlatform.web.auth.service.SecurityService;
 import gr.Accenture2.TradingPlatform.web.enumeration.RestResponseStatus;
@@ -52,7 +52,16 @@ public class WebServiceController {
 	private FormValidationService formValidationService;
 	
 	/**
-	 * The authentication api service for login
+	 * The authentication API service for login.
+	 * 
+	 * API endpoint: [host]:[port]/services/auth
+	 * HTTP method: POST
+	 * POST paramethers:
+	 * 		* username
+	 * 		* password
+	 *
+	 * Temp working passwords: user1/password1
+	 * Temp not working passwords: user1/password2  
 	 * 
 	 * @param model
 	 * @param username
@@ -60,7 +69,7 @@ public class WebServiceController {
 	 * @return
 	 * @throws TradingPlatformAuthenticationException
 	 */
-	@RequestMapping(value = "/auth", method = RequestMethod.GET) // RequestMethod.GET must be used instead
+	@RequestMapping(value = "/auth", method = RequestMethod.POST) // RequestMethod.POST must be used instead
 	@ResponseBody
 	public GenericRestResponse showAuth( Model model, @RequestParam("username") final String username, @RequestParam("password") final String password) throws TradingPlatformAuthenticationException {
 		
@@ -76,7 +85,14 @@ public class WebServiceController {
     }
 
 	/**
-	 * The forgot password api service
+	 * The forgot password API service
+	 * 
+	 * 
+	 * API endpoint: [host]:[port]/services/forgot
+	 * HTTP method: POST
+	 * POST paramethers:
+	 * 		* email
+	 * 
 	 * 
 	 * @param model
 	 * @param username
@@ -84,7 +100,7 @@ public class WebServiceController {
 	 * @return
 	 * @throws TradingPlatformAuthenticationException
 	 */
-	@RequestMapping(value = "/forgot", method = RequestMethod.GET) // RequestMethod.GET must be used instead
+	@RequestMapping(value = "/forgot", method = RequestMethod.POST) // RequestMethod.POST must be used instead
 	@ResponseBody
 	public GenericRestResponse showForgot( Model model, @RequestParam("email") final String email) throws TradingPlatformAuthenticationException {
 		
@@ -102,17 +118,19 @@ public class WebServiceController {
 
 	
 	/**
-	 * The register api service
-	 * 
-	 * Form fields:
-	 * firstname
-	 * lastname
-	 * birthDate
-	 * mobile
-	 * username
-	 * password
-	 * passwordCofirm
-	 * email
+	 * The registration api service
+
+	 * API endpoint: [host]:[port]/services/register
+	 * HTTP method: POST
+	 * POST paramethers:
+	 * 		* firstname
+	 * 		* lastname
+	 * 		* birthDate
+	 * 		* mobile
+	 * 		* username
+	 * 		* password
+	 * 		* passwordCofirm
+	 * 		* email
 	 * 
 	 * @param model
 	 * @param username
@@ -120,7 +138,7 @@ public class WebServiceController {
 	 * @return
 	 * @throws TradingPlatformAuthenticationException
 	 */
-	@RequestMapping(value = "/register", method = RequestMethod.GET) // RequestMethod.GET must be used instead
+	@RequestMapping(value = "/register", method = RequestMethod.POST) // RequestMethod.POST must be used instead
 	@ResponseBody
 	public GenericRestResponse showRegistration(RegistrationForm registrationForm, BindingResult bindingResult, Model model) throws TradingPlatformAuthenticationException {
 		
@@ -163,7 +181,7 @@ public class WebServiceController {
 	 * @return
 	 * @throws TradingPlatformAuthenticationException
 	 */
-	@RequestMapping(value = "/private", method = RequestMethod.GET)
+	@RequestMapping(value = "/private", method = { RequestMethod.GET, RequestMethod.POST} )
 	@ResponseBody
 	public GenericRestResponse showPrivate( Model model) throws TradingPlatformAuthenticationException {
 		
@@ -185,7 +203,7 @@ public class WebServiceController {
 	 * @return
 	 * @throws TradingPlatformAuthenticationException
 	 */
-	@RequestMapping(value = "/unauthorize", method = RequestMethod.GET)
+	@RequestMapping(value = "/unauthorize", method = { RequestMethod.GET, RequestMethod.POST})
 	@ResponseBody
 	public GenericRestResponse showUnauthorize(Model model) throws TradingPlatformAuthenticationException {
 		

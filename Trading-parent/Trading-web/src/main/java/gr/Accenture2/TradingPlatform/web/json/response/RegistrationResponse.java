@@ -57,7 +57,7 @@ public class RegistrationResponse {
 
 
 
-	public Set getRegistrationStatusMessage() {
+	public Set getRegistrationStatusMessages() {
 		return registrationStatusMessages;
 	}
 

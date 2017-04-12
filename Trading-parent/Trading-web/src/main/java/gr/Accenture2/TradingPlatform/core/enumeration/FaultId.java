@@ -1,4 +1,4 @@
-package gr.Accenture2.TradingPlatform.core.enumaration;
+package gr.Accenture2.TradingPlatform.core.enumeration;
 
 /**
  * The Enum FaultId contains unique fault id per business case/action. The idea is to group under this id, all errors being thrown for a specific
