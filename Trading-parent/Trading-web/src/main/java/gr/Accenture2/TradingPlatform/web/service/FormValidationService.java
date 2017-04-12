@@ -88,10 +88,6 @@ $			#end of the line
 	 */
 	private Pattern passwordPattern = Pattern.compile("((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})");
 	
-
-	
-	
-	@Override
 	public void validate(Object obj, Errors errors) {
 		
 		if (obj instanceof  RegistrationForm){
@@ -100,7 +96,6 @@ $			#end of the line
 		
 	}
 
-	@Override
 	public boolean supports(Class<?> clazz) {
 		
 		if (RegistrationForm.class.equals(clazz)){

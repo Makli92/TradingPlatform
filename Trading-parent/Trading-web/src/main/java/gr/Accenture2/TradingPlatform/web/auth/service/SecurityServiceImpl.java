@@ -24,7 +24,6 @@ public class SecurityServiceImpl implements SecurityService{
 
     private static final Logger logger = LoggerFactory.getLogger(SecurityServiceImpl.class);
 
-    @Override
     public String findLoggedInUsername() {
     	
     	/*
@@ -54,7 +53,6 @@ public class SecurityServiceImpl implements SecurityService{
         */
     }
 
-    @Override
     public void autologin(String username, String password) throws TradingPlatformAuthenticationException {
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
         

@@ -39,7 +39,6 @@ public class SSUserDetailsService implements UserDetailsService {
         this.userService=userService;
     }
     
-    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         try {
             User user = userService.findByUsername(username);
