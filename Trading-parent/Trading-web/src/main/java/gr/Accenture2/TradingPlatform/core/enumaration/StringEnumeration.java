@@ -7,8 +7,8 @@ package gr.Accenture2.TradingPlatform.core.enumaration;
  */
 public enum StringEnumeration {
 
-	/** The string prefix that is used for error messages in the messages_(x).properties  */
-	ERROR_MESSAGE("errorMessage-");
+	/** String "1"  */
+	ONE("1");
 
 	
 	private String string;

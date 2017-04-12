@@ -3,12 +3,14 @@ package gr.Accenture2.TradingPlatform.web.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import gr.Accenture2.TradingPlatform.core.entity.Fault;
+import gr.Accenture2.TradingPlatform.core.enumaration.BundleKey;
 import gr.Accenture2.TradingPlatform.core.enumaration.StringEnumeration;
 import gr.Accenture2.TradingPlatform.core.enumaration.SupportedLanguage;
 import gr.Accenture2.TradingPlatform.core.exception.TradingPlatformAuthenticationException;
 import gr.Accenture2.TradingPlatform.web.auth.service.SecurityService;
 import gr.Accenture2.TradingPlatform.web.enumeration.RestResponseStatus;
 import gr.Accenture2.TradingPlatform.web.json.response.AuthenticationResponse;
+import gr.Accenture2.TradingPlatform.web.json.response.ForgotResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.GenericResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.GenericRestResponse;
 
@@ -65,6 +67,32 @@ public class WebServiceController {
         return response;
     }
 
+	/**
+	 * The authentication api service for login
+	 * 
+	 * @param model
+	 * @param username
+	 * @param password
+	 * @return
+	 * @throws TradingPlatformAuthenticationException
+	 */
+	@RequestMapping(value = "/forgot", method = RequestMethod.GET) // RequestMethod.GET must be used instead
+	@ResponseBody
+	public GenericRestResponse showForgot( Model model, @RequestParam("email") final String email) throws TradingPlatformAuthenticationException {
+		
+		final GenericResponse response = new GenericResponse();
+		
+		// send password here
+		
+		response.setResponseStatus(RestResponseStatus.OK.getName());
+
+		response.setItem(new ForgotResponse(ForgotResponse.Status.OK.getStatus(), messageSource.getMessage(BundleKey.FORGOT_MESSAGE.getKey() + StringEnumeration.ONE.getString(), null,
+				SupportedLanguage.GREEK.getLocale())));
+
+        return response;
+    }
+
+	
 	/**
 	 * Just an API to test authenticated users
 	 * 
@@ -132,14 +160,14 @@ public class WebServiceController {
 			
 			result.setResponseStatus(RestResponseStatus.OK.getName());
 
-			result.setItem(new AuthenticationResponse(AuthenticationResponse.Status.NOT_OK.getStatus(), messageSource.getMessage(StringEnumeration.ERROR_MESSAGE.getString() + fault.getFaultId().getIdRefToString(), null,
+			result.setItem(new AuthenticationResponse(AuthenticationResponse.Status.NOT_OK.getStatus(), messageSource.getMessage(BundleKey.ERROR_MESSAGE.getKey() + fault.getFaultId().getIdRefToString(), null,
 					SupportedLanguage.GREEK.getLocale())));
 
 		}else{
 			
 			result.setResponseStatus(RestResponseStatus.ERROR.getName());
 			
-			result.setResponseStatusMessage(messageSource.getMessage(StringEnumeration.ERROR_MESSAGE.getString() + "1", null,
+			result.setResponseStatusMessage(messageSource.getMessage(BundleKey.ERROR_MESSAGE.getKey() + StringEnumeration.ONE.getString(), null,
 					SupportedLanguage.GREEK.getLocale()));
 
 		}
