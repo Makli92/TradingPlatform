@@ -1,7 +1,7 @@
 package gr.Accenture2.TradingPlatform.core.exception;
 
 import gr.Accenture2.TradingPlatform.core.entity.Fault;
-import gr.Accenture2.TradingPlatform.core.enumaration.FaultId;
+import gr.Accenture2.TradingPlatform.core.enumeration.FaultId;
 
 /**
  * @author Billy

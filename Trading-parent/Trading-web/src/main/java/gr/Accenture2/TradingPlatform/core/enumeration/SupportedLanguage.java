@@ -1,4 +1,4 @@
-package gr.Accenture2.TradingPlatform.core.enumaration;
+package gr.Accenture2.TradingPlatform.core.enumeration;
 
 import java.util.Locale;
 
