@@ -13,6 +13,9 @@ import gr.Accenture2.TradingPlatform.web.json.response.AuthenticationResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.ForgotResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.GenericResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.GenericRestResponse;
+import gr.Accenture2.TradingPlatform.web.json.response.RegistrationResponse;
+import gr.Accenture2.TradingPlatform.web.post.request.RegistrationForm;
+import gr.Accenture2.TradingPlatform.web.service.FormValidationService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +25,8 @@ import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -42,6 +47,9 @@ public class WebServiceController {
 	
 	@Autowired 
 	private MessageSource messageSource;
+	
+	@Autowired 
+	private FormValidationService formValidationService;
 	
 	/**
 	 * The authentication api service for login
@@ -68,7 +76,7 @@ public class WebServiceController {
     }
 
 	/**
-	 * The authentication api service for login
+	 * The forgot password api service
 	 * 
 	 * @param model
 	 * @param username
@@ -82,11 +90,11 @@ public class WebServiceController {
 		
 		final GenericResponse response = new GenericResponse();
 		
-		// send password here
+		// TODO send password here
 		
 		response.setResponseStatus(RestResponseStatus.OK.getName());
 
-		response.setItem(new ForgotResponse(ForgotResponse.Status.OK.getStatus(), messageSource.getMessage(BundleKey.FORGOT_MESSAGE.getKey() + StringEnumeration.ONE.getString(), null,
+		response.setItem(new ForgotResponse(ForgotResponse.Status.OK.getStatus(), messageSource.getMessage(BundleKey.FORGOT_MESSAGE.getKey(), null,
 				SupportedLanguage.GREEK.getLocale())));
 
         return response;
@@ -94,7 +102,62 @@ public class WebServiceController {
 
 	
 	/**
-	 * Just an API to test authenticated users
+	 * The register api service
+	 * 
+	 * Form fields:
+	 * firstname
+	 * lastname
+	 * birthDate
+	 * mobile
+	 * username
+	 * password
+	 * passwordCofirm
+	 * email
+	 * 
+	 * @param model
+	 * @param username
+	 * @param password
+	 * @return
+	 * @throws TradingPlatformAuthenticationException
+	 */
+	@RequestMapping(value = "/register", method = RequestMethod.GET) // RequestMethod.GET must be used instead
+	@ResponseBody
+	public GenericRestResponse showRegistration(RegistrationForm registrationForm, BindingResult bindingResult, Model model) throws TradingPlatformAuthenticationException {
+		
+		final GenericResponse response = new GenericResponse();
+		
+		formValidationService.validate(registrationForm, bindingResult);
+		
+		RegistrationResponse registrationResponse = new RegistrationResponse();
+		
+		if (bindingResult.hasErrors()){
+			
+			registrationResponse.setRegistrationStatus(RegistrationResponse.Status.NOT_OK.getStatus());
+			
+			for (ObjectError item : bindingResult.getAllErrors()) {
+				
+				registrationResponse.addRegistrationStatusMessage(messageSource.getMessage(item.getCode(), null,
+						SupportedLanguage.GREEK.getLocale()));
+				
+			}
+		
+		}else{
+			
+			// TODO register user
+			
+			registrationResponse.setRegistrationStatus(RegistrationResponse.Status.OK.getStatus());
+			
+		}
+		
+		response.setResponseStatus(RestResponseStatus.OK.getName());
+		response.setItem(registrationResponse);
+
+        return response;
+    }
+
+	
+	/**
+	 * Just an API to test authenticated users. You must be logged in in order to access this api
 	 * 
 	 * @param model
 	 * @return
@@ -116,7 +179,7 @@ public class WebServiceController {
 	/**
 	 * 
 	 * The api that the browser will be redirected in case it requests an API service that
-	 * needs authentication
+	 * needs authentication. This settings is configured in MultiHttpSecurityConfig.class
 	 * 
 	 * @param model
 	 * @return
@@ -153,7 +216,9 @@ public class WebServiceController {
 		
 		final GenericResponse result = new GenericResponse();
 		if (exception instanceof TradingPlatformAuthenticationException) {
-
+			
+			// Authentication error
+			
 			final Fault fault = ((TradingPlatformAuthenticationException) exception).getFault();
 			
 			fault.getFaultId().getIdRef();
@@ -164,6 +229,8 @@ public class WebServiceController {
 					SupportedLanguage.GREEK.getLocale())));
 
 		}else{
+			
+			// General type of error
 			
 			result.setResponseStatus(RestResponseStatus.ERROR.getName());
 			
