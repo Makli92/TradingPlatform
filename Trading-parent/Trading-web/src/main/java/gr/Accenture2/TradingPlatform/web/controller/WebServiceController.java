@@ -41,7 +41,16 @@ public class WebServiceController {
 	@Autowired 
 	private MessageSource messageSource;
 	
-	@RequestMapping(value = "/auth", method = RequestMethod.GET)
+	/**
+	 * The authentication api service for login
+	 * 
+	 * @param model
+	 * @param username
+	 * @param password
+	 * @return
+	 * @throws TradingPlatformAuthenticationException
+	 */
+	@RequestMapping(value = "/auth", method = RequestMethod.GET) // RequestMethod.GET must be used instead
 	@ResponseBody
 	public GenericRestResponse showAuth( Model model, @RequestParam("username") final String username, @RequestParam("password") final String password) throws TradingPlatformAuthenticationException {
 		
@@ -56,13 +65,18 @@ public class WebServiceController {
         return response;
     }
 
+	/**
+	 * Just an API to test authenticated users
+	 * 
+	 * @param model
+	 * @return
+	 * @throws TradingPlatformAuthenticationException
+	 */
 	@RequestMapping(value = "/private", method = RequestMethod.GET)
 	@ResponseBody
-	public GenericRestResponse showPrivate( Model model, @RequestParam("username") final String username, @RequestParam("password") final String password) throws TradingPlatformAuthenticationException {
+	public GenericRestResponse showPrivate( Model model) throws TradingPlatformAuthenticationException {
 		
 		final GenericResponse response = new GenericResponse();
-		
-		securityService.autologin(username, password);
 		
 		response.setResponseStatus(RestResponseStatus.OK.getName());
 
@@ -71,6 +85,15 @@ public class WebServiceController {
         return response;
     }
 	
+	/**
+	 * 
+	 * The api that the browser will be redirected in case it requests an API service that
+	 * needs authentication
+	 * 
+	 * @param model
+	 * @return
+	 * @throws TradingPlatformAuthenticationException
+	 */
 	@RequestMapping(value = "/unauthorize", method = RequestMethod.GET)
 	@ResponseBody
 	public GenericRestResponse showUnauthorize(Model model) throws TradingPlatformAuthenticationException {
@@ -85,8 +108,6 @@ public class WebServiceController {
 	/**
 	 * Handle exceptions of the following types:<br>
 	 * <ul>
-	 * <li>{@link CosmoteDataException}</li>
-	 * <li>{@link CosmoteValidationException}</li>
 	 * <li>{@link MissingServletRequestParameterException}</li>
 	 * <li>{@link Exception}</li>
 	 * </ul>
