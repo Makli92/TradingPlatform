@@ -1,5 +1,6 @@
 package gr.Accenture2.TradingPlatform.web.config;
 
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +13,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @Configuration
 @EnableWebMvc
 @ComponentScan
+@EntityScan(basePackages = "gr.Accenture2.TradingPlatform.core.entity")
 public class ServerConfiguration extends WebMvcAutoConfiguration{
 	
 	
