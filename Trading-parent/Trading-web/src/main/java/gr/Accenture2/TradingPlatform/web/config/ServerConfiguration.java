@@ -18,5 +18,5 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableJpaRepositories("gr.Accenture2.TradingPlatform.service")
 public class ServerConfiguration extends WebMvcAutoConfiguration{
 	
-	
+
 }
