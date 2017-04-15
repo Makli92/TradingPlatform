@@ -32,6 +32,11 @@ public class Order {
 		super();
 		this.id = id;
 		this.dateIssue = dateIssue;
+	}	
+		
+	public Order(long id) {
+		super();
+		this.id = id;
 	}
 
 	public long getId() {

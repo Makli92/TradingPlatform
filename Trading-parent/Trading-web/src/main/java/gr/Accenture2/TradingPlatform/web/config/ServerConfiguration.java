@@ -4,7 +4,9 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 /**
@@ -15,7 +17,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableWebMvc
 @ComponentScan
 @EntityScan(basePackages = "gr.Accenture2.TradingPlatform.core.entity")
+
 @EnableJpaRepositories("gr.Accenture2.TradingPlatform.service")
 public class ServerConfiguration extends WebMvcAutoConfiguration{
- 
+
 }
