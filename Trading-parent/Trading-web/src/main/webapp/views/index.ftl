@@ -11,14 +11,18 @@
 	  <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 	  <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	  <link rel="stylesheet" href="/resources/css/style.css">
+	  <script src="/resources/js/trading.platform.v1.01.js"></script> 
 	  
 	  <script>
 	  $(function(){
+	  /*
 		$( "datepicker" ).datepicker({
 		changeMonth: true,
 		changeYear: true 
 		});
-	  
+	  */
+	  tradingPlatform.init();
+	  tradingPlatform.login.init();
 	  });
 	  </script>
 
@@ -26,6 +30,7 @@
 </head>
 
 <body>
+<input type="hidden" class="customClassCsrf" name="${_csrf.parameterName}"   value="${_csrf.token}"/>
     <h1>Stock Trading Project</h1>
 	
     <div class="login-page">
@@ -42,11 +47,13 @@
 		  <p class="message">Already registered? <a href="#">Sign In</a></p>
 		</form>
 		<form class="login-form">
-		  
 		 
-		  <input type="text" placeholder="username"/>
-		  <input type="password" placeholder="password"/>
-		  <button>login</button>
+		  <input type="text" class="customClassLoginUsername" placeholder="username"/>
+		  <input type="password" class="customClassLoginPassword" placeholder="password"/>
+		  
+		  <p class="customclassloginMessage small text-danger"></p>
+		  
+		  <button  class="customClassLoginButton">login</button>
 		  <p class="message">Not registered? <a href="#">Create an account</a></p>
 		  <div class="container">
 			  <a href="#" data-target="#m1" data-toggle="modal">Forgot my password</a>
