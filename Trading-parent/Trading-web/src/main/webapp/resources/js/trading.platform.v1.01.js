@@ -25,7 +25,10 @@ var tradingPlatform = {
 				
 				$('.customClassLoginButton').bind( "click", function( event ) {
 				    
-					tradingPlatform.login.loginAttempt();
+					if($(".customClassLoginUsername").val() !== ""){
+					
+						tradingPlatform.login.loginAttempt();
+					}
 
 				});
 				
@@ -91,9 +94,173 @@ var tradingPlatform = {
 			
 			
 		},
-		
-		init : function(msg) {
-		
+		/* login js code*/
+		'register' : {
+			'config' : {
+				
+				'registerEndpoint' : '/services/register',
+				'SuccesfullRegistrationMessage' : 'Η εγγραφή σας ολοκληρώθηκε'
+				
+			},
+			'init': function() {
+				
+				$('.customClassRegisterButton').bind( "click", function( event ) {
+				   
+					tradingPlatform.register.registerAttempt();
+
+				});
+				
+			},
+			
+			'registerAttempt': function() {
+				
+				// Send request
+				$.ajax({
+					type : 'POST',
+					url : tradingPlatform.register.config.registerEndpoint,
+					cache : false,
+					data : {
+						'firstname' : $(".customClassRegisterFirstname").val(),
+						'lastname' : $(".customClassRegisterLastname").val(),
+						'birthDate' : $(".customClassRegisterBirthDate").val(),
+						'mobile' : $(".customClassRegisterMobile").val(),
+						'username' : $(".customClassRegisterUsername").val(),
+						'password' : $(".customClassRegisterPassword").val(),
+						'passwordConfirm' : $(".customClassRegisterPasswordConfirm").val(),
+						'email' : $(".customClassRegisterEmail").val(),
+						'_csrf' : $(".customClassCsrf").val()
+					}
+					,
+					success : function(data) {
+						console.log('registerAttempt1:' + JSON.stringify(data));
+						
+						if(data.responseStatus == tradingPlatform.constants.responseStatuses.OK){
+							
+							if(data.item.registrationStatus == tradingPlatform.constants.responseStatuses.OK){
+
+								tradingPlatform.register.successfulRegistrationMessage(tradingPlatform.register.config.SuccesfullRegistrationMessage);
+
+								$(".customClassRegisterFirstname").val('');	
+								$(".customClassRegisterLastname").val('');
+								$(".customClassRegisterBirthDate").val('');
+								$(".customClassRegisterMobile").val('');
+								$(".customClassRegisterUsername").val('');
+								$(".customClassRegisterPassword").val('');
+								$(".customClassRegisterPasswordConfirm").val('');
+								$(".customClassRegisterEmail").val('');
+	
+							}else{
+								
+								tradingPlatform.register.registrationMessage(data.item.registrationStatusMessages);
+								
+							}
+							
+
+						}else{
+							
+							var tempArray = new Array(data.responseStatusMessage);
+							
+							
+							tradingPlatform.register.registrationMessage(tempArray);
+							
+						}
+						
+					},
+					error : function() {
+						
+						var tempArray = new Array(tradingPlatform.constants.generalErrorMessage);
+						
+						tradingPlatform.register.registrationMessage(tempArray);
+						console.log ('registrationMessage1 error');	
+
+					}
+				});	
+				
+			} , 
+			
+			'registrationMessage' : function(msg) {
+				
+				var tempArray = new Array();
+				
+				if($.isArray(msg)){
+					
+					tempArray = msg;
+					
+				}else{
+					
+					tempArray[0] = msg;
+					
+				}
+			
+				
+				$(".customclassRegisterMessage").fadeIn(tradingPlatform.constants.fadeinDelay);
+				
+				$('.customclassRegisterMessage').text("");
+				
+				for (var i = 0; i < tempArray.length; i++) {
+
+				    $('.customclassRegisterMessage').html(
+				    		
+/*
+				    		
+				    		$('.customclassRegisterMessage').html()
+				    		+ '<div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><span class="sr-only">Error:</span>'
+				    		+ tempArray[i]
+				    		+ '</div>'
+	*/
+				    		$('.customclassRegisterMessage').html()
+				    		+ '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><span class="sr-only">Error:</span> '
+				    		+ tempArray[i] + '<br />'
+				    		
+				    );
+				    
+				}
+	
+				
+				$(".customclassRegisterMessage").fadeOut(tradingPlatform.constants.fadeoutDelay * 3);
+
+			},
+			
+			'successfulRegistrationMessage' : function(msg) {
+				
+				var tempArray = new Array();
+				
+				if($.isArray(msg)){
+					
+					tempArray = msg;
+					
+				}else{
+					
+					tempArray[0] = msg;
+					
+				}
+			
+				
+				$(".customclassRegisterSuccessfulMessage").fadeIn(tradingPlatform.constants.fadeinDelay);
+				
+				$('.customclassRegisterSuccessfulMessage').text("");
+				
+				for (var i = 0; i < tempArray.length; i++) {
+
+		    		$('.customclassRegisterSuccessfulMessage').html()
+		    		+ '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><span class="sr-only">Success:</span> '
+		    		+ tempArray[i] + '<br />'
+					
+					
+				    $('.customclassRegisterSuccessfulMessage').text(
+				    		$('.customclassRegisterSuccessfulMessage').text()
+				    		+ tempArray[i]	
+				    );
+				    
+				}
+	
+				
+				$(".customclassRegisterSuccessfulMessage").fadeOut(tradingPlatform.constants.fadeoutDelay * 3);
+
+			}
+		},
+		'init': function() {
+
 			// Prevent submitting  form
 			$(document).on("submit", "form", function(e){
 			    e.preventDefault();

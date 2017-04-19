@@ -4,25 +4,25 @@
   <meta charset="UTF-8">
   <title>Java Coding School</title>
       <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   
-      
-	  <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-	  <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	  <link rel="stylesheet" href="/resources/css/style.css">
 	  <script src="/resources/js/trading.platform.v1.01.js"></script> 
 	  
 	  <script>
 	  $(function(){
 	  /*
-		$( "datepicker" ).datepicker({
+		$( "#datepicker" ).datepicker({
 		changeMonth: true,
-		changeYear: true 
+		changeYear: true,
+		dateFormat: 'dd/mm/yyyy'
 		});
 	  */
+	  
 	  tradingPlatform.init();
 	  tradingPlatform.login.init();
+	  tradingPlatform.register.init();
 	  });
 	  </script>
 
@@ -36,14 +36,20 @@
     <div class="login-page">
 	  <div class="form">
 		<form class="register-form">
-		  <input type="text" placeholder="first name"/>
-		  <input type="text" placeholder="last name"/>
-		  <input type="date" id="datepicker" placeholder="date of birth"/>
-		  <input type="text" placeholder="mobile"/>
-		  <input type="text" placeholder="name"/>
-		  <input type="password" placeholder="password"/>
-		  <input type="text" placeholder="email address"/>
-		  <button>create</button>
+		  <input type="text" class="customClassRegisterFirstname" placeholder="first name"/>
+		  <input type="text" class="customClassRegisterLastname" placeholder="last name"/>
+		  <input type="date" class="customClassRegisterBirthDate" id="datepicker" placeholder="date of birth"/>
+		  <input type="text" class="customClassRegisterMobile" placeholder="mobile"/>
+		  <input type="text" class="customClassRegisterUsername" placeholder="username"/>
+		  <input type="password" data-toggle="tooltip" data-placement="top"  class="customClassRegisterPassword" placeholder="password" title="must contains one digit from 0-9, one lowercase characters, one uppercase characters, one special symbols in the list @#$%, at least 6 characters and maximum"/>
+		  <input type="password" data-toggle="tooltip" data-placement="top"  class="customClassRegisterPasswordConfirm" placeholder="confirm password" title="must contains one digit from 0-9, one lowercase characters, one uppercase characters, one special symbols in the list @#$%, at least 6 characters and maximum"/>
+		  <input type="text" class="customClassRegisterEmail" placeholder="email address"/>
+		  
+		  <p class="customclassRegisterMessage small text-danger"></p>
+		  <p class="customclassRegisterSuccessfulMessage small bg-success"></p>
+		  
+		  
+		  <button class="customClassRegisterButton" >create</button>
 		  <p class="message">Already registered? <a href="#">Sign In</a></p>
 		</form>
 		<form class="login-form">
@@ -53,7 +59,7 @@
 		  
 		  <p class="customclassloginMessage small text-danger"></p>
 		  
-		  <button  class="customClassLoginButton">login</button>
+		  <button class="customClassLoginButton">login</button>
 		  <p class="message">Not registered? <a href="#">Create an account</a></p>
 		  <div class="container">
 			  <a href="#" data-target="#m1" data-toggle="modal">Forgot my password</a>
