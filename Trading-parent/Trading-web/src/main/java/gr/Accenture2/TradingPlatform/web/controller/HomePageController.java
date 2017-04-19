@@ -43,18 +43,21 @@ public class HomePageController {
 		LOGGER.debug("This is a test debug log");
 		
 		ModelAndView mnv = new ModelAndView("index");
-	
-		mnv.addObject("username",securityService.findLoggedInUsername());
-	
+
         return mnv;
     }
 	
 	
 	@RequestMapping("/dashboard")
-	public String showDashboard( Model model) {
+	public ModelAndView showDashboard( Model model) {
 	
+		LOGGER.debug("This is a test debug log");
 		
-        return "dashboard";
+		ModelAndView mnv = new ModelAndView("dashboard");
+	
+		mnv.addObject("username",securityService.findLoggedInUsername());
+
+        return mnv;
     }
 	
 	@RequestMapping(value="/logout", method = RequestMethod.GET)

@@ -7,6 +7,11 @@
     <link rel="stylesheet" type="text/css" href="resources/css/test.css">
 </head>
 <body>
-    <h2 class="testHello"" >DashBoard...you are logged in</h2>
+    <h2 class="testHello"" >DashBoard...you are logged. Your username is:${username!"No mouse."}!</h2>
+    
+    <br />
+    <br />
+    <a href="/logout">Logout here!!!</a>
+    
 </body>
 </html>
