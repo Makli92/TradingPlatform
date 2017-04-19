@@ -42,7 +42,7 @@ public class HomePageController {
 		
 		LOGGER.debug("This is a test debug log");
 		
-		ModelAndView mnv = new ModelAndView("home");
+		ModelAndView mnv = new ModelAndView("index");
 	
 		mnv.addObject("username",securityService.findLoggedInUsername());
 	
