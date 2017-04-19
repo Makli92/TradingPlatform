@@ -48,24 +48,6 @@ public class HomePageController {
 	
         return mnv;
     }
-
-	@RequestMapping("/login")
-	public String showLogin( Model model) {
-		
-        return "login";
-    }
-	
-	
-	@RequestMapping("/Autologin")
-	public String showAutologin( Model model) {
-		
-		LOGGER.debug("showAutologin");
-		
-		//securityService.autologin("user1", "password1");
-		
-        return "login";
-    }
-	
 	
 	
 	@RequestMapping("/dashboard")
@@ -81,7 +63,7 @@ public class HomePageController {
 		if (auth != null){    
 			new SecurityContextLogoutHandler().logout(request, response, auth);
 		}
-		return "redirect:/login";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
+		return "redirect:/";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
 	}
 
 	

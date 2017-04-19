@@ -23,6 +23,8 @@
 	  tradingPlatform.init();
 	  tradingPlatform.login.init();
 	  tradingPlatform.register.init();
+	  tradingPlatform.forgotPass.init();
+	  
 	  });
 	  </script>
 
@@ -81,9 +83,10 @@
 			<div class="modal-body">
 			<form action="/action_page.php">
 	        Email Address:<br>
-		    <input type="email" pattern="[^ @]*@[^ @]*" value="">
+		    <input class="customClassForgotPassEmail" type="email" pattern="[^ @]*@[^ @]*" value="">
+			<p class="customclassForgotPassMessage small text-danger"></p>
 			<br><br>
-			<input type="submit" value = "Submit">
+			<input class="customClassForgotPassButton" type="button" value = "Submit">
 			<input type="reset" value="Cancel">
 			</form>
 			</div>

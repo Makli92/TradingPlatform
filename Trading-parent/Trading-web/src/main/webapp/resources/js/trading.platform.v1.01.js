@@ -8,7 +8,7 @@ var tradingPlatform = {
 				
 			},
 			'generalErrorMessage' : 'Παρουσιάστηκε τεχνικό σφάλμα',
-			'fadeoutDelay': 3000,
+			'fadeoutDelay': 5000,
 			'fadeinDelay' : 'slow'
 			
 		},
@@ -259,6 +259,80 @@ var tradingPlatform = {
 
 			}
 		},
+		
+		/* login js code*/
+		'forgotPass' : {
+			'config' : {
+				
+				'forgotPassEndpoint' : '/services/forgot'
+				
+			},
+			'init': function() {
+				
+				$('.customClassForgotPassButton').bind( "click", function( event ) {
+				    
+					if($(".customClassForgotPassEmail").val() !== ""){
+					
+						tradingPlatform.forgotPass.forgotPassAttempt();
+					}
+
+				});
+				
+			},
+			
+			'forgotPassAttempt': function() {
+				
+				// Send request
+				$.ajax({
+					type : 'POST',
+					url : tradingPlatform.forgotPass.config.forgotPassEndpoint,
+					cache : false,
+					data : {
+						'email' : $(".customClassForgotPassEmail").val(),
+						'_csrf' : $(".customClassCsrf").val()
+					}
+					,
+					success : function(data) {
+						console.log('forgotPassAttempt1:' + JSON.stringify(data));
+						
+						if(data.responseStatus == tradingPlatform.constants.responseStatuses.OK){
+							
+							if(data.item.forgotStatus == tradingPlatform.constants.responseStatuses.OK){
+								
+								tradingPlatform.forgotPass.forgotPassMessage(data.item.forgotStatusMessage);
+								
+							}
+							
+
+						}else{
+							
+							tradingPlatform.forgotPass.forgotPassMessage(data.responseStatusMessage);
+							
+						}
+						
+					},
+					error : function() {
+					
+						tradingPlatform.forgotPass.loginMessage(tradingPlatform.constants.generalErrorMessage);
+						console.log ('forgotPass1 error');	
+
+					}
+				});	
+				
+			} , 
+			
+			'forgotPassMessage' : function(msg) {
+				
+				$(".customclassForgotPassMessage").fadeIn(tradingPlatform.constants.fadeinDelay);
+				
+				$('.customclassForgotPassMessage').text(msg)
+				
+				$(".customclassForgotPassMessage").fadeOut(tradingPlatform.constants.fadeoutDelay);
+
+			}
+			
+		},
+		
 		'init': function() {
 
 			// Prevent submitting  form

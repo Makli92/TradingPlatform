@@ -7,6 +7,6 @@
     <link rel="stylesheet" type="text/css" href="resources/css/test.css">
 </head>
 <body>
-    <h2 class="testHello"" >DashBoard</h2>
+    <h2 class="testHello"" >DashBoard...you are logged in</h2>
 </body>
 </html>
