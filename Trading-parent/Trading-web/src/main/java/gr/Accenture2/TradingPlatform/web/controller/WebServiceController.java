@@ -40,28 +40,26 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class WebServiceController {
 
 	/** The logger in use by this controller. */
-	private static final Logger LOGGER = LoggerFactory.getLogger(WebServiceController.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(WebServiceController.class);
 
-	@Autowired 
+	@Autowired
 	SecurityService securityService;
-	
-	@Autowired 
+
+	@Autowired
 	private MessageSource messageSource;
-	
-	@Autowired 
+
+	@Autowired
 	private FormValidationService formValidationService;
-	
+
 	/**
 	 * The authentication API service for login.
 	 * 
-	 * API endpoint: [host]:[port]/services/auth
-	 * HTTP method: POST
-	 * POST paramethers:
-	 * 		* username
-	 * 		* password
-	 *
-	 * Temp working passwords: user1/password1
-	 * Temp not working passwords: user1/password2  
+	 * API endpoint: [host]:[port]/services/auth HTTP method: POST POST
+	 * paramethers: * username * password
+	 * 
+	 * Temp working passwords: user1/password1 Temp not working passwords:
+	 * user1/password2
 	 * 
 	 * @param model
 	 * @param username
@@ -69,29 +67,32 @@ public class WebServiceController {
 	 * @return
 	 * @throws TradingPlatformAuthenticationException
 	 */
-	@RequestMapping(value = "/auth", method = RequestMethod.POST) // RequestMethod.POST must be used instead
+	@RequestMapping(value = "/auth", method = RequestMethod.POST)
+	// RequestMethod.POST must be used instead
 	@ResponseBody
-	public GenericRestResponse showAuth( Model model, @RequestParam("username") final String username, @RequestParam("password") final String password) throws TradingPlatformAuthenticationException {
-		
+	public GenericRestResponse showAuth(Model model,
+			@RequestParam("username") final String username,
+			@RequestParam("password") final String password)
+			throws TradingPlatformAuthenticationException {
+
 		final GenericResponse response = new GenericResponse();
-		
+
 		securityService.autologin(username, password);
-		
+
 		response.setResponseStatus(RestResponseStatus.OK.getName());
 
-		response.setItem(new AuthenticationResponse(AuthenticationResponse.Status.OK.getStatus(), null));
+		response.setItem(new AuthenticationResponse(
+				AuthenticationResponse.Status.OK.getStatus(), null));
 
-        return response;
-    }
+		return response;
+	}
 
 	/**
 	 * The forgot password API service
 	 * 
 	 * 
-	 * API endpoint: [host]:[port]/services/forgot
-	 * HTTP method: POST
-	 * POST paramethers:
-	 * 		* email
+	 * API endpoint: [host]:[port]/services/forgot HTTP method: POST POST
+	 * paramethers: * email
 	 * 
 	 * 
 	 * @param model
@@ -100,37 +101,33 @@ public class WebServiceController {
 	 * @return
 	 * @throws TradingPlatformAuthenticationException
 	 */
-	@RequestMapping(value = "/forgot", method = RequestMethod.POST) // RequestMethod.POST must be used instead
+	@RequestMapping(value = "/forgot", method = RequestMethod.POST)
+	// RequestMethod.POST must be used instead
 	@ResponseBody
-	public GenericRestResponse showForgot( Model model, @RequestParam("email") final String email) throws TradingPlatformAuthenticationException {
-		
+	public GenericRestResponse showForgot(Model model,
+			@RequestParam("email") final String email)
+			throws TradingPlatformAuthenticationException {
+
 		final GenericResponse response = new GenericResponse();
-		
+
 		// TODO send password here
-		
+
 		response.setResponseStatus(RestResponseStatus.OK.getName());
 
-		response.setItem(new ForgotResponse(ForgotResponse.Status.OK.getStatus(), messageSource.getMessage(BundleKey.FORGOT_MESSAGE.getKey(), null,
+		response.setItem(new ForgotResponse(ForgotResponse.Status.OK
+				.getStatus(), messageSource.getMessage(
+				BundleKey.FORGOT_MESSAGE.getKey(), null,
 				SupportedLanguage.GREEK.getLocale())));
 
-        return response;
-    }
+		return response;
+	}
 
-	
 	/**
 	 * The registration api service
-
-	 * API endpoint: [host]:[port]/services/register
-	 * HTTP method: POST
-	 * POST paramethers:
-	 * 		* firstname
-	 * 		* lastname
-	 * 		* birthDate
-	 * 		* mobile
-	 * 		* username
-	 * 		* password
-	 * 		* passwordCofirm
-	 * 		* email
+	 * 
+	 * API endpoint: [host]:[port]/services/register HTTP method: POST POST
+	 * paramethers: * firstname * lastname * birthDate * mobile * username *
+	 * password * passwordConfirm * email
 	 * 
 	 * @param model
 	 * @param username
@@ -138,82 +135,96 @@ public class WebServiceController {
 	 * @return
 	 * @throws TradingPlatformAuthenticationException
 	 */
-	@RequestMapping(value = "/register", method = RequestMethod.POST) // RequestMethod.POST must be used instead
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	// RequestMethod.POST must be used instead
 	@ResponseBody
-	public GenericRestResponse showRegistration(RegistrationForm registrationForm, BindingResult bindingResult, Model model) throws TradingPlatformAuthenticationException {
-		
+	public GenericRestResponse showRegistration(
+			RegistrationForm registrationForm, BindingResult bindingResult,
+			Model model) throws TradingPlatformAuthenticationException {
+
 		final GenericResponse response = new GenericResponse();
-		
+
 		formValidationService.validate(registrationForm, bindingResult);
-		
+
 		RegistrationResponse registrationResponse = new RegistrationResponse();
-		
-		if (bindingResult.hasErrors()){
-			
-			registrationResponse.setRegistrationStatus(RegistrationResponse.Status.NOT_OK.getStatus());
-			
+
+		if (bindingResult.hasErrors()) {
+
+			registrationResponse
+					.setRegistrationStatus(RegistrationResponse.Status.NOT_OK
+							.getStatus());
+
 			for (ObjectError item : bindingResult.getAllErrors()) {
-				
-				registrationResponse.addRegistrationStatusMessage(messageSource.getMessage(item.getCode(), null,
-						SupportedLanguage.GREEK.getLocale()));
-				
+
+				registrationResponse.addRegistrationStatusMessage(messageSource
+						.getMessage(item.getCode(), null,
+								SupportedLanguage.GREEK.getLocale()));
+
 			}
-		
-		}else{
-			
+
+		} else {
+
 			// TODO register user
-			
-			registrationResponse.setRegistrationStatus(RegistrationResponse.Status.OK.getStatus());
-			
+
+			registrationResponse
+					.setRegistrationStatus(RegistrationResponse.Status.OK
+							.getStatus());
+
 		}
-		
+
 		response.setResponseStatus(RestResponseStatus.OK.getName());
 		response.setItem(registrationResponse);
 
-        return response;
-    }
+		return response;
+	}
 
-	
 	/**
-	 * Just an API to test authenticated users. You must be logged in in order to access this api
+	 * Just an API to test authenticated users. You must be logged in in order
+	 * to access this api
 	 * 
 	 * @param model
 	 * @return
 	 * @throws TradingPlatformAuthenticationException
 	 */
-	@RequestMapping(value = "/private", method = { RequestMethod.GET, RequestMethod.POST} )
+	@RequestMapping(value = "/private", method = { RequestMethod.GET,
+			RequestMethod.POST })
 	@ResponseBody
-	public GenericRestResponse showPrivate( Model model) throws TradingPlatformAuthenticationException {
-		
+	public GenericRestResponse showPrivate(Model model)
+			throws TradingPlatformAuthenticationException {
+
 		final GenericResponse response = new GenericResponse();
-		
+
 		response.setResponseStatus(RestResponseStatus.OK.getName());
 
-		response.setItem(new AuthenticationResponse(AuthenticationResponse.Status.OK.getStatus(), null));
+		response.setItem(new AuthenticationResponse(
+				AuthenticationResponse.Status.OK.getStatus(), null));
 
-        return response;
-    }
-	
+		return response;
+	}
+
 	/**
 	 * 
-	 * The api that the browser will be redirected in case it requests an API service that
-	 * needs authentication. This settings is configured in MultiHttpSecurityConfig.class
+	 * The api that the browser will be redirected in case it requests an API
+	 * service that needs authentication. This settings is configured in
+	 * MultiHttpSecurityConfig.class
 	 * 
 	 * @param model
 	 * @return
 	 * @throws TradingPlatformAuthenticationException
 	 */
-	@RequestMapping(value = "/unauthorize", method = { RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/unauthorize", method = { RequestMethod.GET,
+			RequestMethod.POST })
 	@ResponseBody
-	public GenericRestResponse showUnauthorize(Model model) throws TradingPlatformAuthenticationException {
-		
+	public GenericRestResponse showUnauthorize(Model model)
+			throws TradingPlatformAuthenticationException {
+
 		final GenericResponse response = new GenericResponse();
-		
+
 		response.setResponseStatus(RestResponseStatus.UNAUTHORIZED.getName());
 
-        return response;
-    }
-	
+		return response;
+	}
+
 	/**
 	 * Handle exceptions of the following types:<br>
 	 * <ul>
@@ -221,44 +232,56 @@ public class WebServiceController {
 	 * <li>{@link Exception}</li>
 	 * </ul>
 	 * <br>
-	 * Keep in mind that the exception used as parameter must be parent of all handled exceptions.
+	 * Keep in mind that the exception used as parameter must be parent of all
+	 * handled exceptions.
 	 * 
-	 * @param exception the parent of all handled exception, currently .
-	 * @param request the request of type {@link HttpServletRequest}.
-	 * @return the {@link GenericResponse} object which includes our error response we communicate to the client.
+	 * @param exception
+	 *            the parent of all handled exception, currently .
+	 * @param request
+	 *            the request of type {@link HttpServletRequest}.
+	 * @return the {@link GenericResponse} object which includes our error
+	 *         response we communicate to the client.
 	 */
-	@ExceptionHandler({TradingPlatformAuthenticationException.class, Exception.class})
+	@ExceptionHandler({ TradingPlatformAuthenticationException.class,
+			Exception.class })
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public GenericResponse<String> handleException(final Exception exception, final HttpServletRequest request) {
-		
+	public GenericResponse<String> handleException(final Exception exception,
+			final HttpServletRequest request) {
+
 		final GenericResponse result = new GenericResponse();
 		if (exception instanceof TradingPlatformAuthenticationException) {
-			
+
 			// Authentication error
-			
-			final Fault fault = ((TradingPlatformAuthenticationException) exception).getFault();
-			
+
+			final Fault fault = ((TradingPlatformAuthenticationException) exception)
+					.getFault();
+
 			fault.getFaultId().getIdRef();
-			
+
 			result.setResponseStatus(RestResponseStatus.OK.getName());
 
-			result.setItem(new AuthenticationResponse(AuthenticationResponse.Status.NOT_OK.getStatus(), messageSource.getMessage(BundleKey.ERROR_MESSAGE.getKey() + fault.getFaultId().getIdRefToString(), null,
-					SupportedLanguage.GREEK.getLocale())));
+			result.setItem(new AuthenticationResponse(
+					AuthenticationResponse.Status.NOT_OK.getStatus(),
+					messageSource.getMessage(BundleKey.ERROR_MESSAGE.getKey()
+							+ fault.getFaultId().getIdRefToString(), null,
+							SupportedLanguage.GREEK.getLocale())));
 
-		}else{
-			
+		} else {
+
 			// General type of error
-			
+
 			result.setResponseStatus(RestResponseStatus.ERROR.getName());
-			
-			result.setResponseStatusMessage(messageSource.getMessage(BundleKey.ERROR_MESSAGE.getKey() + StringEnumeration.ONE.getString(), null,
+
+			result.setResponseStatusMessage(messageSource.getMessage(
+					BundleKey.ERROR_MESSAGE.getKey()
+							+ StringEnumeration.ONE.getString(), null,
 					SupportedLanguage.GREEK.getLocale()));
 
 		}
-	
+
 		LOGGER.error(exception.getMessage(), exception);
 		return result;
 	}
-	
+
 }

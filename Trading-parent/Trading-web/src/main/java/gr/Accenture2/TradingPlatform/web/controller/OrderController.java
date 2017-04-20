@@ -13,24 +13,24 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import gr.Accenture2.TradingPlatform.repository.entity.Order;
-import gr.Accenture2.TradingPlatform.repository.service.OrderService;
+import gr.Accenture2.TradingPlatform.repository.service.OrderRepository;
 
 @RestController
 @RequestMapping("/api/orders")
 public class OrderController {
 
 	@Autowired
-	private OrderService orderService;
+	private OrderRepository orderRepository;
 	
 	@GetMapping("/{orderId}")
 	public Order findOrder(@PathVariable Long orderId) {
-		return orderService.findById(orderId);
+		return orderRepository.findById(orderId);
 	}
 	
 	@PostMapping("")
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public Order createOrder(@Valid @RequestBody Order order) {
-	    orderService.save(order);
+	    orderRepository.save(order);
 		return order;
 	}
 }

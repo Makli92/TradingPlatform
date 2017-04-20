@@ -42,37 +42,22 @@ public class HomePageController {
 		
 		LOGGER.debug("This is a test debug log");
 		
-		ModelAndView mnv = new ModelAndView("home");
-	
-		mnv.addObject("username",securityService.findLoggedInUsername());
-	
+		ModelAndView mnv = new ModelAndView("index");
+
         return mnv;
     }
-
-	@RequestMapping("/login")
-	public String showLogin( Model model) {
-		
-        return "login";
-    }
-	
-	
-	@RequestMapping("/Autologin")
-	public String showAutologin( Model model) {
-		
-		LOGGER.debug("showAutologin");
-		
-		//securityService.autologin("user1", "password1");
-		
-        return "login";
-    }
-	
 	
 	
 	@RequestMapping("/dashboard")
-	public String showDashboard( Model model) {
+	public ModelAndView showDashboard( Model model) {
 	
+		LOGGER.debug("This is a test debug log");
 		
-        return "dashboard";
+		ModelAndView mnv = new ModelAndView("dashboard");
+	
+		mnv.addObject("username",securityService.findLoggedInUsername());
+
+        return mnv;
     }
 	
 	@RequestMapping(value="/logout", method = RequestMethod.GET)
@@ -81,7 +66,7 @@ public class HomePageController {
 		if (auth != null){    
 			new SecurityContextLogoutHandler().logout(request, response, auth);
 		}
-		return "redirect:/login";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
+		return "redirect:/";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
 	}
 
 	
