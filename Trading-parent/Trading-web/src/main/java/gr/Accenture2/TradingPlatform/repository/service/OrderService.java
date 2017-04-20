@@ -1,11 +1,11 @@
-package gr.Accenture2.TradingPlatform.service;
+package gr.Accenture2.TradingPlatform.repository.service;
 
 //import javax.transaction.Transactional;
 import org.springframework.transaction.annotation.Transactional;
 
-import org.springframework.data.repository.CrudRepository;
+import gr.Accenture2.TradingPlatform.repository.entity.Order;
 
-import gr.Accenture2.TradingPlatform.core.entity.Order;
+import org.springframework.data.repository.CrudRepository;
 
 @Transactional
 public interface OrderService extends CrudRepository<Order, Long> {

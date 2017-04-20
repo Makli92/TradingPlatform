@@ -2,37 +2,59 @@ package gr.Accenture2.TradingPlatform.core.entity;
 
 import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
 /**
  * @author ekiras
  */
- 
+@Entity
+@Table(name = "users")
 public class User {
 
 
     /**
      * The id in database
      */
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     
     /**
      * The username
      */
+	
+	@Column(name = "username", nullable = false)
     private String username;
 
     /**
      * The password
      */
+	@Column(name = "password", nullable = false)
     private String password;
 
     /**
      * The flag that indicates if the user is enabled
      */
+	@Column(name = "enabled", nullable = false)
     private boolean enabled;
 
     /**
      * The list of roles the user is assigned to
      */
+    @ManyToMany
+    @JoinTable(	name = "users_to_roles", 
+    			joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+    			inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
+    )
     private Set<Role> roles;
 
 	public long getId() {
