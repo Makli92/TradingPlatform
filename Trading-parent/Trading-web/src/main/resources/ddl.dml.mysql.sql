@@ -23,7 +23,7 @@ UNLOCK TABLES;
 --
 
 LOCK TABLES `users` WRITE;
-INSERT INTO `users` VALUES (1,'','123','Makli'),(2,'','321','Bill'),(3,'','132','Themis');
+INSERT INTO `users` (id,email,password,username,enabled) VALUES (1,'email@gmail.com','123','Makli',1),(2,'email@gmail.com','321','Bill',1),(3,'email@gmail.com','132','Themis',1);
 UNLOCK TABLES;
 
 --
@@ -31,5 +31,5 @@ UNLOCK TABLES;
 --
 
 LOCK TABLES `users_to_roles` WRITE;
-INSERT INTO `users_to_roles` VALUES (1,1), (2,2), (3,1);
+INSERT INTO `users_to_roles` VALUES (1,1), (2,1), (3,1);
 UNLOCK TABLES;

@@ -2,6 +2,7 @@ package gr.Accenture2.TradingPlatform.web.auth.service;
 
 import gr.Accenture2.TradingPlatform.core.entity.Role;
 import gr.Accenture2.TradingPlatform.core.entity.User;
+import gr.Accenture2.TradingPlatform.core.exception.TradingPlatformAuthenticationException;
 import gr.Accenture2.TradingPlatform.service.UserService;
 
 import java.util.HashSet;
@@ -43,13 +44,15 @@ public class SSUserDetailsService implements UserDetailsService {
         try {
             User user = userService.findByUsername(username);
             if (user == null) {
-                LOGGER.debug("user not found with the provided username");
-                return null;
+                LOGGER.debug("user not found with the provided username:{}",username);
+                
+                throw new TradingPlatformAuthenticationException();
+            
             }
             LOGGER.debug(" loadUserByUsername user:{}" , user);
             return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), getAuthorities(user));
         }
-        catch (Exception e){
+        catch (TradingPlatformAuthenticationException e){
             throw new UsernameNotFoundException("User not found");
         }
     }

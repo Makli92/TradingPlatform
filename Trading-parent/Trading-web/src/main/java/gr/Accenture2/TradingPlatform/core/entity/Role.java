@@ -78,8 +78,8 @@ public class Role {
 		builder.append(id);
 		builder.append(", role=");
 		builder.append(role);
-		builder.append(", users=");
-		builder.append(users);
+		//builder.append(", users=");
+		//builder.append(users);
 		builder.append("]");
 		return builder.toString();
 	}

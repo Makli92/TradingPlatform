@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -246,12 +247,20 @@ public class WebServiceController {
 			Exception.class })
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public GenericResponse<String> handleException(final Exception exception,
+	public GenericResponse<String> handleException(Exception exception,
 			final HttpServletRequest request) {
 
 		final GenericResponse result = new GenericResponse();
-		if (exception instanceof TradingPlatformAuthenticationException) {
+		if (exception instanceof TradingPlatformAuthenticationException ||
+				exception instanceof UsernameNotFoundException) {
 
+			if(exception instanceof UsernameNotFoundException){
+				
+				exception = new TradingPlatformAuthenticationException();
+			}
+			
+
+			
 			// Authentication error
 
 			final Fault fault = ((TradingPlatformAuthenticationException) exception)

@@ -120,8 +120,8 @@ public class User {
 		builder.append(username);
 		builder.append(", enabled=");
 		builder.append(enabled);
-		builder.append(", roles=");
-		builder.append(roles);
+		//builder.append(", roles=");
+		//builder.append(roles);
 		builder.append("]");
 		return builder.toString();
 	}
