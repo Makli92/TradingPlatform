@@ -164,7 +164,7 @@ public class WebServiceController {
 
 		} else {
 
-			// Create user
+			// TODO register user
 
 			registrationResponse
 					.setRegistrationStatus(RegistrationResponse.Status.OK
