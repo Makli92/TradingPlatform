@@ -1,12 +1,18 @@
 package gr.Accenture2.TradingPlatform.web.controller;
 
+import java.util.HashSet;
+
 import javax.servlet.http.HttpServletRequest;
 
 import gr.Accenture2.TradingPlatform.core.entity.Fault;
+import gr.Accenture2.TradingPlatform.core.entity.Role;
+import gr.Accenture2.TradingPlatform.core.entity.User;
 import gr.Accenture2.TradingPlatform.core.enumeration.BundleKey;
 import gr.Accenture2.TradingPlatform.core.enumeration.StringEnumeration;
 import gr.Accenture2.TradingPlatform.core.enumeration.SupportedLanguage;
 import gr.Accenture2.TradingPlatform.core.exception.TradingPlatformAuthenticationException;
+import gr.Accenture2.TradingPlatform.service.RoleService;
+import gr.Accenture2.TradingPlatform.service.UserService;
 import gr.Accenture2.TradingPlatform.web.auth.service.SecurityService;
 import gr.Accenture2.TradingPlatform.web.enumeration.RestResponseStatus;
 import gr.Accenture2.TradingPlatform.web.json.response.AuthenticationResponse;
@@ -23,6 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -46,6 +53,13 @@ public class WebServiceController {
 	@Autowired
 	SecurityService securityService;
 
+	@Autowired
+	UserService userService; 
+	
+	@Autowired
+	RoleService roleService; 
+	
+	
 	@Autowired
 	private MessageSource messageSource;
 
@@ -165,6 +179,19 @@ public class WebServiceController {
 		} else {
 
 			// TODO register user
+			
+			User user = new User();
+			
+			user.setEmail(registrationForm.getEmail());
+			user.setEnabled(true);
+			user.setPassword(registrationForm.getPassword());
+			user.setUsername(registrationForm.getUsername());
+			
+			user.setRoles(new HashSet<Role>());
+		
+			user.getRoles().add(roleService.findByRole(StringEnumeration.USER.getString()));
+			
+			userService.save(user);
 
 			registrationResponse
 					.setRegistrationStatus(RegistrationResponse.Status.OK
@@ -246,12 +273,20 @@ public class WebServiceController {
 			Exception.class })
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public GenericResponse<String> handleException(final Exception exception,
+	public GenericResponse<String> handleException(Exception exception,
 			final HttpServletRequest request) {
 
 		final GenericResponse result = new GenericResponse();
-		if (exception instanceof TradingPlatformAuthenticationException) {
+		if (exception instanceof TradingPlatformAuthenticationException ||
+				exception instanceof UsernameNotFoundException) {
 
+			if(exception instanceof UsernameNotFoundException){
+				
+				exception = new TradingPlatformAuthenticationException();
+			}
+			
+
+			
 			// Authentication error
 
 			final Fault fault = ((TradingPlatformAuthenticationException) exception)

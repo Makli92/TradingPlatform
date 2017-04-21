@@ -2,6 +2,16 @@ package gr.Accenture2.TradingPlatform.core.entity;
 
 import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
 
  
 /**
@@ -10,17 +20,22 @@ import java.util.Set;
  * This class encapsules the role entity for authorization purposes
  *
  */
+@Entity
+@Table(name = "roles")
 public class Role {
 
 
     /**
      * The id in database
      */
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     /**
      * The role name
      */
+	@Column(name = "role", nullable = false)
     private String role;
 
     /**
@@ -29,6 +44,7 @@ public class Role {
      * Maybe it's not necessary.
      * 
      */
+	@ManyToMany(mappedBy = "roles")
     private Set<User> users;
 
 	public long getId() {
@@ -62,8 +78,8 @@ public class Role {
 		builder.append(id);
 		builder.append(", role=");
 		builder.append(role);
-		builder.append(", users=");
-		builder.append(users);
+		//builder.append(", users=");
+		//builder.append(users);
 		builder.append("]");
 		return builder.toString();
 	}

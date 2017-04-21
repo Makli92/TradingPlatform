@@ -1,4 +1,4 @@
-package gr.Accenture2.TradingPlatform.core.entity;
+package gr.Accenture2.TradingPlatform.repository.entity;
 
 import java.util.Date;
 

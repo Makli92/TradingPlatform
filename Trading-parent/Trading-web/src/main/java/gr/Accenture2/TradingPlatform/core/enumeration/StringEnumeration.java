@@ -8,8 +8,9 @@ package gr.Accenture2.TradingPlatform.core.enumeration;
 public enum StringEnumeration {
 
 	/** String "1"  */
-	ONE("1");
-
+	ONE("1"),
+	/** role User  */
+	USER("User");
 	
 	private String string;
 
