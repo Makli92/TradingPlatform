@@ -16,7 +16,7 @@ import gr.Accenture2.TradingPlatform.repository.entity.Order;
 import gr.Accenture2.TradingPlatform.repository.service.OrderRepository;
 
 @RestController
-@RequestMapping("/api/orders")
+@RequestMapping("/services/orders")
 public class OrderController {
 
 	@Autowired
@@ -30,7 +30,6 @@ public class OrderController {
 	@PostMapping("")
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public Order createOrder(@Valid @RequestBody Order order) {
-	    orderRepository.save(order);
-		return order;
+		return orderRepository.save(order);
 	}
 }

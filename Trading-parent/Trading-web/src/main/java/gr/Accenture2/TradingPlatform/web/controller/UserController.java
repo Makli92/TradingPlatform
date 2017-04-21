@@ -12,7 +12,7 @@ import gr.Accenture2.TradingPlatform.core.entity.Role;
 import gr.Accenture2.TradingPlatform.service.UserService;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/services/users")
 public class UserController {
 
 	@Autowired
@@ -22,6 +22,6 @@ public class UserController {
 	public int getUser(@PathVariable String username) {
 		Set<Role> roles = userService.findByUsername(username).getRoles();
 		System.out.println(roles.iterator().next().getRole());
-		return 1;
+		return roles.size();
 	}
 }

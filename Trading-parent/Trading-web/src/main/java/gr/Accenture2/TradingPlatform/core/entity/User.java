@@ -47,6 +47,12 @@ public class User {
 	@Column(name = "enabled", nullable = false)
     private boolean enabled;
 
+	/**
+     * The email
+     */
+	@Column(name = "email", nullable = false)
+    private String email;
+	
     /**
      * The list of roles the user is assigned to
      */
@@ -87,6 +93,14 @@ public class User {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public Set<Role> getRoles() {

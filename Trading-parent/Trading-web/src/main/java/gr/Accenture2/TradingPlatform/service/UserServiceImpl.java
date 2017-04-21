@@ -37,6 +37,16 @@ public class UserServiceImpl implements UserService {
 //		return user;
 		
 	}
+
+
+	public Long save(User user) {
+		return userRepository.save(user).getId();
+	}
+
+
+	public User findByEmail(String email) {
+		return userRepository.findByEmail(email);
+	}
 	
 	
 }

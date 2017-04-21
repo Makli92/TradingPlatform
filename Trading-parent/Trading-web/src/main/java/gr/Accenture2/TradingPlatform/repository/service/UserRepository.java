@@ -10,4 +10,6 @@ import gr.Accenture2.TradingPlatform.core.entity.User;
 public interface UserRepository extends CrudRepository<User, String> {
 
 	public User findByUsername(String username);
+	
+	public User findByEmail(String email);
 }
