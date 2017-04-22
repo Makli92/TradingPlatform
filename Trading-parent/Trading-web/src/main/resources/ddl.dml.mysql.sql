@@ -33,3 +33,20 @@ UNLOCK TABLES;
 LOCK TABLES `users_to_roles` WRITE;
 INSERT INTO `users_to_roles` VALUES (1,1), (2,1), (3,1);
 UNLOCK TABLES;
+
+--
+-- Dumping data for table `stocks`
+--
+LOCK TABLES `stocks` WRITE;
+INSERT INTO `stocks` VALUES (1,convert(datetime,'23-04-17 10:34:09 PM',5)),(2,convert(datetime,'22-04-17 11:34:09 PM',5));
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `stock_prices`
+--
+
+LOCK TABLES `stock_prices` WRITE;
+INSERT INTO `stock_prices` VALUES (1,1,convert(datetime,'26-05-17 10:34:09 PM',5),1000), (2,2,convert(datetime,'27-05-17 12:36:09 PM',5),2000); 
+UNLOCK TABLES;
+
+
