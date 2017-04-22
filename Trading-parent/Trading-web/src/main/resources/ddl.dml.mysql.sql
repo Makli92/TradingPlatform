@@ -38,7 +38,7 @@ UNLOCK TABLES;
 -- Dumping data for table `stocks`
 --
 LOCK TABLES `stocks` WRITE;
-INSERT INTO `stocks` VALUES (1,convert(datetime,'23-04-17 10:34:09 PM',5)),(2,convert(datetime,'22-04-17 11:34:09 PM',5));
+INSERT INTO `stocks` (`stock_id`, `creation_date`) VALUES ('1', '2017-04-23'), ('2', '2017-04-22');
 UNLOCK TABLES;
 
 --
@@ -46,7 +46,7 @@ UNLOCK TABLES;
 --
 
 LOCK TABLES `stock_prices` WRITE;
-INSERT INTO `stock_prices` VALUES (1,1,convert(datetime,'26-05-17 10:34:09 PM',5),1000), (2,2,convert(datetime,'27-05-17 12:36:09 PM',5),2000); 
+INSERT INTO `stock_prices` (`stock_price_id`, `company_id`, `creation_date`, `stock_price`) VALUES ('1', '1', '2017-05-26', '1000') ,('2', '2', '2017-05-27', '2000'); 
 UNLOCK TABLES;
 
 
