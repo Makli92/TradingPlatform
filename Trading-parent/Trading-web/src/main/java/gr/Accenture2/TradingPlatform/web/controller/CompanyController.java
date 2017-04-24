@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import gr.Accenture2.TradingPlatform.core.entity.Company;
 import gr.Accenture2.TradingPlatform.repository.service.CompanyRepository;
+import gr.Accenture2.TradingPlatform.repository.service.StockRepository;
 
 @RestController
 @RequestMapping("/services/companies")
@@ -15,6 +16,9 @@ public class CompanyController {
 
 	@Autowired
 	private CompanyRepository companyRepository;
+	
+	@Autowired
+	private StockRepository stockRepository;
 	
 	@GetMapping("")
 	public List<Company> getCompanies() {

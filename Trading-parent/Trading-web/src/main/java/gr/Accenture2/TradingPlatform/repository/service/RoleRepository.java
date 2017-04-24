@@ -1,6 +1,6 @@
 package gr.Accenture2.TradingPlatform.repository.service;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.data.repository.CrudRepository;
 
