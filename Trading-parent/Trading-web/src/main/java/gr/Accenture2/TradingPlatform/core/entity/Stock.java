@@ -1,49 +1,38 @@
 package gr.Accenture2.TradingPlatform.core.entity;
 
-import java.sql.Date;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.springframework.beans.factory.annotation.Autowired;
 
 
-
-
-	@Entity
-	@Table(name = "stocks")
-	public class Stock {
+@Entity
+@Table(name = "stocks")
+public class Stock {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-    private long stock_id;
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "creation_date", columnDefinition = "DATETIME")
+    private long id;
+
+	@Column(name = "creation_date", columnDefinition = "TIMESTAMP")
 	private Date creation_date;
 	
-	
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	  private Set<Company> company;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "company_id", nullable = false)
+	private Company company;
 
-	public long getStock_id() {
-		return stock_id;
+	public long getId() {
+		return id;
 	}
 
-	public void setStock_id(long stock_id) {
-		this.stock_id = stock_id;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public Date getCreation_date() {
@@ -53,7 +42,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 	public void setCreation_date(Date creation_date) {
 		this.creation_date = creation_date;
 	}
-	
-	
 
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
+	}
+	
+	
 }

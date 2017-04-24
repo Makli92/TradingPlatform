@@ -7,8 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -18,24 +16,20 @@ public class Company {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-    private long company_id;
+    private long id;
 	
 	@Column(name = "name", nullable = false)
     private String name;
 	
-	@OneToMany(mappedBy = "companies")
-	 @JoinTable(name = "Stock_price", 
-		joinColumns = @JoinColumn(name = "company_id", referencedColumnName = "id")
-		
-)
-	private Set<Stock_price> stock_price;
+	@OneToMany(mappedBy = "company", orphanRemoval = true)
+	private Set<Stock> stocks;
 
-	public long getCompany_id() {
-		return company_id;
+	public long getId() {
+		return id;
 	}
 
-	public void setCompany_id(long company_id) {
-		this.company_id = company_id;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -45,6 +39,13 @@ public class Company {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
+	public Set<Stock> getStocks() {
+		return stocks;
+	}
+
+	public void setStocks(Set<Stock> stocks) {
+		this.stocks = stocks;
+	}
 	
 }
