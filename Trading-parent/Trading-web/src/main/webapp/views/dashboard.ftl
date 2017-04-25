@@ -13,16 +13,16 @@
     <title>Java Coding School</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/resources/template/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="/resources/css/sb-admin.css" rel="stylesheet">
+    <link href="/resources/template/css/sb-admin.css" rel="stylesheet">
 
     <!-- Morris Charts CSS -->
-    <link href="/resources/css/plugins/morris.css" rel="stylesheet">
+    <link href="/resources/template/css/plugins/morris.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="/resources/template/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -154,16 +154,16 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                     <li class="active">
-                        <a href="dashboard.html"><i class="fa fa-fw fa-dashboard"></i> Home</a>
+                        <a href="/dashboard"><i class="fa fa-fw fa-dashboard"></i> Home</a>
                     </li>
                     <li>
                         <a href="newOrder.html"><i class="fa fa-fw fa-shopping-cart"></i></i>New Order</a>
                     </li>
                     <li>
-                        <a href="tradesView.html"><i class="fa fa-fw fa-table"></i> Trades View</a>
+                        <a href="/trades"><i class="fa fa-fw fa-table"></i> Trades View</a>
                     </li>
                     <li>
-                        <a href="portfolio.html"><i class="fa fa-fw fa-edit"></i> Portfolio</a>
+                        <a href="/portfolio"><i class="fa fa-fw fa-edit"></i> Portfolio</a>
                     </li>
                   </ul>
             </div>

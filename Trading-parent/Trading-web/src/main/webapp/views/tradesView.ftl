@@ -12,13 +12,13 @@
     <title>Java Coding School</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="/resources/template/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="css/sb-admin.css" rel="stylesheet">
+    <link href="/resources/template/css/sb-admin.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="/resources/template/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -57,7 +57,7 @@
                                         <img class="media-object" src="http://placehold.it/50x50" alt="">
                                     </span>
                                     <div class="media-body">
-                                        <h5 class="media-heading"><strong>Themis Apostologlou</strong>
+                                        <h5 class="media-heading"><strong>${username}</strong>
                                         </h5>
                                         <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
                                         <p>Lorem ipsum dolor sit amet, consectetur...</p>
@@ -72,7 +72,7 @@
                                         <img class="media-object" src="http://placehold.it/50x50" alt="">
                                     </span>
                                     <div class="media-body">
-                                        <h5 class="media-heading"><strong>Themis Apostologlou</strong>
+                                        <h5 class="media-heading"><strong>${username}</strong>
                                         </h5>
                                         <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
                                         <p>Lorem ipsum dolor sit amet, consectetur...</p>
@@ -87,7 +87,7 @@
                                         <img class="media-object" src="http://placehold.it/50x50" alt="">
                                     </span>
                                     <div class="media-body">
-                                        <h5 class="media-heading"><strong>Themis Apostologlou</strong>
+                                        <h5 class="media-heading"><strong>${username}</strong>
                                         </h5>
                                         <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
                                         <p>Lorem ipsum dolor sit amet, consectetur...</p>
@@ -150,16 +150,16 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                     <li>
-                        <a href="dashboard.html"><i class="fa fa-fw fa-dashboard"></i> Home</a>
+                        <a href="/dashboard"><i class="fa fa-fw fa-dashboard"></i> Home</a>
                     </li>
                     <li>
                         <a href="newOrder.html"><i class="fa fa-fw fa-shopping-cart"></i>New Order</a>
                     </li>
                     <li class="active">
-                        <a href="tradesView.html"><i class="fa fa-fw fa-table"></i>Trades View</a>
+                        <a href="/trades"><i class="fa fa-fw fa-table"></i>Trades View</a>
                     </li>
                     <li>
-                        <a href="portfolio.html"><i class="fa fa-fw fa-edit"></i>Portfolio</a>
+                        <a href="/portfolio"><i class="fa fa-fw fa-edit"></i>Portfolio</a>
                     </li>
                 </ul>
             </div>
