@@ -28,6 +28,10 @@ public class Company {
 	@OneToMany(mappedBy = "company", orphanRemoval = true)
 	private Set<Stock> stocks;
 
+	public Company() {
+		super();
+	}
+
 	public Company(long id, String name) {
 		super();
 		this.id = id;
