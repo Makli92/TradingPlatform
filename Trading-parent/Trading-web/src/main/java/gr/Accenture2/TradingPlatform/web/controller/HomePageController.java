@@ -55,7 +55,7 @@ public class HomePageController {
 		
 		ModelAndView mnv = new ModelAndView("dashboard");
 	
-		mnv.addObject("username",securityService.findLoggedInUsername());
+		mnv.addObject("username", securityService.findLoggedInUsername());
 
         return mnv;
     }

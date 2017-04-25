@@ -1,5 +1,6 @@
 package gr.Accenture2.TradingPlatform.core.entity;
 
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -27,6 +28,17 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+	@Column(name = "firstname", nullable = false)
+    private String firstName;
+    
+	@Column(name = "lastname", nullable = false)
+    private String lastName;
+    
+	@Column(name = "birthdate", columnDefinition = "TIMESTAMP")
+    private Date birthDate;
+    
+	@Column(name = "mobile", nullable = false, length = 15)
+    private String mobile;
     
     /**
      * The username
@@ -63,6 +75,9 @@ public class User {
     )
     private Set<Role> roles;
 
+    @Column(name = "cashbalance", nullable = false, columnDefinition = "FLOAT DEFAULT 1000", precision = 10, scale = 2)
+    private Float cashBalance;
+    
 	public long getId() {
 		return id;
 	}
@@ -109,6 +124,46 @@ public class User {
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public Date getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public Float getCashBalance() {
+		return cashBalance;
+	}
+
+	public void setCashBalance(Float cashBalance) {
+		this.cashBalance = cashBalance;
 	}
 
 	@Override

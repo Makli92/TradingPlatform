@@ -43,7 +43,7 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 public class MvcWebConfig  extends WebMvcConfigurerAdapter {
 
         static final Logger logger = LoggerFactory.getLogger(MvcWebConfig.class);
-
+        
         @Override
         public void addInterceptors(InterceptorRegistry registry) {
                 registry.addInterceptor(localeChangeInterceptor());
