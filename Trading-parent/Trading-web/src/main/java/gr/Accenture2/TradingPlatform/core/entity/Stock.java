@@ -11,6 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 
 @Entity
 @Table(name = "stocks")
@@ -24,6 +27,7 @@ public class Stock {
 	private Date creation_date;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="id", scope = Company.class)
 	@JoinColumn(name = "company_id", nullable = false)
 	private Company company;
 

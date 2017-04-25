@@ -1,6 +1,7 @@
 package gr.Accenture2.TradingPlatform.web.controller;
 
-import java.util.List;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,8 +22,8 @@ public class CompanyController {
 	private StockRepository stockRepository;
 	
 	@GetMapping("")
-	public List<Company> getCompanies() {
-		return (List<Company>) companyRepository.findAll();
+	public Set<Company> getCompanies() {
+		return companyRepository.findAllIdAndName();
 	}
 	
 }
