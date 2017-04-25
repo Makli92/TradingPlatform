@@ -87,17 +87,47 @@ public class HomePageController {
 	}
 
 	
-	@RequestMapping("/save")
-	public ModelAndView createCompany() throws Exception {
+	@RequestMapping("/create")
+	public ModelAndView create() throws Exception {
+		
+		companyService.createCompany("Accenture", 10L, 10);
+			
+		//LOGGER.debug("findUnpurchasedStocks:{}", stockService.findUnpurchasedStocks(2));
+		
+		//LOGGER.debug("findPurchasedStocks:{}",stockService.findPurchasedStocks(companyService.findByName("Accenture"), 1));
+	
+		//tradeService.purchaseStocks(companyService.findByName("Accenture"), 2, userService.findByUsername("Bill"));
+		
+		ModelAndView mnv = new ModelAndView("index");
+	    return mnv;
+	}
+	
+	@RequestMapping("/buy")
+	public ModelAndView save() throws Exception {
 		
 		//companyService.createCompany("Accenture", 10L, 10);
 			
 		//LOGGER.debug("findUnpurchasedStocks:{}", stockService.findUnpurchasedStocks(2));
 		
-		LOGGER.debug("findPurchasedStocks:{}",stockService.findPurchasedStocks(companyService.findByName("Accenture"), 2));
+		//LOGGER.debug("findPurchasedStocks:{}",stockService.findPurchasedStocks(companyService.findByName("Accenture"), 1));
 	
-		//tradeService.purchaseStocks(companyService.findByName("Accenture"), 2, userService.findByUsername("Bill"));
+		tradeService.purchaseStocks(companyService.findByName("Accenture"), 2, userService.findByUsername("Bill"));
 		
+		ModelAndView mnv = new ModelAndView("index");
+	    return mnv;
+	}
+	
+	@RequestMapping("/sell")
+	public ModelAndView get() throws Exception {
+		
+		//companyService.createCompany("Accenture", 10L, 10);
+			
+		//LOGGER.debug("findUnpurchasedStocks:{}", stockService.findUnpurchasedStocks(2));
+		
+		tradeService.sellStocks(companyService.findByName("Accenture"),1,userService.findByUsername("Bill"));
+		
+		//LOGGER.debug("findPurchasedStocks:{}",stockService.findPurchasedStocks(companyService.findByName("Accenture"), 1));
+
 		ModelAndView mnv = new ModelAndView("index");
 	    return mnv;
 	}

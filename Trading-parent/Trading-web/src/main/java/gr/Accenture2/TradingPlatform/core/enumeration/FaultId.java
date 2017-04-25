@@ -24,7 +24,17 @@ public enum FaultId {
 	 * Customer has not enough cash balance
 	 * 
 	 */
-	NOT_ENOUPH_BALANCE(4L);
+	NOT_ENOUPH_BALANCE(4L),
+	
+	
+	
+	/**
+	 * The requested stocks for sell are not available any more
+	 * 
+	 */
+	PURCHASED_STOCKS_NOT_AVAILABLE(5L)
+	
+	;
 	
 	/** The id reference. */
 	private final Long idRef;

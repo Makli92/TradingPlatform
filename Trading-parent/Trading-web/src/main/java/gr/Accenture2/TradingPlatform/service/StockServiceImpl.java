@@ -21,12 +21,12 @@ public class StockServiceImpl implements StockService {
 	@Autowired
 	StockRepository stockRepository;
 	
-	public Set<Stock> findUnpurchasedStocks( Integer numberOfStocks ){
+	public Set<Stock> findUnpurchasedStocks( Company company, Integer numberOfStocks ){
 		
 		PageRequest pageRequest = new PageRequest(0, numberOfStocks);
 		
 		Set<Stock> targetCollection = new HashSet<Stock>();
-		CollectionUtils.addAll(targetCollection, stockRepository.findUnpurchasedStocks(pageRequest).iterator());
+		CollectionUtils.addAll(targetCollection, stockRepository.findUnpurchasedStocks(company, pageRequest).iterator());
 		
 		return targetCollection;
 		

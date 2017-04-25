@@ -8,4 +8,6 @@ public interface TradeService {
 
 	boolean purchaseStocks(Company company, Integer numberOfStocks, User user) throws TradingPlatformTradeException;
 	
+	public boolean sellStocks(Company company, Integer numberOfStocks, User user) throws TradingPlatformTradeException;
+	
 }

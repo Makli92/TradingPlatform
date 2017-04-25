@@ -30,7 +30,7 @@ public class UserStockTrade {
 	private Trade trade;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private Stock Stock;
+	private Stock stock;
 	
 	/**
 	 * This flag specifies if the ownership of the Stock is still on the User
@@ -61,14 +61,6 @@ public class UserStockTrade {
 		this.trade = trade;
 	}
 
-	public Stock getStock() {
-		return Stock;
-	}
-
-	public void setStock(Stock stock) {
-		Stock = stock;
-	}
-
 	public boolean isActive() {
 		return active;
 	}
@@ -76,9 +68,13 @@ public class UserStockTrade {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-	
-	
-	
-	
-	
+
+	public Stock getStock() {
+		return stock;
+	}
+
+	public void setStock(Stock stock) {
+		this.stock = stock;
+	}
+
 }

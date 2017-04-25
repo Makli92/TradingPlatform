@@ -58,6 +58,19 @@ public class Stock {
 	void preInsertPriceCreation_date() {
 		this.setCreation_date(new Date());
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Stock [id=");
+		builder.append(id);
+		builder.append(", creation_date=");
+		builder.append(creation_date);
+		builder.append(", company=");
+		builder.append(company);
+		builder.append("]");
+		return builder.toString();
+	}
 	
 	
 }
