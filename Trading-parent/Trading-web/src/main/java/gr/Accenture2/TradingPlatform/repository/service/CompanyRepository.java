@@ -10,4 +10,6 @@ import gr.Accenture2.TradingPlatform.core.entity.Company;
 public interface CompanyRepository extends PagingAndSortingRepository<Company, Long> {
 
 	public Company findByName(String name);
+	
+	
 }

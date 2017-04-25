@@ -15,6 +15,14 @@ import javax.persistence.Table;
 /**
  * @author ekiras
  */
+/**
+ * @author Billy
+ *
+ */
+/**
+ * @author Billy
+ *
+ */
 @Entity
 @Table(name = "users")
 public class User {
@@ -52,6 +60,12 @@ public class User {
      */
 	@Column(name = "email", nullable = false)
     private String email;
+	
+	/**
+     * The email
+     */
+	@Column(name = "cash_balance", nullable = false)
+	double cashBalance;
 	
     /**
      * The list of roles the user is assigned to
@@ -109,6 +123,15 @@ public class User {
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
+	}
+	
+	
+	public double getCashBalance() {
+		return cashBalance;
+	}
+
+	public void setCashBalance(double cashBalance) {
+		this.cashBalance = cashBalance;
 	}
 
 	@Override

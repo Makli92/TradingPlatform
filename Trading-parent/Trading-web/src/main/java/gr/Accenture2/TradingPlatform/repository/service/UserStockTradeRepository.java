@@ -13,16 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import gr.Accenture2.TradingPlatform.core.entity.Company;
 import gr.Accenture2.TradingPlatform.core.entity.Stock;
+import gr.Accenture2.TradingPlatform.core.entity.UserStockTrade;
 
 @Transactional
-public interface StockRepository extends CrudRepository<Stock, Long>, JpaRepository<Stock, Long> {
+public interface UserStockTradeRepository extends CrudRepository<UserStockTrade, Long>, JpaRepository<UserStockTrade, Long> {
 	
-	public Set<Stock> findByCompany(Company company);
-	
-	@Query("SELECT s FROM Stock s WHERE s.id NOT IN (SELECT ust.Stock.id FROM UserStockTrade ust WHERE ust.active = true )")
-	public Page<Stock> findUnpurchasedStocks(Pageable pageable);
-	
-	@Query("SELECT s FROM Stock s WHERE s.company = :company1 AND s.id IN (SELECT ust.Stock.id FROM UserStockTrade ust WHERE ust.active = true )")
-	public Page<Stock> findPurchasedStocks(@Param(value = "company1") Company company, Pageable pageable);
 	
 }

@@ -1,6 +1,8 @@
 package gr.Accenture2.TradingPlatform.core.entity;
 
 import java.util.Date;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 
@@ -23,7 +26,7 @@ public class Stock {
 	@Column(name = "creation_date", columnDefinition = "TIMESTAMP")
 	private Date creation_date;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "company_id", nullable = false)
 	private Company company;
 
@@ -49,6 +52,11 @@ public class Stock {
 
 	public void setCompany(Company company) {
 		this.company = company;
+	}
+	
+	@PrePersist
+	void preInsertPriceCreation_date() {
+		this.setCreation_date(new Date());
 	}
 	
 	

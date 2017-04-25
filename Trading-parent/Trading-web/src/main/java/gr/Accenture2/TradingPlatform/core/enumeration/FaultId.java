@@ -11,7 +11,20 @@ public enum FaultId {
 	/**
 	 * The authentication error
 	 */
-	AUTHENTICATION_ERROR(2L);
+	AUTHENTICATION_ERROR(2L),
+	
+	
+	/**
+	 * The requested stocks for purchase are not available any more
+	 * 
+	 */
+	UNPURCHASED_STOCKS_NOT_AVAILABLE(3L),
+	
+	/**
+	 * Customer has not enough cash balance
+	 * 
+	 */
+	NOT_ENOUPH_BALANCE(4L);
 	
 	/** The id reference. */
 	private final Long idRef;
