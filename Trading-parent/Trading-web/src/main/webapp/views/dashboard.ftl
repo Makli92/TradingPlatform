@@ -31,8 +31,38 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-</head>
+	    <!-- jQuery -->
+    <script src="/resources/template/js/jquery.js"></script>
 
+	<script type="text/javascript">
+		$(document).ready(function () { //this is a closure!
+		
+		/* Morris Charts JavaScript */
+		    $.ajax({
+		  url: "/resources/template/js/plugins/morris/raphael.min.js",
+		  dataType: "script",
+		  success: function( data, textStatus, jqxhr ) {}
+			});
+		
+		
+			    $.ajax({
+		  url: "/resources/template/js/plugins/morris/morris.min.js",
+		  dataType: "script",
+		  success: function( data, textStatus, jqxhr ) {}
+			});
+			
+				
+			    $.ajax({
+		  url: "/resources/template/js/plugins/morris/morris-data.js",
+		  dataType: "script",
+		  success: function( data, textStatus, jqxhr ) {}
+			});
+			
+		});
+	
+	</script>
+
+</head>
 <body>
 
     <div id="wrapper">
@@ -332,31 +362,10 @@
     </div>
     <!-- /#wrapper -->
 
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
+
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-
-    <!-- Morris Charts JavaScript -->
-    <script src="js/plugins/morris/raphael.min.js"></script>
-    <script src="js/plugins/morris/morris.min.js"></script>
-    <script src="js/plugins/morris/morris-data.js"></script>
-
-    <!-- jQuery -->
-    <script src="../vendor/jquery/jquery.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
-
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="../vendor/metisMenu/metisMenu.min.js"></script>
-
-    <!-- DataTables JavaScript -->
-    <script src="../vendor/datatables/js/jquery.dataTables.min.js"></script>
-    <script src="../vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
-    <script src="../vendor/datatables-responsive/dataTables.responsive.js"></script>
-
+    <script src="/resources/template/js/bootstrap.min.js"></script>
 
 </body>
 
