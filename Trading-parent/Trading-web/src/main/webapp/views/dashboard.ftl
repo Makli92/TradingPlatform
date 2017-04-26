@@ -3,7 +3,6 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -31,8 +30,10 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-	    <!-- jQuery -->
+	<!-- jQuery -->
     <script src="/resources/template/js/jquery.js"></script>
+    
+	<script src="/resources/js/trading.platform.v1.01.js"></script> 
 
 	<script type="text/javascript">
 		$(document).ready(function () { //this is a closure!
@@ -58,13 +59,15 @@
 		  success: function( data, textStatus, jqxhr ) {}
 			});
 			
+			tradingPlatform.showUserDetails.init();
+			
 		});
 	
 	</script>
 
 </head>
 <body>
-
+<input type="hidden" class="customClassCsrf" name="${_csrf.parameterName}"   value="${_csrf.token}"/>
     <div id="wrapper">
 
         <!-- Navigation -->
@@ -91,7 +94,7 @@
                                         <img class="media-object" src="http://placehold.it/50x50" alt="">
                                     </span>
                                     <div class="media-body">
-                                        <h5 class="media-heading"><strong>${username}</strong>
+                                        <h5 class="media-heading"> <strong><span class="customClassLoggedInUsername"><i class="fa fa-spinner fa-spin" style="font-size:16px"></i></span></strong>
                                         </h5>
                                         <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
                                     </div>
@@ -105,7 +108,7 @@
                                         <img class="media-object" src="http://placehold.it/50x50" alt="">
                                     </span>
                                     <div class="media-body">
-                                        <h5 class="media-heading"><strong>${username}</strong>
+                                        <h5 class="media-heading"><strong><span class="customClassLoggedInUsername"><i class="fa fa-spinner fa-spin" style="font-size:16px"></i></span></strong>
                                         </h5>
                                         <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
                                         <p>Lorem ipsum dolor sit amet, consectetur...</p>
@@ -120,7 +123,7 @@
                                         <img class="media-object" src="http://placehold.it/50x50" alt="">
                                     </span>
                                     <div class="media-body">
-                                        <h5 class="media-heading"><strong>${username}</strong>
+                                        <h5 class="media-heading"><strong><span class="customClassLoggedInUsername"><i class="fa fa-spinner fa-spin" style="font-size:16px"></i></span></strong>
                                         </h5>
                                         <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
                                         <p>Lorem ipsum dolor sit amet, consectetur...</p>
@@ -161,7 +164,7 @@
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i>${username}<b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <span class="customClassLoggedInUsername"><i class="fa fa-spinner fa-spin" style="font-size:16px"></i></span><b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
                             <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
@@ -174,7 +177,7 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                            <a href="/logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
                         </li>
                     </ul>
                 </li>
@@ -186,10 +189,10 @@
                         <a href="/dashboard"><i class="fa fa-fw fa-dashboard"></i> Home</a>
                     </li>
                     <li>
-                        <a href="newOrder.html"><i class="fa fa-fw fa-shopping-cart"></i></i>New Order</a>
+                        <a href="/newOrder"><i class="fa fa-fw fa-shopping-cart"></i></i>New Order</a>
                     </li>
                     <li>
-                        <a href="/trades"><i class="fa fa-fw fa-table"></i> Trades View</a>
+                        <a href="tradesView"><i class="fa fa-fw fa-table"></i> Trades View</a>
                     </li>
                     <li>
                         <a href="/portfolio"><i class="fa fa-fw fa-edit"></i> Portfolio</a>
@@ -211,7 +214,7 @@
                         </h1>
                         <ol class="breadcrumb">
                             <li class="active">
-                                 Cash: 1000€
+                                 <i class="fa fa-fw fa-money"></i> Cash: <span class="customClassLoggedInCash"><i class="fa fa-spinner fa-spin" style="font-size:16px"></i></span>
                             </li>
 
                         </ol>

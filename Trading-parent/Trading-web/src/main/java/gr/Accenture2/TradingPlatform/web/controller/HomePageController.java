@@ -85,6 +85,43 @@ public class HomePageController {
         return mnv;
     }
 	
+	@RequestMapping("/newOrder")
+	public ModelAndView showNewOrder( Model model) {
+	
+		LOGGER.debug("This is a test debug log");
+		
+		ModelAndView mnv = new ModelAndView("newOrder");
+	
+		mnv.addObject("username", securityService.findLoggedInUsername());
+
+        return mnv;
+    }
+
+	@RequestMapping("/tradesView")
+	public ModelAndView showTradesView( Model model) {
+	
+		LOGGER.debug("This is a test debug log");
+		
+		ModelAndView mnv = new ModelAndView("tradesView");
+	
+		mnv.addObject("username", securityService.findLoggedInUsername());
+
+        return mnv;
+    }
+	
+	@RequestMapping("/portfolio")
+	public ModelAndView showportfolio( Model model) {
+	
+		LOGGER.debug("This is a test debug log");
+		
+		ModelAndView mnv = new ModelAndView("portfolio");
+	
+		mnv.addObject("username", securityService.findLoggedInUsername());
+
+        return mnv;
+    }
+	
+	
 	@RequestMapping(value="/logout", method = RequestMethod.GET)
 	public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();

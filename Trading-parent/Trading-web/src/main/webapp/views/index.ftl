@@ -8,6 +8,7 @@
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   
 	  <link rel="stylesheet" href="/resources/css/style.css">
+	  
 	  <script src="/resources/js/trading.platform.v1.01.js"></script> 
 	  
 	  <script>
