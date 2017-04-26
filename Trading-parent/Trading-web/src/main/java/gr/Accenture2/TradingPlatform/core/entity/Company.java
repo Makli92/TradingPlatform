@@ -10,8 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 @Entity
 @Table(name = "companies")
+@JsonInclude(Include.NON_EMPTY)
 public class Company {
 
 	@Id
@@ -23,6 +27,16 @@ public class Company {
 	
 	@OneToMany(mappedBy = "company", orphanRemoval = true)
 	private Set<Stock> stocks;
+
+	public Company() {
+		super();
+	}
+
+	public Company(long id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
 
 	public long getId() {
 		return id;

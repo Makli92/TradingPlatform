@@ -30,6 +30,7 @@ public class MultiHttpSecurityConfig {
             .antMatcher("/services/**")
             .authorizeRequests()
             	.antMatchers("/services/auth","/services/unauthorize", "/services/forgot", "/services/register").permitAll()
+            	.antMatchers("/services/companies").permitAll()
             	.antMatchers("/services/*").hasAuthority("User")
             	//.antMatchers("/**").permitAll()
                 //.anyRequest().authenticated()
