@@ -106,9 +106,28 @@ public class HomePageController {
 		role.setRole("User");
 		roleService.save(role);
 		
-		
-		
 		User user1  =  new User();
+		user1.setUsername("Makli");
+		user1.setEnabled(true);
+		user1.setCashBalance(100);
+		user1.setPassword("123");
+		user1.setEmail("email@gmail.com");
+		user1.setRoles(new HashSet<Role>());
+		user1.getRoles().add(roleService.findByRole(StringEnumeration.USER.getString()));
+		userService.save(user1);
+		
+		user1  =  new User();
+		user1.setUsername("Themis");
+		user1.setEnabled(true);
+		user1.setCashBalance(100);
+		user1.setPassword("132");
+		user1.setEmail("test@test.com");
+		user1.setRoles(new HashSet<Role>());
+		user1.getRoles().add(roleService.findByRole(StringEnumeration.USER.getString()));
+		userService.save(user1);
+		
+		
+		user1  =  new User();
 		user1.setUsername("Bill");
 		user1.setEnabled(true);
 		user1.setCashBalance(100);
