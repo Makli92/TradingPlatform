@@ -16,6 +16,14 @@ import javax.persistence.Table;
 /**
  * @author ekiras
  */
+/**
+ * @author Billy
+ *
+ */
+/**
+ * @author Billy
+ *
+ */
 @Entity
 @Table(name = "users")
 public class User {
@@ -65,6 +73,7 @@ public class User {
 	@Column(name = "email", nullable = false)
     private String email;
 	
+
     /**
      * The list of roles the user is assigned to
      */

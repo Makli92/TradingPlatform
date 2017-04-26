@@ -11,6 +11,9 @@ import gr.Accenture2.TradingPlatform.core.enumeration.BundleKey;
 import gr.Accenture2.TradingPlatform.core.enumeration.StringEnumeration;
 import gr.Accenture2.TradingPlatform.core.enumeration.SupportedLanguage;
 import gr.Accenture2.TradingPlatform.core.exception.TradingPlatformAuthenticationException;
+import gr.Accenture2.TradingPlatform.repository.service.CompanyRepository;
+import gr.Accenture2.TradingPlatform.repository.service.StockRepository;
+import gr.Accenture2.TradingPlatform.service.CompanyService;
 import gr.Accenture2.TradingPlatform.service.RoleService;
 import gr.Accenture2.TradingPlatform.service.UserService;
 import gr.Accenture2.TradingPlatform.web.auth.service.SecurityService;
@@ -59,6 +62,12 @@ public class WebServiceController {
 	@Autowired
 	RoleService roleService; 
 	
+	
+	@Autowired
+	private CompanyService companyService;
+	
+	@Autowired
+	private StockRepository stockRepository;
 	
 	@Autowired
 	private MessageSource messageSource;
