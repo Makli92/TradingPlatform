@@ -9,6 +9,7 @@ import gr.Accenture2.TradingPlatform.core.entity.Trade;
 import gr.Accenture2.TradingPlatform.core.entity.User;
 import gr.Accenture2.TradingPlatform.core.enumeration.TradeSide;
 import gr.Accenture2.TradingPlatform.core.exception.TradingPlatformTradeException;
+import gr.Accenture2.TradingPlatform.web.json.entity.TradeView;
 
 public interface TradeService {
 
@@ -23,4 +24,6 @@ public interface TradeService {
 	public List<Trade> getTrades(Date from, Date to, Company company);
 	
 	public List<Trade> getTrades(Date from, Date to);
+	
+	public List<TradeView> getTradeView(Date from, Date to, String side, String company);
 }

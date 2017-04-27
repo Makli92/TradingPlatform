@@ -1,10 +1,12 @@
 package gr.Accenture2.TradingPlatform.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,7 @@ import gr.Accenture2.TradingPlatform.core.enumeration.TradeSide;
 import gr.Accenture2.TradingPlatform.core.exception.TradingPlatformTradeException;
 import gr.Accenture2.TradingPlatform.repository.service.TradeRepository;
 import gr.Accenture2.TradingPlatform.repository.service.UserRepository;
+import gr.Accenture2.TradingPlatform.web.json.entity.TradeView;
 
 @Service
 public class TradeServiceImpl implements TradeService {
@@ -32,6 +35,9 @@ public class TradeServiceImpl implements TradeService {
 	
 	@Autowired
 	private TradeRepository tradeRepository;
+	
+	@Autowired
+	private CompanyService companyService;
 	
 	
 	public boolean purchaseStocks(Company company, Integer numberOfStocks, User user) throws TradingPlatformTradeException{
@@ -157,5 +163,29 @@ public class TradeServiceImpl implements TradeService {
 
 	public List<Trade> getTrades(Date from, Date to, Company company, TradeSide side) {
 		return tradeRepository.findByTradeDateBetweenAndCompanyAndSide(from, to, company, side);
+	}
+
+
+	public List<TradeView> getTradeView(Date from, Date to, String side, String company) {
+		List<Trade> trades;
+		List<TradeView> tradeViews = new ArrayList();
+		
+		if (company.isEmpty() && side.isEmpty()) {
+			trades = this.getTrades(from, to);
+		} else if (company.isEmpty()) {
+			trades = this.getTrades(from, to, TradeSide.valueOf(side));
+		} else if (side.isEmpty()) {
+			trades = this.getTrades(from, to, companyService.findByNameStartingWith(company));
+		} else {
+			trades = this.getTrades(from, to, companyService.findByNameStartingWith(company), TradeSide.valueOf(side));
+		}
+
+		for(Trade trade : trades){
+			TradeView view = new TradeView();
+			BeanUtils.copyProperties(trade, view);
+			tradeViews.add(view);
+		}
+		
+		return tradeViews;
 	}
 }

@@ -26,7 +26,7 @@ import gr.Accenture2.TradingPlatform.service.UserService;
 import gr.Accenture2.TradingPlatform.web.auth.service.SecurityService;
 import gr.Accenture2.TradingPlatform.web.enumeration.RestResponseStatus;
 import gr.Accenture2.TradingPlatform.web.json.entity.ApiUser;
-import gr.Accenture2.TradingPlatform.web.json.entity.TradeData;
+import gr.Accenture2.TradingPlatform.web.json.entity.TradeView;
 import gr.Accenture2.TradingPlatform.web.json.response.AuthenticationResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.ForgotResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.GenericResponse;
@@ -400,38 +400,10 @@ public class WebServiceController {
 
 		final GenericResponse response = new GenericResponse();
 		
-		List<Trade> trades;
-		
-		if (company.isEmpty() && side.isEmpty()) {
-			trades = tradeService.getTrades(from, to);
-		} else if (company.isEmpty()) {
-			trades = tradeService.getTrades(from, to, TradeSide.valueOf(side));
-		} else if (side.isEmpty()) {
-			trades = tradeService.getTrades(from, to, companyService.findByNameStartingWith(company));
-		} else {
-			trades = tradeService.getTrades(from, to, companyService.findByNameStartingWith(company), TradeSide.valueOf(side));
-		} 
-		
-		List<TradeData> tradeView = new ArrayList();
-		
-		for (int i = 0; i < trades.size(); i++) {
-			Trade currTrade = trades.get(i);
-			
-			TradeData row = new TradeData();
-			row.setCompany(currTrade.getCompany().getName());
-			row.setIssueDate(currTrade.getTradeDate());
-			row.setSide(currTrade.getSide().toString());
-			row.setQuantity(currTrade.getQuantity());
-			row.setOrderPrice(currTrade.getOrderPriceWithoutFeeTaxes());
-			row.setUnitPrice(currTrade.getUnitPrice());
-			row.setStatus(currTrade.getStatus().toString());
-			
-			tradeView.add(row);
-		}
+		List<TradeView> tradeViews = tradeService.getTradeView(from, to, side, company);
 		
 		response.setResponseStatus(RestResponseStatus.OK.getName());
-
-		response.setItem(new TradeViewResponse(TradeViewResponse.Status.OK.getStatus(), null, tradeView));
+		response.setItem(new TradeViewResponse(TradeViewResponse.Status.OK.getStatus(), null, tradeViews));
 
 		return response;
 	}
