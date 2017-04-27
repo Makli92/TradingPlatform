@@ -18,16 +18,19 @@ import gr.Accenture2.TradingPlatform.service.RoleService;
 import gr.Accenture2.TradingPlatform.service.UserService;
 import gr.Accenture2.TradingPlatform.web.auth.service.SecurityService;
 import gr.Accenture2.TradingPlatform.web.enumeration.RestResponseStatus;
+import gr.Accenture2.TradingPlatform.web.json.entity.ApiUser;
 import gr.Accenture2.TradingPlatform.web.json.response.AuthenticationResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.ForgotResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.GenericResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.GenericRestResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.RegistrationResponse;
+import gr.Accenture2.TradingPlatform.web.json.response.UserDataResponse;
 import gr.Accenture2.TradingPlatform.web.post.request.RegistrationForm;
 import gr.Accenture2.TradingPlatform.web.service.FormValidationService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.MessageSource;
@@ -210,6 +213,39 @@ public class WebServiceController {
 
 		response.setResponseStatus(RestResponseStatus.OK.getName());
 		response.setItem(registrationResponse);
+
+		return response;
+	}
+	
+	/**
+	 * The user data API service, for login and update profile
+	 * 
+	 * API endpoint: [host]:[port]/services/getUserData HTTP method: GET
+	 * paramethers: none
+	 * 
+	 * 
+	 * @param model
+	 * @param username
+	 * @param password
+	 * @return
+	 * @throws TradingPlatformAuthenticationException
+	 */
+	@RequestMapping(value = "/getUserData", method = RequestMethod.GET)
+	// RequestMethod.POST must be used instead
+	@ResponseBody
+	public GenericRestResponse showGetUserData(Model model)
+			throws TradingPlatformAuthenticationException {
+
+		final GenericResponse response = new GenericResponse();
+
+		ApiUser apiUser = new ApiUser();
+	
+		BeanUtils.copyProperties(userService.findByUsername(securityService.findLoggedInUsername()), apiUser);
+		
+		response.setResponseStatus(RestResponseStatus.OK.getName());
+
+		response.setItem(new UserDataResponse(
+				UserDataResponse.Status.OK.getStatus(), null, apiUser));
 
 		return response;
 	}

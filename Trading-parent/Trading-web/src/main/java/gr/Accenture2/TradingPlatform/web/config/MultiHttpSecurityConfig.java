@@ -66,8 +66,11 @@ public class MultiHttpSecurityConfig {
 
             http
             .authorizeRequests()
-            	.antMatchers("/dashboard").hasAuthority("User")
-            	.antMatchers("/**").permitAll()
+            	//.antMatchers("/dashboard").hasAuthority("User")
+            	.antMatchers("/resources/**").permitAll()
+            	.antMatchers("/createData").permitAll()
+            	.antMatchers("/").permitAll()
+            	.antMatchers("/*").hasAuthority("User")
                 .anyRequest().authenticated()
                 .and()
             .formLogin()

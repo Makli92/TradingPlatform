@@ -331,6 +331,73 @@ var tradingPlatform = {
 
 			}
 			
+		},		/* login js code*/
+		'showUserDetails' : {
+			'config' : {
+				
+				'loginEndpoint' : '/services/getUserData'
+				
+			},
+			'init': function() {
+				
+				tradingPlatform.showUserDetails.getUserData();
+				
+			},
+			
+			'getUserData': function() {
+				
+				// Send request
+				$.ajax({
+					type : 'GET',
+					url : tradingPlatform.showUserDetails.config.loginEndpoint,
+					cache : false,
+					data : {
+						//'_csrf' : $(".customClassCsrf").val()
+					}
+					,
+					success : function(data) {
+						console.log('getUserData:' + JSON.stringify(data));
+						
+						if(data.responseStatus == tradingPlatform.constants.responseStatuses.OK){
+							
+							if(data.item.userDataStatus == tradingPlatform.constants.responseStatuses.OK){
+								
+								
+								setTimeout( function() {
+									
+									$('.customClassLoggedInUsername').text(data.item.item.username);
+									
+									$('.customClassLoggedInCash').html(data.item.item.cashBalance + '&euro;');
+									
+								}, 1000 );
+								
+
+								
+								
+								//
+								
+							}else{
+								
+								//do something with  data.item.userDataStatusMessage
+							}
+							
+
+						}else{
+							
+							//do something with data.responseStatusMessage
+
+							
+						}
+						
+					},
+					error : function() {
+					
+						//do something general e.g. tradingPlatform.constants.generalErrorMessage
+
+					}
+				});	
+				
+			}
 		},
 		
 		'init': function() {
