@@ -1,5 +1,6 @@
 package gr.Accenture2.TradingPlatform.web.controller;
 
+import java.util.Date;
 import java.util.HashSet;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,7 @@ import gr.Accenture2.TradingPlatform.core.entity.User;
 import gr.Accenture2.TradingPlatform.core.enumeration.BundleKey;
 import gr.Accenture2.TradingPlatform.core.enumeration.StringEnumeration;
 import gr.Accenture2.TradingPlatform.core.enumeration.SupportedLanguage;
+import gr.Accenture2.TradingPlatform.core.enumeration.TradeSide;
 import gr.Accenture2.TradingPlatform.core.exception.TradingPlatformAuthenticationException;
 import gr.Accenture2.TradingPlatform.repository.service.CompanyRepository;
 import gr.Accenture2.TradingPlatform.repository.service.StockRepository;
@@ -34,6 +36,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.MessageSource;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
@@ -55,7 +58,7 @@ public class WebServiceController {
 	/** The logger in use by this controller. */
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(WebServiceController.class);
-
+	
 	@Autowired
 	SecurityService securityService;
 
@@ -364,4 +367,38 @@ public class WebServiceController {
 		return result;
 	}
 
+	/**
+	 * The trade view data API service, for global trades presentation
+	 * 
+	 * API endpoint: [host]:[port]/services/trades HTTP method: GET
+	 * paramethers: none
+	 * 
+	 * 
+	 * @param model
+	 * @param username
+	 * @param password
+	 * @return
+	 * @throws TradingPlatformAuthenticationException
+	 */
+	@RequestMapping(value = "/trades", method = RequestMethod.GET)
+	@ResponseBody
+	public GenericRestResponse showTrades(	Model model, 
+											@RequestParam("from") @DateTimeFormat(pattern="yyyy-MM-dd") Date fromDate,
+											@RequestParam("to") @DateTimeFormat(pattern="yyyy-MM-dd") Date toDate,
+											@RequestParam(value = "side", required = false) TradeSide side)
+			throws TradingPlatformAuthenticationException {
+
+		final GenericResponse response = new GenericResponse();
+//		ApiUser apiUser = new ApiUser();
+//	
+//		BeanUtils.copyProperties(userService.findByUsername(securityService.findLoggedInUsername()), apiUser);
+		
+		response.setResponseStatus(RestResponseStatus.OK.getName());
+
+//		response.setItem(new UserDataResponse(
+//				UserDataResponse.Status.OK.getStatus(), null, apiUser));
+
+		return response;
+	}
+	
 }
