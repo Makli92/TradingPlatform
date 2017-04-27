@@ -15,6 +15,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
@@ -56,6 +58,14 @@ public class Trade {
 	@OneToMany(mappedBy = "trade", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, orphanRemoval = true)
 	private Set<UserStockTrade> userStockTrade;
 
+	@ManyToOne(optional = false)
+    @JoinColumn(name = "user_id", nullable = false, updatable = false)
+	private User user;
+	
+	@ManyToOne(optional = false)
+    @JoinColumn(name = "company_id", nullable = false, updatable = false)
+	private Company company;
+	
 	public long getId() {
 		return id;
 	}
@@ -133,9 +143,19 @@ public class Trade {
 		this.side = side;
 	}
 	
-	
-	
-	
-	
-	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
+	}
 }

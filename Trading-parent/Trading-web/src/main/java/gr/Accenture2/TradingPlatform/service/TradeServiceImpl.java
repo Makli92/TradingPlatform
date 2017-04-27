@@ -1,6 +1,7 @@
 package gr.Accenture2.TradingPlatform.service;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,8 @@ public class TradeServiceImpl implements TradeService {
 		trade.setOrderPriceWithoutFeeTaxes(company.getPrice() * stocks.size());
 		trade.setOrderPriceWithFeeTaxes(trade.getOrderPriceWithoutFeeTaxes() + (trade.getOrderPriceWithoutFeeTaxes() * TradeSide.BUY.getTaxes()));
 		trade.setOrderPriceWithFeeTaxes(trade.getOrderPriceWithFeeTaxes() + TradeSide.BUY.getFees());
+		trade.setUser(user);
+		trade.setCompany(company);
 
 		if(user.getCashBalance() < trade.getOrderPriceWithFeeTaxes()){
 			
@@ -116,6 +119,8 @@ public class TradeServiceImpl implements TradeService {
 		trade.setOrderPriceWithoutFeeTaxes(company.getPrice() * userStockTrades.size());
 		trade.setOrderPriceWithFeeTaxes(trade.getOrderPriceWithoutFeeTaxes() - (trade.getOrderPriceWithoutFeeTaxes() * TradeSide.SELL.getTaxes()));
 		trade.setOrderPriceWithFeeTaxes(trade.getOrderPriceWithFeeTaxes() - TradeSide.SELL.getFees());
+		trade.setUser(user);
+		trade.setCompany(company);
 		user.setCashBalance(new Float(user.getCashBalance() + trade.getOrderPriceWithFeeTaxes()));
 		
 		
@@ -134,6 +139,11 @@ public class TradeServiceImpl implements TradeService {
 		tradeRepository.save(trade);
 		
 		return true;
+	}
+
+
+	public List<Trade> getTrades() throws TradingPlatformTradeException {
+		return (List<Trade>) tradeRepository.findAll();
 	}
 
 }

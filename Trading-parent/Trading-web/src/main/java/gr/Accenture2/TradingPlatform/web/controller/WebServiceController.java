@@ -1,32 +1,39 @@
 package gr.Accenture2.TradingPlatform.web.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import gr.Accenture2.TradingPlatform.core.entity.Fault;
 import gr.Accenture2.TradingPlatform.core.entity.Role;
+import gr.Accenture2.TradingPlatform.core.entity.Trade;
 import gr.Accenture2.TradingPlatform.core.entity.User;
 import gr.Accenture2.TradingPlatform.core.enumeration.BundleKey;
 import gr.Accenture2.TradingPlatform.core.enumeration.StringEnumeration;
 import gr.Accenture2.TradingPlatform.core.enumeration.SupportedLanguage;
 import gr.Accenture2.TradingPlatform.core.enumeration.TradeSide;
 import gr.Accenture2.TradingPlatform.core.exception.TradingPlatformAuthenticationException;
+import gr.Accenture2.TradingPlatform.core.exception.TradingPlatformTradeException;
 import gr.Accenture2.TradingPlatform.repository.service.CompanyRepository;
 import gr.Accenture2.TradingPlatform.repository.service.StockRepository;
 import gr.Accenture2.TradingPlatform.service.CompanyService;
 import gr.Accenture2.TradingPlatform.service.RoleService;
+import gr.Accenture2.TradingPlatform.service.TradeService;
 import gr.Accenture2.TradingPlatform.service.UserService;
 import gr.Accenture2.TradingPlatform.web.auth.service.SecurityService;
 import gr.Accenture2.TradingPlatform.web.enumeration.RestResponseStatus;
 import gr.Accenture2.TradingPlatform.web.json.entity.ApiUser;
+import gr.Accenture2.TradingPlatform.web.json.entity.TradeData;
 import gr.Accenture2.TradingPlatform.web.json.response.AuthenticationResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.ForgotResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.GenericResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.GenericRestResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.RegistrationResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.UserDataResponse;
+import gr.Accenture2.TradingPlatform.web.json.response.TradeViewResponse;
 import gr.Accenture2.TradingPlatform.web.post.request.RegistrationForm;
 import gr.Accenture2.TradingPlatform.web.service.FormValidationService;
 
@@ -66,7 +73,10 @@ public class WebServiceController {
 	UserService userService; 
 	
 	@Autowired
-	RoleService roleService; 
+	RoleService roleService;
+	
+	@Autowired
+	TradeService tradeService;
 	
 	
 	@Autowired
@@ -379,6 +389,7 @@ public class WebServiceController {
 	 * @param password
 	 * @return
 	 * @throws TradingPlatformAuthenticationException
+	 * @throws TradingPlatformTradeException 
 	 */
 	@RequestMapping(value = "/trades", method = RequestMethod.GET)
 	@ResponseBody
@@ -386,17 +397,32 @@ public class WebServiceController {
 											@RequestParam("from") @DateTimeFormat(pattern="yyyy-MM-dd") Date fromDate,
 											@RequestParam("to") @DateTimeFormat(pattern="yyyy-MM-dd") Date toDate,
 											@RequestParam(value = "side", required = false) TradeSide side)
-			throws TradingPlatformAuthenticationException {
+			throws TradingPlatformAuthenticationException, TradingPlatformTradeException {
 
 		final GenericResponse response = new GenericResponse();
-//		ApiUser apiUser = new ApiUser();
-//	
-//		BeanUtils.copyProperties(userService.findByUsername(securityService.findLoggedInUsername()), apiUser);
+		
+		List<Trade> trades = tradeService.getTrades();
+		
+		List<TradeData> tradeView = new ArrayList();
+		
+		for (int i = 0; i < trades.size(); i++) {
+			Trade currTrade = trades.get(i);
+			
+			TradeData row = new TradeData();
+			row.setCompany(currTrade.getCompany().getName());
+			row.setIssueDate(currTrade.getTrade_date());
+			row.setSide(currTrade.getSide().toString());
+			row.setQuantity(currTrade.getQuantity());
+			row.setOrderPrice(currTrade.getOrderPriceWithoutFeeTaxes());
+			row.setUnitPrice(currTrade.getUnit_price());
+			row.setStatus(currTrade.getStatus().toString());
+			
+			tradeView.add(row);
+		}
 		
 		response.setResponseStatus(RestResponseStatus.OK.getName());
 
-//		response.setItem(new UserDataResponse(
-//				UserDataResponse.Status.OK.getStatus(), null, apiUser));
+		response.setItem(new TradeViewResponse(TradeViewResponse.Status.OK.getStatus(), null, tradeView));
 
 		return response;
 	}
