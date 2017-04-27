@@ -1,5 +1,9 @@
 package gr.Accenture2.TradingPlatform.service;
 
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,5 +38,13 @@ public class CompanyServiceImpl implements CompanyService {
 		return companyRepository.findByName(name);
 		
 	}
+	
+	public  Iterable<Company> gatAllCompanies(){
+		
+		return companyRepository.findAll();
+
+		
+	}
+	
 
 }

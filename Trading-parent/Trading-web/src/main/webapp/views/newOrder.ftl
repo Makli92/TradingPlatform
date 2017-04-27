@@ -34,6 +34,9 @@
 	<!-- jQuery -->
     <script src="/resources/template/js/jquery.js"></script>
 
+  	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 	<script src="/resources/js/trading.platform.v1.01.js"></script> 
 
 	<script type="text/javascript">
@@ -61,6 +64,7 @@
 			});
 			
 			tradingPlatform.showUserDetails.init();
+			tradingPlatform.autoCompleteSearch.init();
 			
 		});
 	
@@ -224,7 +228,7 @@
 
                         <label class="control-label" for="stockQuickSearch">Stock quick search</label>
                         <div class="form-group input-group">
-                               <input type="text" class="form-control" placeholder="Search...">
+                               <input type="text" class="form-control customClassAutoCompleteSearchInput" placeholder="Search...">
                                <span class="input-group-btn"><button class="btn btn-default" type="button"><i class="fa fa-search" ></i></button></span>
                         </div>
                     </div>

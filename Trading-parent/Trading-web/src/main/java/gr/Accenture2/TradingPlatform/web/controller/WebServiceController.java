@@ -1,9 +1,11 @@
 package gr.Accenture2.TradingPlatform.web.controller;
 
 import java.util.HashSet;
+import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 
+import gr.Accenture2.TradingPlatform.core.entity.Company;
 import gr.Accenture2.TradingPlatform.core.entity.Fault;
 import gr.Accenture2.TradingPlatform.core.entity.Role;
 import gr.Accenture2.TradingPlatform.core.entity.User;
@@ -18,8 +20,10 @@ import gr.Accenture2.TradingPlatform.service.RoleService;
 import gr.Accenture2.TradingPlatform.service.UserService;
 import gr.Accenture2.TradingPlatform.web.auth.service.SecurityService;
 import gr.Accenture2.TradingPlatform.web.enumeration.RestResponseStatus;
+import gr.Accenture2.TradingPlatform.web.json.entity.ApiCompany;
 import gr.Accenture2.TradingPlatform.web.json.entity.ApiUser;
 import gr.Accenture2.TradingPlatform.web.json.response.AuthenticationResponse;
+import gr.Accenture2.TradingPlatform.web.json.response.CompaniesResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.ForgotResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.GenericResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.GenericRestResponse;
@@ -250,6 +254,54 @@ public class WebServiceController {
 		return response;
 	}
 
+	/**
+	 * The user data API service, for search autocomplete
+	 * 
+	 * API endpoint: [host]:[port]/services/getCompanies HTTP method: GET
+	 * paramethers: none
+	 * 
+	 * 
+	 * @param model
+	 * @param username
+	 * @param password
+	 * @return
+	 * @throws TradingPlatformAuthenticationException
+	 */
+	@RequestMapping(value = "/getCompanies", method = RequestMethod.GET)
+	// RequestMethod.POST must be used instead
+	@ResponseBody
+	public GenericRestResponse showGetCompanies(Model model)
+			throws TradingPlatformAuthenticationException {
+
+		final GenericResponse response = new GenericResponse();
+
+		
+		Iterable iterable = companyService.gatAllCompanies();
+		
+	    HashSet<ApiCompany> set = new HashSet<ApiCompany>();
+	    Iterator<Company> it = iterable.iterator();
+	    
+	    ApiCompany tempApiCompany;
+	    
+	    while (it.hasNext()) {
+	    	
+	    	tempApiCompany = new ApiCompany();
+	    	
+			BeanUtils.copyProperties((Company)it.next(), tempApiCompany);
+			
+	    	
+	        set.add(tempApiCompany);
+	    }
+		
+		response.setResponseStatus(RestResponseStatus.OK.getName());
+
+		response.setItem(new CompaniesResponse(
+				CompaniesResponse.Status.OK.getStatus(), null, set));
+
+		return response;
+	}
+	
+	
 	/**
 	 * Just an API to test authenticated users. You must be logged in in order
 	 * to access this api

@@ -184,6 +184,10 @@ public class HomePageController {
 		userService.save(user1);
 		
 		companyService.createCompany("Accenture", 10L, 30);
+		
+		companyService.createCompany("Intrasoft", 10L, 32);
+		
+		companyService.createCompany("Agile Actors", 10L, 33);
 	
 		tradeService.purchaseStocks(companyService.findByName("Accenture"), 3, userService.findByUsername("Bill"));
 		

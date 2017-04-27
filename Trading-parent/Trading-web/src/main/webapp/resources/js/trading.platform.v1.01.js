@@ -13,8 +13,7 @@ var tradingPlatform = {
 			
 		},
 		
-		/* login js code*/
-		'login' : {
+		'login' : { /* tradingPlatform.login - Start */
 			'config' : {
 				
 				'loginEndpoint' : '/services/auth',
@@ -93,9 +92,8 @@ var tradingPlatform = {
 			
 			
 			
-		},
-		/* login js code*/
-		'register' : {
+		}, /* tradingPlatform.login - End */
+		'register' : { /* tradingPlatform.register - Start */
 			'config' : {
 				
 				'registerEndpoint' : '/services/register',
@@ -201,13 +199,6 @@ var tradingPlatform = {
 
 				    $('.customclassRegisterMessage').html(
 				    		
-/*
-				    		
-				    		$('.customclassRegisterMessage').html()
-				    		+ '<div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><span class="sr-only">Error:</span>'
-				    		+ tempArray[i]
-				    		+ '</div>'
-	*/
 				    		$('.customclassRegisterMessage').html()
 				    		+ '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><span class="sr-only">Error:</span> '
 				    		+ tempArray[i] + '<br />'
@@ -258,16 +249,15 @@ var tradingPlatform = {
 				$(".customclassRegisterSuccessfulMessage").fadeOut(tradingPlatform.constants.fadeoutDelay * 3);
 
 			}
-		},
+		}, /* tradingPlatform.register - End */
 		
-		/* login js code*/
-		'forgotPass' : {
+		'forgotPass' : { /* tradingPlatform.forgotPass - Start */
 			'config' : {
 				
 				'forgotPassEndpoint' : '/services/forgot'
 				
 			},
-			'init': function() {
+			'init': function() { /* tradingPlatform.forgotPass.init - Start */
 				
 				$('.customClassForgotPassButton').bind( "click", function( event ) {
 				    
@@ -278,9 +268,9 @@ var tradingPlatform = {
 
 				});
 				
-			},
+			}, /* tradingPlatform.forgotPass.init - End */
 			
-			'forgotPassAttempt': function() {
+			'forgotPassAttempt': function() { /* tradingPlatform.forgotPass.forgotPassAttempt - Start */
 				
 				// Send request
 				$.ajax({
@@ -319,9 +309,10 @@ var tradingPlatform = {
 					}
 				});	
 				
-			} , 
+			} /* tradingPlatform.forgotPass.forgotPassAttempt - End */
+			, 
 			
-			'forgotPassMessage' : function(msg) {
+			'forgotPassMessage' : function(msg) { /* tradingPlatform.forgotPass.forgotPassMessage - Start */
 				
 				$(".customclassForgotPassMessage").fadeIn(tradingPlatform.constants.fadeinDelay);
 				
@@ -329,10 +320,11 @@ var tradingPlatform = {
 				
 				$(".customclassForgotPassMessage").fadeOut(tradingPlatform.constants.fadeoutDelay);
 
-			}
+			} /* tradingPlatform.forgotPass.forgotPassMessage - End */
 			
-		},		/* login js code*/
-		'showUserDetails' : {
+		}, /* tradingPlatform.forgotPass - End */
+		
+		'showUserDetails' : { /* tradingPlatform.showUserDetails.init - Start */
 			'config' : {
 				
 				'loginEndpoint' : '/services/getUserData'
@@ -398,9 +390,114 @@ var tradingPlatform = {
 				});	
 				
 			}
-		},
+		}, /* tradingPlatform.showUserDetails.init - end */
 		
-		'init': function() {
+		'autoCompleteSearch' : { /* tradingPlatform.autoCompleteSearch - start */
+			'config' : {
+				
+				'loginEndpoint' : '/services/getCompanies'
+				
+			},
+			'init': function() { /* tradingPlatform.autoCompleteSearch.init - start */
+								
+				console.log('init autoCompleteSearch:');
+
+				// Send request
+				$.ajax({
+					type : 'GET',
+					url : tradingPlatform.autoCompleteSearch.config.loginEndpoint,
+					cache : false,
+					data : {
+						//'_csrf' : $(".customClassCsrf").val()
+					}
+					,
+					success : function(data) {
+						console.log('autoCompleteSearch:' + JSON.stringify(data));
+
+						
+						if(data.responseStatus == tradingPlatform.constants.responseStatuses.OK){
+							
+							if(data.item.companiesStatus == tradingPlatform.constants.responseStatuses.OK){
+								
+								
+						    	if($.isArray(data.item.item) && data.item.item.length > 0){
+						    		
+						    		var results = [];
+						    		
+						    		for (var i = 0; i < data.item.item.length; i++) {
+						    			
+						    			results.push({ label: data.item.item[i].name, value: data.item.item[i].id });
+						 
+						    		    //alert("loop:"+ JSON.stringify(data.item.item[i]));
+						    		    
+
+						    		}
+						    		
+						    		
+						    	}
+											
+								$(".customClassAutoCompleteSearchInput").autocomplete({
+								    source: results,
+
+								    select: function (e, ui) {
+
+					
+								    	/*
+								    	 * Object of the following type
+								    	 * { label: name, value: id }
+								    	 * 
+								    	 */
+								    	
+								    	//alert("selected!:"+ JSON.stringify(ui));
+								    	
+								        event.preventDefault();
+								        $(".customClassAutoCompleteSearchInput").val(ui.item.label);
+								    	
+								    	
+								    	location = "/newOrder/"+ ui.item.value + "/" + ui.item.label;
+								    	
+								        //alert("selected!:"+ JSON.stringify(ui));
+								    	return false;
+								    },
+
+								    change: function (e, ui) {
+
+								        alert("changed!");
+								    },
+								    focus: function() {
+								        // prevent value inserted on focus
+								    	
+								        return false;
+								    },
+								});
+								
+								
+							}else{
+								
+								//do something with  data.item.companiesStatusMessage
+							}
+							
+
+						}else{
+							
+							//do something with data.companiesStatusMessage
+
+							
+						}
+						
+					},
+					error : function() {
+					
+						//do something general e.g. tradingPlatform.constants.generalErrorMessage
+
+					}
+				});	
+				
+			} /* tradingPlatform.autoCompleteSearch.init - end */
+			
+		}, /* tradingPlatform.autoCompleteSearch - end */
+		
+		'init': function() { /* tradingPlatform.init - start */
 
 			// Prevent submitting  form
 			$(document).on("submit", "form", function(e){
@@ -408,5 +505,5 @@ var tradingPlatform = {
 			    return  false;
 			});
 			
-		}
+		} /* tradingPlatform.init - end */
 };
