@@ -394,14 +394,25 @@ public class WebServiceController {
 	@RequestMapping(value = "/trades", method = RequestMethod.GET)
 	@ResponseBody
 	public GenericRestResponse showTrades(	Model model, 
-											@RequestParam("from") @DateTimeFormat(pattern="yyyy-MM-dd") Date fromDate,
-											@RequestParam("to") @DateTimeFormat(pattern="yyyy-MM-dd") Date toDate,
-											@RequestParam(value = "side", required = false) TradeSide side)
+											@RequestParam("from") @DateTimeFormat(pattern="yyyy-MM-dd") Date from,
+											@RequestParam("to") @DateTimeFormat(pattern="yyyy-MM-dd") Date to,
+											@RequestParam(value = "side", required = false, defaultValue = "") String side,
+											@RequestParam(value = "company", required = false, defaultValue = "") String company)
 			throws TradingPlatformAuthenticationException, TradingPlatformTradeException {
 
 		final GenericResponse response = new GenericResponse();
 		
-		List<Trade> trades = tradeService.getTrades();
+		List<Trade> trades;
+		
+		if (company.isEmpty() && side.isEmpty()) {
+			trades = tradeService.getTrades(from, to);
+		} else if (company.isEmpty()) {
+			trades = tradeService.getTrades(from, to, TradeSide.valueOf(side));
+		} else if (side.isEmpty()) {
+			trades = tradeService.getTrades(from, to, companyService.findByNameStartingWith(company));
+		} else {
+			trades = tradeService.getTrades(from, to, companyService.findByNameStartingWith(company), TradeSide.valueOf(side));
+		} 
 		
 		List<TradeData> tradeView = new ArrayList();
 		
@@ -410,11 +421,11 @@ public class WebServiceController {
 			
 			TradeData row = new TradeData();
 			row.setCompany(currTrade.getCompany().getName());
-			row.setIssueDate(currTrade.getTrade_date());
+			row.setIssueDate(currTrade.getTradeDate());
 			row.setSide(currTrade.getSide().toString());
 			row.setQuantity(currTrade.getQuantity());
 			row.setOrderPrice(currTrade.getOrderPriceWithoutFeeTaxes());
-			row.setUnitPrice(currTrade.getUnit_price());
+			row.setUnitPrice(currTrade.getUnitPrice());
 			row.setStatus(currTrade.getStatus().toString());
 			
 			tradeView.add(row);

@@ -37,7 +37,7 @@ public class Trade {
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "trade_date", columnDefinition = "DATETIME")
-	private Date trade_date;
+	private Date tradeDate;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
@@ -47,7 +47,7 @@ public class Trade {
 	
 	private Float orderPriceWithoutFeeTaxes;
 
-	private Float unit_price;
+	private Float unitPrice;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
@@ -71,20 +71,20 @@ public class Trade {
 	}
 
 	@PrePersist
-	void preInserttrade_date() {
-		this.setTrade_date(new Date());
+	void preInserttradeDate() {
+		this.setTradeDate(new Date());
 	}
 	
 	public void setId(long id) {
 		this.id = id;
 	}
 
-	public Date getTrade_date() {
-		return trade_date;
+	public Date getTradeDate() {
+		return tradeDate;
 	}
 
-	public void setTrade_date(Date trade_date) {
-		this.trade_date = trade_date;
+	public void setTradeDate(Date trade_date) {
+		this.tradeDate = trade_date;
 	}
 
 	public Float getOrderPriceWithFeeTaxes() {
@@ -103,12 +103,12 @@ public class Trade {
 		this.orderPriceWithoutFeeTaxes = orderPriceWithoutFeeTaxes;
 	}
 
-	public Float getUnit_price() {
-		return unit_price;
+	public Float getUnitPrice() {
+		return unitPrice;
 	}
 
-	public void setUnit_price(Float unit_price) {
-		this.unit_price = unit_price;
+	public void setUnitPrice(Float unit_price) {
+		this.unitPrice = unit_price;
 	}
 
 	public TradeStatus getStatus() {

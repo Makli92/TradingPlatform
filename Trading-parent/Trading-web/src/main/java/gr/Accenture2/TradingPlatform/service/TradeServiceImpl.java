@@ -1,5 +1,6 @@
 package gr.Accenture2.TradingPlatform.service;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -51,7 +52,7 @@ public class TradeServiceImpl implements TradeService {
 		
 		Trade trade = new Trade();
 		trade.setSide(TradeSide.BUY);
-		trade.setUnit_price(company.getPrice());
+		trade.setUnitPrice(company.getPrice());
 		trade.setQuantity(stocks.size());
 		trade.setOrderPriceWithoutFeeTaxes(company.getPrice() * stocks.size());
 		trade.setOrderPriceWithFeeTaxes(trade.getOrderPriceWithoutFeeTaxes() + (trade.getOrderPriceWithoutFeeTaxes() * TradeSide.BUY.getTaxes()));
@@ -114,7 +115,7 @@ public class TradeServiceImpl implements TradeService {
 		
 		Trade trade = new Trade();
 		trade.setSide(TradeSide.SELL);
-		trade.setUnit_price(company.getPrice());
+		trade.setUnitPrice(company.getPrice());
 		trade.setQuantity(userStockTrades.size());
 		trade.setOrderPriceWithoutFeeTaxes(company.getPrice() * userStockTrades.size());
 		trade.setOrderPriceWithFeeTaxes(trade.getOrderPriceWithoutFeeTaxes() - (trade.getOrderPriceWithoutFeeTaxes() * TradeSide.SELL.getTaxes()));
@@ -142,8 +143,19 @@ public class TradeServiceImpl implements TradeService {
 	}
 
 
-	public List<Trade> getTrades() throws TradingPlatformTradeException {
-		return (List<Trade>) tradeRepository.findAll();
+	public List<Trade> getTrades(Date from, Date to) {
+		return tradeRepository.findByTradeDateBetween(from, to);
+	}
+	
+	public List<Trade> getTrades(Date from, Date to, Company company) {
+		return tradeRepository.findByTradeDateBetweenAndCompany(from, to, company);
 	}
 
+	public List<Trade> getTrades(Date from, Date to, TradeSide side) {
+		return tradeRepository.findByTradeDateBetweenAndSide(from, to, side);
+	}
+
+	public List<Trade> getTrades(Date from, Date to, Company company, TradeSide side) {
+		return tradeRepository.findByTradeDateBetweenAndCompanyAndSide(from, to, company, side);
+	}
 }

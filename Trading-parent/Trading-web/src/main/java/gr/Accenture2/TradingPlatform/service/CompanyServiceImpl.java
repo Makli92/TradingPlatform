@@ -35,4 +35,9 @@ public class CompanyServiceImpl implements CompanyService {
 		
 	}
 
+
+	public Company findByNameStartingWith(String company) {
+		return companyRepository.findByNameStartingWith(company);
+	}
+
 }
