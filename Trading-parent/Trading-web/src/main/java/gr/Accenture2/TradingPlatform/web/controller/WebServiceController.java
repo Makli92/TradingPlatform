@@ -385,8 +385,6 @@ public class WebServiceController {
 	 * 
 	 * 
 	 * @param model
-	 * @param username
-	 * @param password
 	 * @return
 	 * @throws TradingPlatformAuthenticationException
 	 * @throws TradingPlatformTradeException 
