@@ -1,3 +1,10 @@
+
+.customClassLoggedInCash{
+	font-size: 20px;
+	
+}
+
+/* Spinner start css  */
 .spinner {
   width: 100px;
 }
@@ -33,3 +40,5 @@
   top: 0;
   left: 4px;
 }
+
+/* Spinner end css  */

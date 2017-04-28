@@ -661,11 +661,42 @@ var tradingPlatform = {
 										$(".customClassRequestedStockSellPrice").text($.formatNumber(data.item.item.requestedStockSellPrice, tradingPlatform.constants.numberFormatGreek) + '$');
 										$(".customClassRequestedStockSellfeesAndTaxes").text($.formatNumber(data.item.item.requestedStockSellfeesAndTaxes, tradingPlatform.constants.numberFormatGreek) + '$');
 										
-										tradingPlatform.getNewOrderData.variables.slider.slider( "option", "max", data.item.item.avaiableStockForPurchase);
+										
 										tradingPlatform.getNewOrderData.variables.maxValue = data.item.item.avaiableStockForPurchase;
 										$(".customClassAvaiableStockForPurchase").text(data.item.item.avaiableStockForPurchase);
 										
 										$(".customClassNumberOfUserPurchaseStock").text(data.item.item.numberOfUserPurchaseStock);
+										
+										
+										
+										if($("input[name=customNameSIDE]:checked").val() == tradingPlatform.constants.SIDE.BUY ){
+											
+											tradingPlatform.getNewOrderData.variables.slider.slider( "option", "max", data.item.item.avaiableStockForPurchase);
+											
+											if(parseInt($('.spinner input').val()) > data.item.item.avaiableStockForPurchase ){
+												
+												
+												$('.spinner input').val(1);
+												tradingPlatform.getNewOrderData.setSlider($('.spinner input').val());
+												
+											}
+											
+										} else if ($("input[name=customNameSIDE]:checked").val() == tradingPlatform.constants.SIDE.SELL){
+											
+											
+											
+											tradingPlatform.getNewOrderData.variables.slider.slider( "option", "max", data.item.item.numberOfUserPurchaseStock);
+											
+											if(parseInt($('.spinner input').val()) > data.item.item.numberOfUserPurchaseStock ){
+												
+												
+												
+												$('.spinner input').val(1);
+												tradingPlatform.getNewOrderData.setSlider($('.spinner input').val());
+												
+											}
+											
+										}
 
 										
 									}else{
@@ -742,7 +773,7 @@ var tradingPlatform = {
 										tradingPlatform.getNewOrderData.RequestNewOrderDataRequest();
 										
 										$(".customClassBuySuccessMessage").fadeIn(tradingPlatform.constants.fadeinDelay);
-										$(".customClassBuySuccessMessage").fadeOut(tradingPlatform.constants.fadeoutDelay * 3);
+										$(".customClassBuySuccessMessage").fadeOut(tradingPlatform.constants.fadeoutDelay);
 										
 										
 										
@@ -753,7 +784,7 @@ var tradingPlatform = {
 										
 										$('.customClassBuyErrorMessageText').text(data.item.buyStocksStatusMessage);
 										$(".customClassBuyErrorMessage").fadeIn(tradingPlatform.constants.fadeinDelay);
-										$(".customClassBuyErrorMessage").fadeOut(tradingPlatform.constants.fadeoutDelay * 3);
+										$(".customClassBuyErrorMessage").fadeOut(tradingPlatform.constants.fadeoutDelay);
 		
 										tradingPlatform.getNewOrderData.RequestNewOrderDataRequest();
 										
@@ -767,7 +798,7 @@ var tradingPlatform = {
 									
 									$('.customClassBuyErrorMessageText').text(data.item.responseStatusMessage);
 									$(".customClassBuyErrorMessage").fadeIn(tradingPlatform.constants.fadeinDelay);
-									$(".customClassBuyErrorMessage").fadeOut(tradingPlatform.constants.fadeoutDelay * 6);
+									$(".customClassBuyErrorMessage").fadeOut(tradingPlatform.constants.fadeoutDelay);
 
 								}
 								
@@ -779,7 +810,7 @@ var tradingPlatform = {
 								
 								$('.customClassBuyErrorMessageText').text(tradingPlatform.constants.generalErrorMessage);
 								$(".customClassBuyErrorMessage").fadeIn(tradingPlatform.constants.fadeinDelay);
-								$(".customClassBuyErrorMessage").fadeOut(tradingPlatform.constants.fadeoutDelay * 6);
+								$(".customClassBuyErrorMessage").fadeOut(tradingPlatform.constants.fadeoutDelay);
 
 								console.log ('buyStocksRequest error');	
 		
@@ -788,7 +819,100 @@ var tradingPlatform = {
 			}
 		
 		}, /* tradingPlatform.buyStocks - End */
+	
+		'sellStocks' : { /* tradingPlatform.buyStocks - Start */
+			'config' : {
+				
+				'loginEndpoint' : '/services/sellStocks'
+			},
 			
+			'variables' : {
+				
+			}
+			,
+			'init': function() {
+				
+				$(".customClassSellButton").click(function() {
+				
+					tradingPlatform.sellStocks.sellStocksRequest()
+					
+				});
+				
+
+			},
+
+			'sellStocksRequest': function() {
+				
+
+						// Send request
+						$.ajax({
+							type : 'POST',
+							url : tradingPlatform.sellStocks.config.loginEndpoint,
+							cache : false,
+							data : {
+								'_csrf' : $(".customClassCsrf").val(),
+								'companyId' : tradingPlatform.getNewOrderData.variables.companyId,
+								'requestedStocks' : $('.spinner input').val()
+							}
+							,
+							success : function(data) {
+								console.log('sellStocksRequest:' + JSON.stringify(data));
+								
+								if(data.responseStatus == tradingPlatform.constants.responseStatuses.OK){
+									
+									if(data.item.sellStocksStatus == tradingPlatform.constants.responseStatuses.OK){
+										
+										tradingPlatform.showUserDetails.getUserData();
+										tradingPlatform.getNewOrderData.RequestNewOrderDataRequest();
+										
+										$(".customClassSellSuccessMessage").fadeIn(tradingPlatform.constants.fadeinDelay);
+										$(".customClassSellSuccessMessage").fadeOut(tradingPlatform.constants.fadeoutDelay);
+										
+										
+										
+									}else{
+										
+										tradingPlatform.showUserDetails.getUserData();
+										tradingPlatform.getNewOrderData.RequestNewOrderDataRequest();
+										
+										$('.customClassSellErrorMessageText').text(data.item.sellStocksStatusMessage);
+										$(".customClassSellErrorMessage").fadeIn(tradingPlatform.constants.fadeinDelay);
+										$(".customClassSellErrorMessage").fadeOut(tradingPlatform.constants.fadeoutDelay);
+		
+										tradingPlatform.getNewOrderData.RequestNewOrderDataRequest();
+										
+									}
+									
+		
+								}else{
+									
+									tradingPlatform.showUserDetails.getUserData();
+									tradingPlatform.getNewOrderData.RequestNewOrderDataRequest();
+									
+									$('.customClassSellErrorMessageText').text(data.item.responseStatusMessage);
+									$(".customClassSellErrorMessage").fadeIn(tradingPlatform.constants.fadeinDelay);
+									$(".customClassSellErrorMessage").fadeOut(tradingPlatform.constants.fadeoutDelay);
+
+								}
+								
+							},
+							error : function() {
+								
+								tradingPlatform.showUserDetails.getUserData();
+								tradingPlatform.getNewOrderData.RequestNewOrderDataRequest();
+								
+								$('.customClassBuyErrorMessageText').text(tradingPlatform.constants.generalErrorMessage);
+								$(".customClassBuyErrorMessage").fadeIn(tradingPlatform.constants.fadeinDelay);
+								$(".customClassBuyErrorMessage").fadeOut(tradingPlatform.constants.fadeoutDelay);
+
+								console.log ('sellStocksRequest error');	
+		
+							}
+						});	
+			}
+		
+		}, /* tradingPlatform.buyStocks - End */
+		
 		'init': function() { /* tradingPlatform.init - start */
 
 			// Prevent submitting  form

@@ -35,6 +35,7 @@ import gr.Accenture2.TradingPlatform.web.json.response.GenericResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.GenericRestResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.NewOrderDataResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.RegistrationResponse;
+import gr.Accenture2.TradingPlatform.web.json.response.SellStocksResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.UserDataResponse;
 import gr.Accenture2.TradingPlatform.web.post.request.RegistrationForm;
 import gr.Accenture2.TradingPlatform.web.service.FormValidationService;
@@ -339,7 +340,7 @@ public class WebServiceController {
 	 * API endpoint: [host]:[port]/services/buyStocks HTTP method: GET
 	 * paramethers: none
 	 * 
-	 * E.G : http://localhost:8080/services/getNewOrderData
+	 * E.G : http://localhost:8080/services/buyStocks
 	 * 
 	 * @param model
 	 * @param username
@@ -380,6 +381,58 @@ public class WebServiceController {
 
 		response.setItem(new BuyStocksResponse(
 				BuyStocksResponse.Status.OK.getStatus(), null,null));
+
+		return response;
+	}
+	
+	
+	/**
+	 * The user data API service, for selling stocks
+	 * 
+	 * API endpoint: [host]:[port]/services/sellStocks HTTP method: GET
+	 * paramethers: none
+	 * 
+	 * E.G : http://localhost:8080/services/sellStocks
+	 * 
+	 * @param model
+	 * @param username
+	 * @param password
+	 * @return
+	 * @throws TradingPlatformAuthenticationException
+	 */
+	@RequestMapping(value = "/sellStocks", method = RequestMethod.POST)
+	// RequestMethod.POST must be used instead
+	@ResponseBody
+	public GenericRestResponse showSellStocks(Model model,
+			@RequestParam("companyId") final String companyId,
+			@RequestParam("requestedStocks") String requestedStocks)
+			throws TradingPlatformAuthenticationException {
+
+		final GenericResponse response = new GenericResponse();
+
+		Company company = companyService.findById(Long.parseLong(companyId));
+		
+		try{
+		
+			tradeService.sellStocks(company,Integer.parseInt(requestedStocks),userService.findByUsername(securityService.findLoggedInUsername()));
+			
+		}catch(TradingPlatformTradeException tpte){
+	
+
+			response.setResponseStatus(RestResponseStatus.OK.getName());
+
+			response.setItem(new SellStocksResponse(
+					SellStocksResponse.Status.NOT_OK.getStatus(), messageSource.getMessage(BundleKey.ERROR_MESSAGE.getKey()
+							+ tpte.getFault().getFaultId().getIdRefToString(), null,
+							SupportedLanguage.GREEK.getLocale()),null));
+
+			return response;
+		}
+		
+		response.setResponseStatus(RestResponseStatus.OK.getName());
+
+		response.setItem(new SellStocksResponse(
+				SellStocksResponse.Status.OK.getStatus(), null,null));
 
 		return response;
 	}
