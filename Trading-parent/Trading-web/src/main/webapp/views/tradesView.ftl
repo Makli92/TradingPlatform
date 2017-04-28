@@ -226,15 +226,16 @@
                         		Date to : <input type="text" class="datepicker form-control" id="dateTo">
                         	</li>
                         	<li>
-                        		Side :  <select "name"="side" class="form-control">
-										  <option value="ALL" selected="true">-</option> 
-										  <option value="BUY">Buy</option>
-										  <option value="SELL">Sell</option>
+                        		Side :  <select "id"="sideSelect" name="sideSelect" class="form-control">
+											<option value="ALL" selected="selected">-</option> 
+											<option value="BUY">Buy</option>
+											<option value="SELL">Sell</option>
 										</select>
                         	</li>
                         	<li>
-                        		Stock : <input type="text" name="stock" class="form-control" placeholder="Search..."><span class="input-group-btn">
-                        		<button class="btn btn-default" type="button" id="searchTradeBtn"><i class="fa fa-search" ></i></button></span>
+                        		<div class="form-group input-group">
+                        		<input type="text" id="stock" class="form-control" placeholder="Search Stock..."><span class="input-group-btn"><button class="btn btn-default" type="button" id="searchTradeBtn"><i class="fa fa-search" ></i></button></span>
+                        		</div>
                         	</li>
                         </ol>
                     </div>

@@ -406,46 +406,46 @@ var tradingPlatform = {
 				'tradeViewEndpoint' : '/services/trades'
 			},
 			'init': function() {
-					$( ".datepicker" ).datepicker({
-			  			changeMonth: true,
-			  			changeYear: true,
-			  			dateFormat: 'yy-mm-dd'
-			  		});
-			  		
-			  		$("#dateFrom").datepicker( "setDate", new Date() );
-			  		$("#dateTo").datepicker( "setDate", new Date() );
-				
-					tradingPlatform.tradeView.tradeViewRetrieve();
+				$( ".datepicker" ).datepicker({
+		  			changeMonth: true,
+		  			changeYear: true,
+		  			dateFormat: 'yy-mm-dd'
+		  		});
+		  		
+		  		$("#dateFrom").datepicker( "setDate", new Date() );
+		  		$("#dateTo").datepicker( "setDate", new Date() );
 
-					$('#searchTradeBtn').bind( "click", function( event ) {
-						tradingPlatform.tradeView.tradeViewRetrieve();
-					});
+				$('#searchTradeBtn').bind( "click", function( event ) {
+					tradingPlatform.tradeView.tradeViewRetrieve();
+				});
+				
+				tradingPlatform.tradeView.tradeViewRetrieve();
 			},
 			
 			'tradeViewRetrieve': function() {
 				// Empty table contents
 		        $('#tradeViewTable tbody > tr').remove();
-		        
-		        // Prepare request payload
+
+//		        console.log("Before ");
+		        var payload = tradingPlatform.tradeView.tradeViewPreparePayload();
+//		        console.log("After ");
 				// Send request
 				$.ajax({
 					type : 'GET',
 					url : tradingPlatform.tradeView.config.tradeViewEndpoint,
 					cache : false,
-					data : {
-						'from'	: $("#dateFrom").val(),
-						'to'	: $("#dateTo").val()
-					},
+					data : payload,
 					success : function(data) {
 						console.log('tradesView:' + JSON.stringify(data));
 						
 						if(data.responseStatus == tradingPlatform.constants.responseStatuses.OK) {
 							if(data.item.tradeViewStatus == tradingPlatform.constants.responseStatuses.OK) {
 								$.each(data.item.item, function(index, row) {
+									var date = new Date(row.tradeDate);
 							        var $tr = 
 							        	$('<tr>').append(
 								            $('<td>').text(row.company),
-								            $('<td>').text(row.tradeDate),
+								            $('<td>').text(date),
 								            $('<td>').text(row.side),
 								            $('<td>').text(row.quantity),
 								            $('<td>').text(row.orderPriceWithoutFeeTaxes),
@@ -467,7 +467,22 @@ var tradingPlatform = {
 						console.log ('TradeView error');
 					}
 				});
-			} ,
+			},
+			'tradeViewPreparePayload' : function() {
+				console.log("INSIDE ");
+				// Prepare request payload
+		        var payload = {'from': $("#dateFrom").val(), 'to': $("#dateTo").val()};
+		        
+		        if ($('#sideSelect').find(":selected").val() != "ALL") {
+		            payload.side = $("#side").val(); 
+		        }
+		        
+		        if ($("#stock").val() != "") {
+		        	payload.company = $("#stock").val();
+		        }
+		        
+		        return payload;
+			},
 			'tradeViewMessage' : function(msg) {
 //				$(".customclassForgotPassMessage").fadeIn(tradingPlatform.constants.fadeinDelay);
 //				$('.customclassForgotPassMessage').text(msg)
