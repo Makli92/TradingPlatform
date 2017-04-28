@@ -728,7 +728,7 @@ var tradingPlatform = {
 		
 								}else{
 									
-									// TODO do something with data.item.responseStatusMessage
+									// TODO do something with data.responseStatusMessage
 									
 								}
 								
@@ -814,7 +814,7 @@ var tradingPlatform = {
 									tradingPlatform.showUserDetails.getUserData();
 									tradingPlatform.getNewOrderData.RequestNewOrderDataRequest();
 									
-									$('.customClassBuyErrorMessageText').text(data.item.responseStatusMessage);
+									$('.customClassBuyErrorMessageText').text(data.responseStatusMessage);
 									$(".customClassBuyErrorMessage").fadeIn(tradingPlatform.constants.fadeinDelay);
 									$(".customClassBuyErrorMessage").fadeOut(tradingPlatform.constants.fadeoutDelay);
 
@@ -907,7 +907,7 @@ var tradingPlatform = {
 									tradingPlatform.showUserDetails.getUserData();
 									tradingPlatform.getNewOrderData.RequestNewOrderDataRequest();
 									
-									$('.customClassSellErrorMessageText').text(data.item.responseStatusMessage);
+									$('.customClassSellErrorMessageText').text(data.responseStatusMessage);
 									$(".customClassSellErrorMessage").fadeIn(tradingPlatform.constants.fadeinDelay);
 									$(".customClassSellErrorMessage").fadeOut(tradingPlatform.constants.fadeoutDelay);
 
