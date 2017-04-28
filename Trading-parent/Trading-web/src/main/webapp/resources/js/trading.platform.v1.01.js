@@ -400,6 +400,80 @@ var tradingPlatform = {
 			}
 		},
 		
+		/*Trade View*/
+		'tradeView' : {
+			'config' : {
+				'tradeViewEndpoint' : '/services/trades'
+			},
+			'init': function() {
+					$( ".datepicker" ).datepicker({
+			  			changeMonth: true,
+			  			changeYear: true,
+			  			dateFormat: 'yy-mm-dd'
+			  		});
+			  		
+			  		$("#dateFrom").datepicker( "setDate", new Date() );
+			  		$("#dateTo").datepicker( "setDate", new Date() );
+				
+					tradingPlatform.tradeView.tradeViewRetrieve();
+
+					$('#searchTradeBtn').bind( "click", function( event ) {
+						tradingPlatform.tradeView.tradeViewRetrieve();
+					});
+			},
+			
+			'tradeViewRetrieve': function() {
+				// Empty table contents
+		        $('#tradeViewTable tbody > tr').remove();
+		        
+		        // Prepare request payload
+				// Send request
+				$.ajax({
+					type : 'GET',
+					url : tradingPlatform.tradeView.config.tradeViewEndpoint,
+					cache : false,
+					data : {
+						'from'	: $("#dateFrom").val(),
+						'to'	: $("#dateTo").val()
+					},
+					success : function(data) {
+						console.log('tradesView:' + JSON.stringify(data));
+						
+						if(data.responseStatus == tradingPlatform.constants.responseStatuses.OK) {
+							if(data.item.tradeViewStatus == tradingPlatform.constants.responseStatuses.OK) {
+								$.each(data.item.item, function(index, row) {
+							        var $tr = 
+							        	$('<tr>').append(
+								            $('<td>').text(row.company),
+								            $('<td>').text(row.tradeDate),
+								            $('<td>').text(row.side),
+								            $('<td>').text(row.quantity),
+								            $('<td>').text(row.orderPriceWithoutFeeTaxes),
+								            $('<td>').text(row.unitPrice),
+								            $('<td>').text(row.status),
+								            $('<td>').text("?")
+								        );
+							        $tr.appendTo('#tradeViewTableBody');
+//							        console.log($tr.wrap('<p>').html());
+							    });
+//								tradingPlatform.forgotPass.forgotPassMessage(data.item.forgotStatusMessage);
+							}
+						} else {
+//							tradingPlatform.forgotPass.forgotPassMessage(data.responseStatusMessage);
+						}
+					},
+					error : function() {
+						tradingPlatform.tradeView.loginMessage(tradingPlatform.constants.generalErrorMessage);
+						console.log ('TradeView error');
+					}
+				});
+			} ,
+			'tradeViewMessage' : function(msg) {
+//				$(".customclassForgotPassMessage").fadeIn(tradingPlatform.constants.fadeinDelay);
+//				$('.customclassForgotPassMessage').text(msg)
+//				$(".customclassForgotPassMessage").fadeOut(tradingPlatform.constants.fadeoutDelay);
+			}
+		},
 		'init': function() {
 
 			// Prevent submitting  form

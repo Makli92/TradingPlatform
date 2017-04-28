@@ -20,7 +20,6 @@ import gr.Accenture2.TradingPlatform.core.enumeration.FaultId;
 import gr.Accenture2.TradingPlatform.core.enumeration.TradeSide;
 import gr.Accenture2.TradingPlatform.core.exception.TradingPlatformTradeException;
 import gr.Accenture2.TradingPlatform.repository.service.TradeRepository;
-import gr.Accenture2.TradingPlatform.repository.service.UserRepository;
 import gr.Accenture2.TradingPlatform.web.json.entity.TradeView;
 
 @Service
@@ -84,7 +83,7 @@ public class TradeServiceImpl implements TradeService {
 		
 		UserStockTrade userStockTrade;
 		
-		Iterator iter = stocks.iterator();
+		Iterator<Stock> iter = stocks.iterator();
 		
 		while (iter.hasNext()) {
 			
@@ -133,7 +132,7 @@ public class TradeServiceImpl implements TradeService {
 		
 		UserStockTrade userStockTrade;
 		
-		Iterator iter = userStockTrades.iterator();
+		Iterator<UserStockTrade> iter = userStockTrades.iterator();
 		while (iter.hasNext()) {
 			
 			userStockTrade = (UserStockTrade)iter.next();
@@ -168,7 +167,7 @@ public class TradeServiceImpl implements TradeService {
 
 	public List<TradeView> getTradeView(Date from, Date to, String side, String company) {
 		List<Trade> trades;
-		List<TradeView> tradeViews = new ArrayList();
+		List<TradeView> tradeViews = new ArrayList<TradeView>();
 		
 		if (company.isEmpty() && side.isEmpty()) {
 			trades = this.getTrades(from, to);
@@ -179,12 +178,12 @@ public class TradeServiceImpl implements TradeService {
 		} else {
 			trades = this.getTrades(from, to, companyService.findByNameStartingWith(company), TradeSide.valueOf(side));
 		}
-
-		for(Trade trade : trades){
+		
+		trades.forEach(trade->{
 			TradeView view = new TradeView();
 			BeanUtils.copyProperties(trade, view);
 			tradeViews.add(view);
-		}
+		});
 		
 		return tradeViews;
 	}

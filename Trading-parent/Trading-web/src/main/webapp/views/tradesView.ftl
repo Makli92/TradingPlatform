@@ -30,33 +30,35 @@
 	<!-- jQuery -->
     <script src="/resources/template/js/jquery.js"></script>
 		
-	<script src="/resources/js/trading.platform.v1.01.js"></script> 
+	<script src="/resources/js/trading.platform.v1.01.js"></script>
+	
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 	<script type="text/javascript">
-		$(document).ready(function () { //this is a closure!
-		
-		/* Morris Charts JavaScript */
+		$(document).ready(function () {
 		    $.ajax({
-		  url: "/resources/template/js/plugins/morris/raphael.min.js",
-		  dataType: "script",
-		  success: function( data, textStatus, jqxhr ) {}
+			  url: "/resources/template/js/plugins/morris/raphael.min.js",
+			  dataType: "script",
+			  success: function( data, textStatus, jqxhr ) {}
 			});
 		
-		
-			    $.ajax({
-		  url: "/resources/template/js/plugins/morris/morris.min.js",
-		  dataType: "script",
-		  success: function( data, textStatus, jqxhr ) {}
+			$.ajax({
+			  url: "/resources/template/js/plugins/morris/morris.min.js",
+			  dataType: "script",
+			  success: function( data, textStatus, jqxhr ) {}
 			});
 			
-				
-			    $.ajax({
-		  url: "/resources/template/js/plugins/morris/morris-data.js",
-		  dataType: "script",
-		  success: function( data, textStatus, jqxhr ) {}
+			$.ajax({
+			  url: "/resources/template/js/plugins/morris/morris-data.js",
+			  dataType: "script",
+			  success: function( data, textStatus, jqxhr ) {}
 			});
 			
 			tradingPlatform.showUserDetails.init();
+			tradingPlatform.tradeView.init();
 		});
 	
 	</script>
@@ -216,6 +218,25 @@
                                 <i class="fa fa-dashboard"></i> Cash: <span class="customClassLoggedInCash"><span class="customClassLoggedInCash"><i class="fa fa-spinner fa-spin" style="font-size:16px"></i></i></span>
                             </li>
                         </ol>
+                        <ol class="breadcrumb form-group input-group">
+                        	<li>
+                        		Date from : <input type="text" class="datepicker form-control" id="dateFrom">
+                        	</li>
+                        	<li>
+                        		Date to : <input type="text" class="datepicker form-control" id="dateTo">
+                        	</li>
+                        	<li>
+                        		Side :  <select "name"="side" class="form-control">
+										  <option value="ALL" selected="true">-</option> 
+										  <option value="BUY">Buy</option>
+										  <option value="SELL">Sell</option>
+										</select>
+                        	</li>
+                        	<li>
+                        		Stock : <input type="text" name="stock" class="form-control" placeholder="Search..."><span class="input-group-btn">
+                        		<button class="btn btn-default" type="button" id="searchTradeBtn"><i class="fa fa-search" ></i></button></span>
+                        	</li>
+                        </ol>
                     </div>
                 </div>
                 <!-- /.row -->
@@ -224,7 +245,7 @@
                     <div class="col-lg-6">
 
 
-                            <table class="table table-bordered table-hover">
+                            <table class="table table-bordered table-hover" id="tradeViewTable">
                                 <thead>
                                     <tr>
                                         <th>Stock</th>
@@ -237,8 +258,8 @@
                                         <th>Order Details</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
+                                <tbody id="tradeViewTableBody">
+                                    <!-- <tr>
                                         <td>Accenture</td>
                                         <td>23/04/2017 19:30 PM</td>
                                         <td>Buy</td>
@@ -248,26 +269,8 @@
                                         <td>Completed</td>
                                         <td> - </td>
 
-                                    </tr>
-                                    <tr>
-
-                                    </tr>
-                                    <tr>
-
-                                    </tr>
-                                    <tr>
-
-                                    </tr>
-                                    <tr>
-
-                                    </tr>
-                                    <tr>
-
-                                    </tr>
-                                    <tr>
-
-                                    </tr>
-                                </tbody>
+                                    </tr> -->
+								</tbody>
                             </table>
                         </div>
                     </div>
