@@ -16,6 +16,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -27,13 +28,13 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 public class ApiCompany {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 	
-	@Column(name = "name", nullable = false)
+
     private String name;
 
+	private Float price;
+	
 	public long getId() {
 		return id;
 	}
@@ -49,7 +50,15 @@ public class ApiCompany {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
 
+	public Float getPrice() {
+		return price;
+	}
+
+	public void setPrice(Float price) {
+		this.price = price;
+	}
+	
+	
 	
 }

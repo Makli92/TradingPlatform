@@ -17,16 +17,19 @@ import gr.Accenture2.TradingPlatform.repository.service.CompanyRepository;
 import gr.Accenture2.TradingPlatform.repository.service.StockRepository;
 import gr.Accenture2.TradingPlatform.service.CompanyService;
 import gr.Accenture2.TradingPlatform.service.RoleService;
+import gr.Accenture2.TradingPlatform.service.TradeService;
 import gr.Accenture2.TradingPlatform.service.UserService;
 import gr.Accenture2.TradingPlatform.web.auth.service.SecurityService;
 import gr.Accenture2.TradingPlatform.web.enumeration.RestResponseStatus;
 import gr.Accenture2.TradingPlatform.web.json.entity.ApiCompany;
+import gr.Accenture2.TradingPlatform.web.json.entity.ApiNewOrderData;
 import gr.Accenture2.TradingPlatform.web.json.entity.ApiUser;
 import gr.Accenture2.TradingPlatform.web.json.response.AuthenticationResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.CompaniesResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.ForgotResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.GenericResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.GenericRestResponse;
+import gr.Accenture2.TradingPlatform.web.json.response.NewOrderDataResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.RegistrationResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.UserDataResponse;
 import gr.Accenture2.TradingPlatform.web.post.request.RegistrationForm;
@@ -81,6 +84,9 @@ public class WebServiceController {
 
 	@Autowired
 	private FormValidationService formValidationService;
+	
+	@Autowired 
+	TradeService tradeService;
 
 	/**
 	 * The authentication API service for login.
@@ -250,6 +256,68 @@ public class WebServiceController {
 
 		response.setItem(new UserDataResponse(
 				UserDataResponse.Status.OK.getStatus(), null, apiUser));
+
+		return response;
+	}
+	
+	
+	/**
+	 * The user data API service, for login and update profile
+	 * 
+	 * API endpoint: [host]:[port]/services/getUserData HTTP method: GET
+	 * paramethers: none
+	 * 
+	 * E.G : http://localhost:8080/services/getNewOrderData
+	 * 
+	 * @param model
+	 * @param username
+	 * @param password
+	 * @return
+	 * @throws TradingPlatformAuthenticationException
+	 */
+	@RequestMapping(value = "/getNewOrderData", method = RequestMethod.GET)
+	// RequestMethod.POST must be used instead
+	@ResponseBody
+	public GenericRestResponse showGetNewOrderData(Model model)
+			throws TradingPlatformAuthenticationException {
+
+		final GenericResponse response = new GenericResponse();
+
+		ApiNewOrderData apiNewOrderData = new ApiNewOrderData();
+		
+		Company company = companyService.findById(1);
+		
+		ApiCompany tempApiCompany = new ApiCompany();
+		BeanUtils.copyProperties(company, tempApiCompany);
+
+		apiNewOrderData.setCompany(tempApiCompany);
+		
+		Integer requestedStocks = 5;
+		
+		apiNewOrderData.setOneStockPriceWithoutFeesAndTaxes(tradeService.calculatePriceWithoutFeeTaxes(company, 1));
+		apiNewOrderData.setRequestedStockPriceWithoutFeesAndTaxes(tradeService.calculatePriceWithoutFeeTaxes(company, requestedStocks));
+		
+		
+		apiNewOrderData.setOneStockBuyPrice(tradeService.calculatePurchasePriceWithFeeTaxes(company, 1));
+		apiNewOrderData.setOneStockBuyfeesAndTaxes(apiNewOrderData.getOneStockBuyPrice() - apiNewOrderData.getOneStockPriceWithoutFeesAndTaxes());
+		
+		apiNewOrderData.setRequestedStockBuyPrice(tradeService.calculatePurchasePriceWithFeeTaxes(company, requestedStocks));
+		apiNewOrderData.setRequestedStockBuyfeesAndTaxes(apiNewOrderData.getRequestedStockBuyPrice()- apiNewOrderData.getRequestedStockPriceWithoutFeesAndTaxes());
+		
+		apiNewOrderData.setOneStockSellPrice(tradeService.calculateSellPriceWithFeeTaxes(company, 1));
+		apiNewOrderData.setOneStockSellfeesAndTaxes(apiNewOrderData.getOneStockPriceWithoutFeesAndTaxes() - apiNewOrderData.getOneStockSellPrice());
+		
+		apiNewOrderData.setRequestedStockSellPrice(tradeService.calculateSellPriceWithFeeTaxes(company, requestedStocks));
+		apiNewOrderData.setRequestedStockSellfeesAndTaxes(tradeService.calculatePriceWithoutFeeTaxes(company, requestedStocks) - apiNewOrderData.getRequestedStockSellPrice());
+		
+
+		
+		tradeService.calculatePurchasePriceWithFeeTaxes(company, 1);
+
+		response.setResponseStatus(RestResponseStatus.OK.getName());
+
+		response.setItem(new NewOrderDataResponse(
+				NewOrderDataResponse.Status.OK.getStatus(), null, apiNewOrderData));
 
 		return response;
 	}

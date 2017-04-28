@@ -13,4 +13,6 @@ public interface CompanyService {
 	
 	public  Iterable<Company> gatAllCompanies();
 	
+	public Company findById(long id);
+	
 }

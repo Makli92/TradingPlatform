@@ -17,6 +17,7 @@ public class CompanyServiceImpl implements CompanyService {
 	@Autowired
 	private CompanyRepository companyRepository;
 	
+	
 	@Autowired
 	StockService stockService;
 	
@@ -36,6 +37,12 @@ public class CompanyServiceImpl implements CompanyService {
 	public Company findByName(String name){
 		
 		return companyRepository.findByName(name);
+		
+	}
+	
+	public Company findById(long id){
+		
+		return companyRepository.findById(id);
 		
 	}
 	

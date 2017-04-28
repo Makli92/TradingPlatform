@@ -15,6 +15,8 @@ public interface CompanyRepository extends PagingAndSortingRepository<Company, L
 	
 	@Query("SELECT new Company(c.id, c.name) FROM Company c" )
 	public Set<Company> findAllIdAndName();
+
+	public Company findById(long id);
 	
 	
 }

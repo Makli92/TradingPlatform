@@ -2,8 +2,8 @@ package gr.Accenture2.TradingPlatform.core.enumeration;
 
 public enum TradeSide {
 	
-	BUY( 0.5f, 0),
-	SELL(0.5f,3f);
+	BUY( 0.5f / 100 , 0),
+	SELL(0.5f  / 100 ,3f);
 	
 	public float getTaxes() {
 		return taxes;

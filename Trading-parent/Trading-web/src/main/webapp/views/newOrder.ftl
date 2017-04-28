@@ -35,6 +35,9 @@
     <script src="/resources/template/js/jquery.js"></script>
 
   	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  	
+  	<link rel="stylesheet" href="/resources/css/customCss.css">
+
   	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 	<script src="/resources/js/trading.platform.v1.01.js"></script> 
@@ -66,6 +69,40 @@
 			tradingPlatform.showUserDetails.init();
 			tradingPlatform.autoCompleteSearch.init();
 			
+			$(".customClassMarketTradeOption").bind( "click", function( event ) {
+				   
+					$(".customClassMarketTradeOption").prop('checked', true);
+				});
+				
+				
+				  var spinner = $( ".customClassPickNumberOfStocks" ).spinner();
+
+				  $('.spinner .btn:first-of-type').on('click', function() {
+				    $('.spinner input').val( parseInt($('.spinner input').val(), 10) + 1);
+				  });
+				  $('.spinner .btn:last-of-type').on('click', function() {
+				    $('.spinner input').val( parseInt($('.spinner input').val(), 10) - 1);
+				  });
+
+				 $( "#slider-range-min" ).slider({
+				      range: "min",
+				      value: 37,
+				      min: 1,
+				      max: 700,
+				      slide: function( event, ui ) {
+				      
+				      	$('.spinner input').val(ui.value );
+				      
+				        //$( "#amount" ).val( ui.value );
+				      }
+				    });
+				    
+				    $('.spinner input').val($( "#slider-range-min" ).slider( "value" ) );
+				    
+				    //$( "#amount" ).val($("#slider-range-min" ).slider( "value" ) );
+				
+
+
 		});
 	
 	</script>
@@ -216,6 +253,13 @@
                 <!-- Page Heading -->
                 <div class="row">
                     <div class="col-lg-12">
+
+                        <label class="control-label" for="stockQuickSearch">Stock quick search</label>
+                    
+                        <div class="form-group input-group">
+                               <input type="text" class="form-control customClassAutoCompleteSearchInput" placeholder="Search for a company">
+                               <span class="input-group-btn"><button class="btn btn-default" type="button"><i class="fa fa-search" ></i></button></span>
+                        </div>
                         <h1 class="page-header">
                             New Order
                         </h1>
@@ -226,11 +270,6 @@
 
                         </ol>
 
-                        <label class="control-label" for="stockQuickSearch">Stock quick search</label>
-                        <div class="form-group input-group">
-                               <input type="text" class="form-control customClassAutoCompleteSearchInput" placeholder="Search...">
-                               <span class="input-group-btn"><button class="btn btn-default" type="button"><i class="fa fa-search" ></i></button></span>
-                        </div>
                     </div>
                 </div>
                 <!-- /.row -->
@@ -239,99 +278,126 @@
                 <!-- /.row -->
 
                 <div class="row">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <div class="row">
 
-                                    <div class="col-xs-3">
-
-                                    </div>
-
-                                    <div class="col-xs-9 text-right">
-
-                                        <div>Accenture</div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <a href="accenture_stock.html">
-                                <div class="panel-footer">
-                                    <span class="pull-left">Details</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-green">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-3">
-
-                                    </div>
-                                    <div class="col-xs-9 text-right">
-
-                                        <div>Apple</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="#">
-                                <div class="panel-footer">
-                                    <span class="pull-left">Details</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-yellow">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-3">
-
-                                    </div>
-                                    <div class="col-xs-9 text-right">
-
-                                        <div>Microsoft</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="#">
-                                <div class="panel-footer">
-                                    <span class="pull-left">Details</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
                     <div class="col-lg-3 col-md-6">
                         <div class="panel panel-red">
                             <div class="panel-heading">
                                 <div class="row">
                                     <div class="col-xs-3">
-
+                                        <i class="fa fa-shopping-cart fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-
-                                        <div>Amazon</div>
+                                        <div class="huge">124</div>
+                                        <div>New Orders!</div>
                                     </div>
                                 </div>
                             </div>
                             <a href="#">
                                 <div class="panel-footer">
-                                    <span class="pull-left">Details</span>
+                                    <span class="pull-left">Buy</span>
                                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                     <div class="clearfix"></div>
                                 </div>
                             </a>
                         </div>
                     </div>
+                    
+               <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-money fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">26</div>
+                                        <div>New Comments!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#">
+                                <div class="panel-footer">
+                                    <span class="pull-left">Sell</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-5 text-center">
+                        <div class="panel panel-default">
+                            <div class="panel-body1">
+                                <div class="form-group">
+                       
+                                
+	                                <label>Place trade on:</label>
+	                                                <div class="row">
+	                                                
+															<div class="checkbox">
+															   <label>
+															   <input type="checkbox" checked="checked" class="customClassMarketTradeOption" value="">Market
+															   </label>
+
+															   <label>
+															   <input type="checkbox" disabled  value="">Limit
+															   </label>
+															</div>
+															<div class="checkbox">
+															   <label>
+															   <input type="checkbox" disabled  value="">Open
+															   </label>
+
+															   <label>
+															   <input type="checkbox" disabled  value="">Close
+															   </label>
+															</div>
+
+									                                
+									                </div>
+									                <!-- /.row -->
+	                            </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!-- /.row -->
+				
+				<div class="row">
+				
+                    <div class="col-lg-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-long-arrow-right fa-fw"></i> Donut Chart</h3>
+                            </div>
+                            <div class="panel-body">
+                               						                                
+								  <div class="input-group spinner">
+								    <input type="text" class="form-control" value="42">
+								    <div class="input-group-btn-vertical">
+								      <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
+								      <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
+								    </div>
+								  </div>
+								     
+     
+									<p>
+									  <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+									</p>
+									 
+									<div id="slider-range-min"></div>
+ 
+     
+
+                            </div>
+                        </div>
+                    </div>
+				
+				
+				
+				</div>
+				<!-- /.row -->
 
                 <div class="row">
                     <div class="col-lg-12">
