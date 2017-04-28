@@ -257,9 +257,12 @@
 
                 <!-- /.row -->
 
-                <div class="row">
 
-                    <div class="col-lg-3 col-md-6">
+
+                    
+               <div class="row">
+               
+                   <div class="col-lg-3 col-md-6">
                         <div class="panel panel-red">
                             <div class="panel-heading">
                                 <div class="row">
@@ -284,8 +287,7 @@
 
                         </div>
                     </div>
-                    
-               <div class="row">
+               
                     <div class="col-lg-3 col-md-6">
                         <div class="panel panel-primary">
                             <div class="panel-heading">
@@ -313,42 +315,50 @@
 
                         </div>
                     </div>
-              
-                    <div class="col-lg-5 text-center">
-                        <ul class="list-group">
-                            <li class="list-group-item active">Τύπος συναλλαγής</li>
-                            <li class="list-group-item">
-                            
-	                           		<div class="checkbox">
-				                            	<label>
-												<input type="checkbox" checked="checked" class="customClassMarketTradeOption" value="">Market
-												</label>
-												 <label>
-											   <input type="checkbox" disabled  value="">Limit
-											   </label>
-									</div>
-								
-							</li>
-                            <li class="list-group-item">
-	                            	<div class="checkbox">
-											   <label>
-											   <input type="checkbox" disabled  value="">Open
-											   </label>
-											   											   <label>
-											   <input type="checkbox" disabled  value="">Close
-											   </label>
-									</div>
 
-							</li>
-                        </ul>
-                    </div>
-                    
                 </div>
                 <!-- /.row -->
 				
 				<div class="row">
-				
-                    <div class="col-lg-4 customClassPickQuantityPanel"  style="display: none;">
+
+                    <div class="col-lg-3 text-center">
+                        <ul class="list-group">
+                            <li class="list-group-item active">Τύπος συναλλαγής</li>
+                            <li class="list-group-item">
+                            
+                            	<table class="table" style="margin-bottom: 0px;">
+    								<tr>
+       								 <td>
+	
+				                            	<label>
+												<input type="checkbox" checked="checked" class="customClassMarketTradeOption" value="">Market
+												</label>
+									 </td>
+									  <td>			 <label>
+											   <input type="checkbox" disabled  value="">Limit
+											   </label>
+									 </td>
+									 </tr>
+									    								<tr>
+       								 <td>
+		  
+											   <label>
+											   <input type="checkbox" disabled  value="">Open
+											   </label>
+									</td>
+									 <td>	
+									<label>
+											   <input type="checkbox" disabled  value="">Close
+											   </label>
+									 </td>
+									 </tr>
+
+  									</table>
+							</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="col-lg-3 customClassPickQuantityPanel"  style="display: none;">
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-crosshairs fa-fw"></i> Pick quantity of Stocks</h3>
@@ -376,8 +386,15 @@
                         </div>
                     </div>
                     
+				</div>   <!-- /.row -->
+				<div class="row">
+
+
+				</div>   <!-- /.row -->      
+				<div class="row">
+                    
                     <!-- /.col-sm-4 -->
-                    <div class="col-sm-4 customClassOrderDetailsBuy" style="display: none;">
+                    <div class="col-sm-6 customClassOrderDetailsBuy" style="display: none;">
                         <div class="panel panel-red">
                             <div class="panel-heading">
                                 <h3 class="panel-title">Order Details</h3>
@@ -407,7 +424,7 @@
                    
                    
                    <!-- /.col-sm-4 -->
-                    <div class="col-sm-4 customClassOrderDetailsSell" style="display: none;">
+                    <div class="col-sm-6 customClassOrderDetailsSell" style="display: none;">
                         <div class="panel panel-primary">
                             <div class="panel-heading">
                                 <h3 class="panel-title">Order Details</h3>

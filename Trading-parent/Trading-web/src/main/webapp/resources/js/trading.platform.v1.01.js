@@ -590,11 +590,29 @@ var tradingPlatform = {
 					
 						if($("input[name=customNameSIDE]:checked").val() == tradingPlatform.constants.SIDE.BUY ){
 							
-							$(".customClassOrderDetailsSell").hide();
-							
-							$(".customClassOrderDetailsBuy").show(2500);
+							if($(".customClassOrderDetailsSell").is(":visible")){
+								
+								$(".customClassOrderDetailsSell").hide();
+								$(".customClassOrderDetailsBuy").show();
+							}else{
+								$(".customClassOrderDetailsSell").hide();
+								$(".customClassOrderDetailsBuy").show(2500);
+								
+							}
 							
 						} else if ($("input[name=customNameSIDE]:checked").val() == tradingPlatform.constants.SIDE.SELL){
+							
+							if($(".customClassOrderDetailsBuy").is(":visible")){
+								
+								$(".customClassOrderDetailsBuy").hide()
+								$(".customClassOrderDetailsSell").show();
+							}else{
+								
+								$(".customClassOrderDetailsBuy").hide()
+								$(".customClassOrderDetailsSell").show(2500);
+								
+							}
+							
 							
 							$(".customClassOrderDetailsBuy").hide()
 							
