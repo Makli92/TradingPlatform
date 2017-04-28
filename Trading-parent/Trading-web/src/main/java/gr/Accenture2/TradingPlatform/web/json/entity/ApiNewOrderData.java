@@ -23,6 +23,16 @@ public class ApiNewOrderData {
 	Float oneStockPriceWithoutFeesAndTaxes;
 	Float requestedStockPriceWithoutFeesAndTaxes;
 	
+	Long avaiableStockForPurchase;
+	
+	Long numberOfUserPurchaseStock;
+	
+	public Long getAvaiableStockForPurchase() {
+		return avaiableStockForPurchase;
+	}
+	public void setAvaiableStockForPurchase(Long avaiableStockForPurchase) {
+		this.avaiableStockForPurchase = avaiableStockForPurchase;
+	}
 	public ApiCompany getCompany() {
 		return company;
 	}
@@ -92,8 +102,11 @@ public class ApiNewOrderData {
 			Float requestedStockPriceWithoutFeesAndTaxes) {
 		this.requestedStockPriceWithoutFeesAndTaxes = requestedStockPriceWithoutFeesAndTaxes;
 	}
-	
-	
-	
-	
+	public Long getNumberOfUserPurchaseStock() {
+		return numberOfUserPurchaseStock;
+	}
+	public void setNumberOfUserPurchaseStock(Long numberOfUserPurchaseStock) {
+		this.numberOfUserPurchaseStock = numberOfUserPurchaseStock;
+	}
+
 }

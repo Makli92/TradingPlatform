@@ -15,4 +15,6 @@ public interface CompanyService {
 	
 	public Company findById(long id);
 	
+	public Company getFirstCompany();
+	
 }

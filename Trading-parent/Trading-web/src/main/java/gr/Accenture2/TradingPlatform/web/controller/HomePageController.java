@@ -96,6 +96,8 @@ public class HomePageController {
 		ModelAndView mnv = new ModelAndView("newOrder");
 	
 		mnv.addObject("username", securityService.findLoggedInUsername());
+		
+		mnv.addObject("companyId", id);
 
         return mnv;
     }
@@ -108,6 +110,8 @@ public class HomePageController {
 		LOGGER.debug("This is a test debug log");
 		
 		ModelAndView mnv = new ModelAndView("newOrder");
+		
+		mnv.addObject("companyId", companyService.getFirstCompany().getId());
 	
 		mnv.addObject("username", securityService.findLoggedInUsername());
 

@@ -9,7 +9,9 @@ var tradingPlatform = {
 			},
 			'generalErrorMessage' : 'Παρουσιάστηκε τεχνικό σφάλμα',
 			'fadeoutDelay': 5000,
-			'fadeinDelay' : 'slow'
+			'fadeinDelay' : 'slow',
+			'SIDE' : { 'BUY' : 'BUY', 'SELL' : 'SELL'},
+			'numberFormatGreek' : {format:"#.###,00", locale:"el"}
 			
 		},
 		
@@ -497,6 +499,296 @@ var tradingPlatform = {
 			
 		}, /* tradingPlatform.autoCompleteSearch - end */
 		
+		'getNewOrderData' : { /* tradingPlatform.getNewOrderData - Start */
+			'config' : {
+				
+				'loginEndpoint' : '/services/getNewOrderData',
+				'loadingHTML' : ' <i class="fa fa-spinner fa-spin" style="font-size:16px"></i>'
+			},
+			
+			'variables' : {
+				
+				'spinner' : null,
+				'slider' : null,
+				'RequestNewOrderDataTimeout' : null,
+				'minValue' : 1,
+				'maxValue' : 1000,
+				'companyId' : 1
+			}
+			,
+			'init': function(companyId) {
+				
+				tradingPlatform.getNewOrderData.variables.companyId = companyId;
+				
+				
+				
+				console.log("getNewOrderData.init start");
+				
+				$('.spinner input').prop("readonly", true);
+
+				tradingPlatform.getNewOrderData.variables.slider = $( "#slider-range-min" ).slider({
+				      range: "min",
+				      value: 1,
+				      min: 1,
+				      max: 700,
+				      slide: function( event, ui ) {
+				      
+				    	  tradingPlatform.getNewOrderData.RequestNewOrderDataRequest();
+				    	  
+				      	$('.spinner input').val(ui.value );
+				      
+				        //$( "#amount" ).val( ui.value );
+				      }
+				    });
+				    
+				    $('.spinner input').val($( "#slider-range-min" ).slider( "value" ) );
+				    
+				    //$( "#amount" ).val($("#slider-range-min" ).slider( "value" ) );
+				
+				tradingPlatform.getNewOrderData.variables.spinner = $( ".customClassPickNumberOfStocks" ).spinner();
+
+				  $('.spinner .btn:first-of-type').on('click', function() {
+				    $('.spinner input').val( parseInt($('.spinner input').val(), 10) + 1);
+				    tradingPlatform.getNewOrderData.setSlider($('.spinner input').val());
+				    
+				    if(tradingPlatform.getNewOrderData.variables.maxValue < parseInt($('.spinner input').val())){
+				    	
+				    	$('.spinner input').val(tradingPlatform.getNewOrderData.variables.maxValue);
+				    }
+				    
+				    tradingPlatform.getNewOrderData.RequestNewOrderDataRequest();
+				  
+				  });
+				  $('.spinner .btn:last-of-type').on('click', function() {
+				    $('.spinner input').val( parseInt($('.spinner input').val(), 10) - 1);
+				    tradingPlatform.getNewOrderData.setSlider($('.spinner input').val());
+				    
+				    if(tradingPlatform.getNewOrderData.variables.minValue > parseInt($('.spinner input').val())){
+				    	
+				    	$('.spinner input').val(tradingPlatform.getNewOrderData.variables.minValue);
+				    }
+				    
+				    
+				    tradingPlatform.getNewOrderData.RequestNewOrderDataRequest();
+				    
+				  });
+
+				  
+					$('.customClassPickQuantity').bind( "input", function( event ) {
+					    
+						tradingPlatform.getNewOrderData.setSlider($('.spinner input').val());
+						
+						tradingPlatform.getNewOrderData.RequestNewOrderDataRequest();
+						
+					});
+
+					$(".customClassSideOption").change(function() {
+					
+						$(".customClassPickQuantityPanel").show(2500);
+
+						tradingPlatform.getNewOrderData.RequestNewOrderDataRequest();
+					
+						if($("input[name=customNameSIDE]:checked").val() == tradingPlatform.constants.SIDE.BUY ){
+							
+							$(".customClassOrderDetailsSell").hide();
+							
+							$(".customClassOrderDetailsBuy").show(2500);
+							
+						} else if ($("input[name=customNameSIDE]:checked").val() == tradingPlatform.constants.SIDE.SELL){
+							
+							$(".customClassOrderDetailsBuy").hide()
+							
+							$(".customClassOrderDetailsSell").show(2500);
+							
+						} else{
+							
+							$(".customClassOrderDetailsBuy").hide();
+							$(".customClassOrderDetailsSell").hide();
+							
+						}
+
+					});
+					
+					tradingPlatform.getNewOrderData.RequestNewOrderDataRequest();
+				
+			},
+			
+			'setSlider' : function(value) {
+				
+				tradingPlatform.getNewOrderData.variables.slider.slider( "value", parseInt(value) );
+				
+			},
+			
+			'RequestNewOrderDataRequest': function() {
+				
+				$(".customClassBackEndDataLoading").html(tradingPlatform.getNewOrderData.config.loadingHTML);
+				
+				if(tradingPlatform.getNewOrderData.variables.RequestNewOrderDataTimeout != null){
+					// Prevent the previous call function set with the setTimeout() to execute:
+					clearTimeout(tradingPlatform.getNewOrderData.variables.RequestNewOrderDataTimeout);
+					
+				}
+				
+				tradingPlatform.getNewOrderData.variables.RequestNewOrderDataTimeout = setTimeout(function(){
+				
+						// Send request
+						$.ajax({
+							type : 'POST',
+							url : tradingPlatform.getNewOrderData.config.loginEndpoint,
+							cache : false,
+							data : {
+								'_csrf' : $(".customClassCsrf").val(),
+								'companyId' : tradingPlatform.getNewOrderData.variables.companyId,
+								'requestedStocks' : $('.spinner input').val()
+							}
+							,
+							success : function(data) {
+								console.log('RequestNewOrderDataRequest:' + JSON.stringify(data));
+								
+								if(data.responseStatus == tradingPlatform.constants.responseStatuses.OK){
+									
+									if(data.item.newOrderDataStatus == tradingPlatform.constants.responseStatuses.OK){
+										
+										
+										$(".customClassNewOrderCompanyName").text(data.item.item.company.name);
+										
+										$(".customClassNewOrderBuyStockPriceWithoutTaxes").text($.formatNumber(data.item.item.oneStockPriceWithoutFeesAndTaxes, tradingPlatform.constants.numberFormatGreek) + '$');
+										$(".customClassNewOrderSellStockPriceWithoutTaxes").text($.formatNumber(data.item.item.oneStockPriceWithoutFeesAndTaxes, tradingPlatform.constants.numberFormatGreek) + '$');
+								
+										$(".customClassRequestedStockBuyPrice").text($.formatNumber(data.item.item.requestedStockBuyPrice, tradingPlatform.constants.numberFormatGreek) + '$');
+										$(".customClassRequestedStockBuyfeesAndTaxes").text($.formatNumber(data.item.item.requestedStockBuyfeesAndTaxes, tradingPlatform.constants.numberFormatGreek) + '$');
+										
+										$(".customClassRequestedStockSellPrice").text($.formatNumber(data.item.item.requestedStockSellPrice, tradingPlatform.constants.numberFormatGreek) + '$');
+										$(".customClassRequestedStockSellfeesAndTaxes").text($.formatNumber(data.item.item.requestedStockSellfeesAndTaxes, tradingPlatform.constants.numberFormatGreek) + '$');
+										
+										tradingPlatform.getNewOrderData.variables.slider.slider( "option", "max", data.item.item.avaiableStockForPurchase);
+										tradingPlatform.getNewOrderData.variables.maxValue = data.item.item.avaiableStockForPurchase;
+										$(".customClassAvaiableStockForPurchase").text(data.item.item.avaiableStockForPurchase);
+										
+										$(".customClassNumberOfUserPurchaseStock").text(data.item.item.numberOfUserPurchaseStock);
+
+										
+									}else{
+										
+										
+										// TODO do something with data.item.newOrderDataStatusMessage
+										
+		
+									}
+									
+		
+								}else{
+									
+									// TODO do something with data.item.responseStatusMessage
+									
+								}
+								
+							},
+							error : function() {
+							
+								// TODO do something with tradingPlatform.constants.generalErrorMessage
+		
+								console.log ('loginAttempt1 error');	
+		
+							}
+						});	
+				 	}, 1000);
+			} 
+		},
+		
+		'buyStocks' : { /* tradingPlatform.buyStocks - Start */
+			'config' : {
+				
+				'loginEndpoint' : '/services/buyStocks'
+			},
+			
+			'variables' : {
+				
+			}
+			,
+			'init': function() {
+				
+				$(".customClassBuyButton").click(function() {
+				
+					tradingPlatform.buyStocks.buyStocksRequest()
+					
+				});
+				
+
+			},
+
+			'buyStocksRequest': function() {
+				
+
+						// Send request
+						$.ajax({
+							type : 'POST',
+							url : tradingPlatform.buyStocks.config.loginEndpoint,
+							cache : false,
+							data : {
+								'_csrf' : $(".customClassCsrf").val(),
+								'companyId' : tradingPlatform.getNewOrderData.variables.companyId,
+								'requestedStocks' : $('.spinner input').val()
+							}
+							,
+							success : function(data) {
+								console.log('buyStocksRequest:' + JSON.stringify(data));
+								
+								if(data.responseStatus == tradingPlatform.constants.responseStatuses.OK){
+									
+									if(data.item.buyStocksStatus == tradingPlatform.constants.responseStatuses.OK){
+										
+										tradingPlatform.showUserDetails.getUserData();
+										tradingPlatform.getNewOrderData.RequestNewOrderDataRequest();
+										
+										$(".customClassBuySuccessMessage").fadeIn(tradingPlatform.constants.fadeinDelay);
+										$(".customClassBuySuccessMessage").fadeOut(tradingPlatform.constants.fadeoutDelay * 3);
+										
+										
+										
+									}else{
+										
+										tradingPlatform.showUserDetails.getUserData();
+										tradingPlatform.getNewOrderData.RequestNewOrderDataRequest();
+										
+										$('.customClassBuyErrorMessageText').text(data.item.buyStocksStatusMessage);
+										$(".customClassBuyErrorMessage").fadeIn(tradingPlatform.constants.fadeinDelay);
+										$(".customClassBuyErrorMessage").fadeOut(tradingPlatform.constants.fadeoutDelay * 3);
+		
+										tradingPlatform.getNewOrderData.RequestNewOrderDataRequest();
+										
+									}
+									
+		
+								}else{
+									
+									tradingPlatform.showUserDetails.getUserData();
+									tradingPlatform.getNewOrderData.RequestNewOrderDataRequest();
+									
+									$('.customClassBuyErrorMessageText').text(data.item.responseStatusMessage);
+									$(".customClassBuyErrorMessage").fadeIn(tradingPlatform.constants.fadeinDelay);
+									$(".customClassBuyErrorMessage").fadeOut(tradingPlatform.constants.fadeoutDelay * 6);
+
+								}
+								
+							},
+							error : function() {
+								
+								tradingPlatform.showUserDetails.getUserData();
+								tradingPlatform.getNewOrderData.RequestNewOrderDataRequest();
+								
+								$('.customClassBuyErrorMessageText').text(tradingPlatform.constants.generalErrorMessage);
+								$(".customClassBuyErrorMessage").fadeIn(tradingPlatform.constants.fadeinDelay);
+								$(".customClassBuyErrorMessage").fadeOut(tradingPlatform.constants.fadeoutDelay * 6);
+
+								console.log ('buyStocksRequest error');	
+		
+							}
+						});	
+			}
+		
+		}, /* tradingPlatform.buyStocks - End */
+			
 		'init': function() { /* tradingPlatform.init - start */
 
 			// Prevent submitting  form

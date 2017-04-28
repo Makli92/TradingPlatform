@@ -33,6 +33,9 @@
 
 	<!-- jQuery -->
     <script src="/resources/template/js/jquery.js"></script>
+    <script src="/resources/js/hashtable.js"></script>
+ 	<script src="/resources/js/jquery.numberformatter-1.2.4.jsmin.js"></script>
+
 
   	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   	
@@ -68,38 +71,14 @@
 			
 			tradingPlatform.showUserDetails.init();
 			tradingPlatform.autoCompleteSearch.init();
+			tradingPlatform.getNewOrderData.init(${companyId!"1"});
+			tradingPlatform.buyStocks.init();
 			
-			$(".customClassMarketTradeOption").bind( "click", function( event ) {
-				   
-					$(".customClassMarketTradeOption").prop('checked', true);
-				});
-				
-				
-				  var spinner = $( ".customClassPickNumberOfStocks" ).spinner();
-
-				  $('.spinner .btn:first-of-type').on('click', function() {
-				    $('.spinner input').val( parseInt($('.spinner input').val(), 10) + 1);
-				  });
-				  $('.spinner .btn:last-of-type').on('click', function() {
-				    $('.spinner input').val( parseInt($('.spinner input').val(), 10) - 1);
-				  });
-
-				 $( "#slider-range-min" ).slider({
-				      range: "min",
-				      value: 37,
-				      min: 1,
-				      max: 700,
-				      slide: function( event, ui ) {
-				      
-				      	$('.spinner input').val(ui.value );
-				      
-				        //$( "#amount" ).val( ui.value );
-				      }
-				    });
-				    
-				    $('.spinner input').val($( "#slider-range-min" ).slider( "value" ) );
-				    
-				    //$( "#amount" ).val($("#slider-range-min" ).slider( "value" ) );
+				$(".customClassMarketTradeOption").bind( "click", function( event ) {
+						   
+						$(".customClassMarketTradeOption").prop('checked', true);
+					});
+					
 				
 
 
@@ -260,8 +239,8 @@
                                <input type="text" class="form-control customClassAutoCompleteSearchInput" placeholder="Search for a company">
                                <span class="input-group-btn"><button class="btn btn-default" type="button"><i class="fa fa-search" ></i></button></span>
                         </div>
-                        <h1 class="page-header">
-                            New Order
+                        <h1 class="page-header customClassNewOrderCompanyName">
+                            <i class="fa fa-spinner fa-spin" style="font-size:16px"></i>
                         </h1>
                         <ol class="breadcrumb">
                             <li class="active">
@@ -287,18 +266,21 @@
                                         <i class="fa fa-shopping-cart fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge">124</div>
-                                        <div>New Orders!</div>
+                                        <div class="huge customClassNewOrderBuyStockPriceWithoutTaxes customClassBackEndDataLoading"><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></div>
+                                        <div>Availble stocks:&nbsp;<span class="customClassAvaiableStockForPurchase"><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></div>
                                     </div>
                                 </div>
                             </div>
-                            <a href="#">
+
                                 <div class="panel-footer">
-                                    <span class="pull-left">Buy</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                                   <label>
+	                                                  <span class="pull-left">Buy &nbsp;</span>
+	                                                  <i class="fa fa-arrow-circle-right"></i></span>
+											          <input type="radio" name="customNameSIDE" id="customIdSideOption1" class="customClassSideOption" value="BUY">
+										          </label>
                                     <div class="clearfix"></div>
                                 </div>
-                            </a>
+
                         </div>
                     </div>
                     
@@ -311,18 +293,23 @@
                                         <i class="fa fa-money fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge">26</div>
-                                        <div>New Comments!</div>
+                                        <div class="huge customClassNewOrderSellStockPriceWithoutTaxes customClassBackEndDataLoading"><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></div>
+                                        <div>My Stocks:&nbsp;<span class="customClassNumberOfUserPurchaseStock"><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></div>
                                     </div>
                                 </div>
                             </div>
-                            <a href="#">
+
                                 <div class="panel-footer">
-                                    <span class="pull-left">Sell</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                                  <label>
+	                                                  <span class="pull-left">Sell &nbsp;</span>
+	                                                  <i class="fa fa-arrow-circle-right"></i></span>
+											          <input type="radio" name="customNameSIDE" id="customIdSideOption2" class="customClassSideOption" value="SELL">
+										          </label>
+										          
+                                    <span class="pull-right">
                                     <div class="clearfix"></div>
                                 </div>
-                            </a>
+
                         </div>
                     </div>
                     
@@ -366,15 +353,15 @@
 				
 				<div class="row">
 				
-                    <div class="col-lg-4">
+                    <div class="col-lg-4 customClassPickQuantityPanel"  style="display: none;">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-long-arrow-right fa-fw"></i> Donut Chart</h3>
+                                <h3 class="panel-title"><i class="fa fa-crosshairs fa-fw"></i> Pick quantity of Stocks</h3>
                             </div>
                             <div class="panel-body">
                                						                                
 								  <div class="input-group spinner">
-								    <input type="text" class="form-control" value="42">
+								    <input type="text" class="form-control customClassPickQuantity" value="42">
 								    <div class="input-group-btn-vertical">
 								      <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
 								      <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
@@ -393,7 +380,57 @@
                             </div>
                         </div>
                     </div>
-				
+                    
+                    <!-- /.col-sm-4 -->
+                    <div class="col-sm-4 customClassOrderDetailsBuy" style="display: none;">
+                        <div class="panel panel-red">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Order Details</h3>
+                            </div>
+                            <div class="panel-body">
+		                       <ul class="list-group">
+		                            <li class="list-group-item list-group-item-danger ">Buy Stocks</li>
+		                            <li class="list-group-item">Price:<strong><span class=" customClassRequestedStockBuyPrice customClassBackEndDataLoading"><i class="fa fa-spinner fa-spin" style="font-size:16px"></i></strong></li>
+		                            <li class="list-group-item">Fees & Taxes:<span class="customClassRequestedStockBuyfeesAndTaxes customClassBackEndDataLoading"><i class="fa fa-spinner fa-spin" style="font-size:16px"></i></li>
+		                        </ul>
+                            </div>
+                            
+                           <div class="alert alert-success customClassBuySuccessMessage" style="display: none;">
+			                    <strong>Συγχρητήρια,</strong> η συναλλαγή ολοκληρώθηκε.
+			                </div>
+                            
+                            <div class="alert alert-danger customClassBuyErrorMessage" style="display: none;">
+			                    <strong>Σφάλμα:</strong> <span class="customClassBuyErrorMessageText"></span>
+			                </div>
+                            
+                            <div class="panel-body">
+			                    <button type="button" class="btn btn-danger customClassBuyButton">Buy / <span class="customClassRequestedStockBuyPrice customClassBackEndDataLoading"><i class="fa fa-spinner fa-spin" style="font-size:16px"></i></button>
+			                </div>
+                            
+                        </div>
+                    </div>
+                   
+                   
+                   <!-- /.col-sm-4 -->
+                    <div class="col-sm-4 customClassOrderDetailsSell" style="display: none;">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Order Details</h3>
+                            </div>
+                            <div class="panel-body">
+		                       <ul class="list-group">
+		                            <li class="list-group-item list-group-item-info">Sell Stocks</li>
+		                            <li class="list-group-item">Price:<strong><span class="customClassRequestedStockSellPrice customClassBackEndDataLoading"><i class="fa fa-spinner fa-spin" style="font-size:16px"></i></strong></li>
+		                            <li class="list-group-item">Fees & Taxes:<span class="customClassRequestedStockSellfeesAndTaxes customClassBackEndDataLoading"><i class="fa fa-spinner fa-spin" style="font-size:16px"></i></li>
+		                        </ul>
+                            </div>
+                                   
+                            <div class="panel-body">
+			                    <button type="button" class="btn btn-info customClassSellButton">Sell / <span class="customClassRequestedStockSellPrice customClassBackEndDataLoading"><i class="fa fa-spinner fa-spin" style="font-size:16px"></i></button>
+			                </div>
+                            
+                        </div>
+                    </div>
 				
 				
 				</div>

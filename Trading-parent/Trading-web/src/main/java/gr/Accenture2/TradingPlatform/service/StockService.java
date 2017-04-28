@@ -13,5 +13,8 @@ public interface StockService  {
 	
 	public Set<Stock> findUnpurchasedStocks(Company company, Integer numberOfStocks);
 	
+	/*
 	public Set<Stock> findPurchasedStocks(Company company, Integer numberOfStocks );
+	*/
+	public Long getAvaiableStockForPurchase(Company company);
 }

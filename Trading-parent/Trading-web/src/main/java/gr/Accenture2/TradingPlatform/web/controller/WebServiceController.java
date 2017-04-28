@@ -13,18 +13,22 @@ import gr.Accenture2.TradingPlatform.core.enumeration.BundleKey;
 import gr.Accenture2.TradingPlatform.core.enumeration.StringEnumeration;
 import gr.Accenture2.TradingPlatform.core.enumeration.SupportedLanguage;
 import gr.Accenture2.TradingPlatform.core.exception.TradingPlatformAuthenticationException;
+import gr.Accenture2.TradingPlatform.core.exception.TradingPlatformTradeException;
 import gr.Accenture2.TradingPlatform.repository.service.CompanyRepository;
 import gr.Accenture2.TradingPlatform.repository.service.StockRepository;
 import gr.Accenture2.TradingPlatform.service.CompanyService;
 import gr.Accenture2.TradingPlatform.service.RoleService;
+import gr.Accenture2.TradingPlatform.service.StockService;
 import gr.Accenture2.TradingPlatform.service.TradeService;
 import gr.Accenture2.TradingPlatform.service.UserService;
+import gr.Accenture2.TradingPlatform.service.UserStockTradeService;
 import gr.Accenture2.TradingPlatform.web.auth.service.SecurityService;
 import gr.Accenture2.TradingPlatform.web.enumeration.RestResponseStatus;
 import gr.Accenture2.TradingPlatform.web.json.entity.ApiCompany;
 import gr.Accenture2.TradingPlatform.web.json.entity.ApiNewOrderData;
 import gr.Accenture2.TradingPlatform.web.json.entity.ApiUser;
 import gr.Accenture2.TradingPlatform.web.json.response.AuthenticationResponse;
+import gr.Accenture2.TradingPlatform.web.json.response.BuyStocksResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.CompaniesResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.ForgotResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.GenericResponse;
@@ -77,7 +81,7 @@ public class WebServiceController {
 	private CompanyService companyService;
 	
 	@Autowired
-	private StockRepository stockRepository;
+	private StockService stockService;
 	
 	@Autowired
 	private MessageSource messageSource;
@@ -87,6 +91,9 @@ public class WebServiceController {
 	
 	@Autowired 
 	TradeService tradeService;
+	
+	@Autowired
+	UserStockTradeService userStockTradeService;
 
 	/**
 	 * The authentication API service for login.
@@ -262,9 +269,9 @@ public class WebServiceController {
 	
 	
 	/**
-	 * The user data API service, for login and update profile
+	 * The user data API service, for updating Stock prices
 	 * 
-	 * API endpoint: [host]:[port]/services/getUserData HTTP method: GET
+	 * API endpoint: [host]:[port]/services/getNewOrderData HTTP method: GET
 	 * paramethers: none
 	 * 
 	 * E.G : http://localhost:8080/services/getNewOrderData
@@ -275,42 +282,46 @@ public class WebServiceController {
 	 * @return
 	 * @throws TradingPlatformAuthenticationException
 	 */
-	@RequestMapping(value = "/getNewOrderData", method = RequestMethod.GET)
+	@RequestMapping(value = "/getNewOrderData", method = RequestMethod.POST)
 	// RequestMethod.POST must be used instead
 	@ResponseBody
-	public GenericRestResponse showGetNewOrderData(Model model)
+	public GenericRestResponse showGetNewOrderData(Model model,
+			@RequestParam("companyId") final String companyId,
+			@RequestParam("requestedStocks") String requestedStocks)
 			throws TradingPlatformAuthenticationException {
 
 		final GenericResponse response = new GenericResponse();
 
 		ApiNewOrderData apiNewOrderData = new ApiNewOrderData();
 		
-		Company company = companyService.findById(1);
+		Company company = companyService.findById(Long.parseLong(companyId));
 		
 		ApiCompany tempApiCompany = new ApiCompany();
 		BeanUtils.copyProperties(company, tempApiCompany);
 
 		apiNewOrderData.setCompany(tempApiCompany);
 		
-		Integer requestedStocks = 5;
+		Integer requestedStocksInteger = Integer.parseInt(requestedStocks);;
 		
 		apiNewOrderData.setOneStockPriceWithoutFeesAndTaxes(tradeService.calculatePriceWithoutFeeTaxes(company, 1));
-		apiNewOrderData.setRequestedStockPriceWithoutFeesAndTaxes(tradeService.calculatePriceWithoutFeeTaxes(company, requestedStocks));
+		apiNewOrderData.setRequestedStockPriceWithoutFeesAndTaxes(tradeService.calculatePriceWithoutFeeTaxes(company, requestedStocksInteger));
 		
 		
 		apiNewOrderData.setOneStockBuyPrice(tradeService.calculatePurchasePriceWithFeeTaxes(company, 1));
 		apiNewOrderData.setOneStockBuyfeesAndTaxes(apiNewOrderData.getOneStockBuyPrice() - apiNewOrderData.getOneStockPriceWithoutFeesAndTaxes());
 		
-		apiNewOrderData.setRequestedStockBuyPrice(tradeService.calculatePurchasePriceWithFeeTaxes(company, requestedStocks));
+		apiNewOrderData.setRequestedStockBuyPrice(tradeService.calculatePurchasePriceWithFeeTaxes(company, requestedStocksInteger));
 		apiNewOrderData.setRequestedStockBuyfeesAndTaxes(apiNewOrderData.getRequestedStockBuyPrice()- apiNewOrderData.getRequestedStockPriceWithoutFeesAndTaxes());
 		
 		apiNewOrderData.setOneStockSellPrice(tradeService.calculateSellPriceWithFeeTaxes(company, 1));
 		apiNewOrderData.setOneStockSellfeesAndTaxes(apiNewOrderData.getOneStockPriceWithoutFeesAndTaxes() - apiNewOrderData.getOneStockSellPrice());
 		
-		apiNewOrderData.setRequestedStockSellPrice(tradeService.calculateSellPriceWithFeeTaxes(company, requestedStocks));
-		apiNewOrderData.setRequestedStockSellfeesAndTaxes(tradeService.calculatePriceWithoutFeeTaxes(company, requestedStocks) - apiNewOrderData.getRequestedStockSellPrice());
+		apiNewOrderData.setRequestedStockSellPrice(tradeService.calculateSellPriceWithFeeTaxes(company, requestedStocksInteger));
+		apiNewOrderData.setRequestedStockSellfeesAndTaxes(tradeService.calculatePriceWithoutFeeTaxes(company, requestedStocksInteger) - apiNewOrderData.getRequestedStockSellPrice());
+	
+		apiNewOrderData.setAvaiableStockForPurchase(stockService.getAvaiableStockForPurchase(company));
 		
-
+		apiNewOrderData.setNumberOfUserPurchaseStock(userStockTradeService.getNumberOfUserStockTrades(company, userService.findByUsername(securityService.findLoggedInUsername())));
 		
 		tradeService.calculatePurchasePriceWithFeeTaxes(company, 1);
 
@@ -322,6 +333,58 @@ public class WebServiceController {
 		return response;
 	}
 
+	/**
+	 * The user data API service, for buying stocks
+	 * 
+	 * API endpoint: [host]:[port]/services/buyStocks HTTP method: GET
+	 * paramethers: none
+	 * 
+	 * E.G : http://localhost:8080/services/getNewOrderData
+	 * 
+	 * @param model
+	 * @param username
+	 * @param password
+	 * @return
+	 * @throws TradingPlatformAuthenticationException
+	 */
+	@RequestMapping(value = "/buyStocks", method = RequestMethod.POST)
+	// RequestMethod.POST must be used instead
+	@ResponseBody
+	public GenericRestResponse showBuyStocks(Model model,
+			@RequestParam("companyId") final String companyId,
+			@RequestParam("requestedStocks") String requestedStocks)
+			throws TradingPlatformAuthenticationException {
+
+		final GenericResponse response = new GenericResponse();
+
+		Company company = companyService.findById(Long.parseLong(companyId));
+		
+		try{
+		
+			tradeService.purchaseStocks(company, Integer.parseInt(requestedStocks), userService.findByUsername(securityService.findLoggedInUsername()));
+		
+		}catch(TradingPlatformTradeException tpte){
+	
+
+			response.setResponseStatus(RestResponseStatus.OK.getName());
+
+			response.setItem(new BuyStocksResponse(
+					BuyStocksResponse.Status.NOT_OK.getStatus(), messageSource.getMessage(BundleKey.ERROR_MESSAGE.getKey()
+							+ tpte.getFault().getFaultId().getIdRefToString(), null,
+							SupportedLanguage.GREEK.getLocale()),null));
+
+			return response;
+		}
+		
+		response.setResponseStatus(RestResponseStatus.OK.getName());
+
+		response.setItem(new BuyStocksResponse(
+				BuyStocksResponse.Status.OK.getStatus(), null,null));
+
+		return response;
+	}
+	
+	
 	/**
 	 * The user data API service, for search autocomplete
 	 * 

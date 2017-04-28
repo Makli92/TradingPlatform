@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import gr.Accenture2.TradingPlatform.core.entity.Company;
@@ -53,5 +54,20 @@ public class CompanyServiceImpl implements CompanyService {
 		
 	}
 	
+	
+	public Company getFirstCompany(){
+		
+		PageRequest pageRequest = new PageRequest(0, 1);
+		
+		Iterator it = companyRepository.getFirstCompany(pageRequest).iterator();
+		
+		while(it.hasNext()){
+			
+			return ((Company)it.next());
+			
+		}
+		
+		return null;
+	}
 
 }
