@@ -31,6 +31,51 @@ public class TradeServiceImpl implements TradeService {
 	@Autowired
 	private TradeRepository tradeRepository;
 	
+	/**
+	 * Price * Number of stocks
+	 * 
+	 * @param company
+	 * @param numberOfStocks
+	 * @return
+	 */
+	public Float calculatePriceWithoutFeeTaxes(Company company, int numberOfStocks){
+		
+		return (company.getPrice() * numberOfStocks);
+	}
+	
+	
+	/**
+	 * When Buying apply 0.5% taxes + 0 euro fees
+	 * 
+	 * @param company
+	 * @param numberOfStocks
+	 * @return
+	 */
+	public Float calculatePurchasePriceWithFeeTaxes(Company company, int numberOfStocks){
+		
+			return calculatePriceWithoutFeeTaxes(company, numberOfStocks)
+					+ (calculatePriceWithoutFeeTaxes(company, numberOfStocks) * TradeSide.BUY.getTaxes())
+					+ TradeSide.BUY.getFees() ;
+
+	}
+	
+	/**
+	 * When Selling apply 0.5% taxes + 3 euro fees
+	 * 
+	 * @param company
+	 * @param numberOfStocks
+	 * @return
+	 */
+	public Float calculateSellPriceWithFeeTaxes(Company company, int numberOfStocks){
+		
+			return (calculatePriceWithoutFeeTaxes(company, numberOfStocks)
+					- (calculatePriceWithoutFeeTaxes(company, numberOfStocks) * TradeSide.SELL.getTaxes()))
+					- TradeSide.SELL.getFees();
+
+	}
+	
+	
+	
 	
 	public boolean purchaseStocks(Company company, Integer numberOfStocks, User user) throws TradingPlatformTradeException{
 		
@@ -52,9 +97,8 @@ public class TradeServiceImpl implements TradeService {
 		trade.setSide(TradeSide.BUY);
 		trade.setUnit_price(company.getPrice());
 		trade.setQuantity(stocks.size());
-		trade.setOrderPriceWithoutFeeTaxes(company.getPrice() * stocks.size());
-		trade.setOrderPriceWithFeeTaxes(trade.getOrderPriceWithoutFeeTaxes() + (trade.getOrderPriceWithoutFeeTaxes() * TradeSide.BUY.getTaxes()));
-		trade.setOrderPriceWithFeeTaxes(trade.getOrderPriceWithFeeTaxes() + TradeSide.BUY.getFees());
+		trade.setOrderPriceWithoutFeeTaxes(calculatePriceWithoutFeeTaxes(company,stocks.size()));
+		trade.setOrderPriceWithFeeTaxes(calculatePurchasePriceWithFeeTaxes(company,stocks.size()));
 
 		if(user.getCashBalance() < trade.getOrderPriceWithFeeTaxes()){
 			
@@ -66,8 +110,7 @@ public class TradeServiceImpl implements TradeService {
 			
 		}
 		
-		
-		
+	
 		user.setCashBalance(new Float(user.getCashBalance().floatValue()- trade.getOrderPriceWithFeeTaxes()));
 		
 		
@@ -113,9 +156,8 @@ public class TradeServiceImpl implements TradeService {
 		trade.setSide(TradeSide.SELL);
 		trade.setUnit_price(company.getPrice());
 		trade.setQuantity(userStockTrades.size());
-		trade.setOrderPriceWithoutFeeTaxes(company.getPrice() * userStockTrades.size());
-		trade.setOrderPriceWithFeeTaxes(trade.getOrderPriceWithoutFeeTaxes() - (trade.getOrderPriceWithoutFeeTaxes() * TradeSide.SELL.getTaxes()));
-		trade.setOrderPriceWithFeeTaxes(trade.getOrderPriceWithFeeTaxes() - TradeSide.SELL.getFees());
+		trade.setOrderPriceWithoutFeeTaxes(calculatePriceWithoutFeeTaxes(company,userStockTrades.size()));
+		trade.setOrderPriceWithFeeTaxes(calculateSellPriceWithFeeTaxes(company,userStockTrades.size()));
 		user.setCashBalance(new Float(user.getCashBalance() + trade.getOrderPriceWithFeeTaxes()));
 		
 		

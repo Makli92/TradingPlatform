@@ -36,5 +36,12 @@ public class UserStockTradeServiceImpl implements UserStockTradeService {
 		
 		return targetCollection;
 	}
+	
+	
+	public Long getNumberOfUserStockTrades(Company company, User user){
+		
+		return userStockTradeRepository.getNumberOfUserStockTrades(company, user);
+
+	}
 
 }

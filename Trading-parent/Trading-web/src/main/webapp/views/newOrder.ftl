@@ -33,6 +33,15 @@
 
 	<!-- jQuery -->
     <script src="/resources/template/js/jquery.js"></script>
+    <script src="/resources/js/hashtable.js"></script>
+ 	<script src="/resources/js/jquery.numberformatter-1.2.4.jsmin.js"></script>
+
+
+  	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  	
+  	<link rel="stylesheet" href="/resources/css/customCss.css">
+
+  	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 	<script src="/resources/js/trading.platform.v1.01.js"></script> 
 
@@ -61,7 +70,19 @@
 			});
 			
 			tradingPlatform.showUserDetails.init();
+			tradingPlatform.autoCompleteSearch.init();
+			tradingPlatform.getNewOrderData.init(${companyId!"1"});
+			tradingPlatform.buyStocks.init();
+			tradingPlatform.sellStocks.init();
 			
+				$(".customClassMarketTradeOption").bind( "click", function( event ) {
+						   
+						$(".customClassMarketTradeOption").prop('checked', true);
+					});
+					
+				
+
+
 		});
 	
 	</script>
@@ -212,8 +233,15 @@
                 <!-- Page Heading -->
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">
-                            New Order
+
+                        <label class="control-label" for="stockQuickSearch">Stock quick search</label>
+                    
+                        <div class="form-group input-group">
+                               <input type="text" class="form-control customClassAutoCompleteSearchInput" placeholder="Search for a company">
+                               <span class="input-group-btn"><button class="btn btn-default" type="button"><i class="fa fa-search" ></i></button></span>
+                        </div>
+                        <h1 class="page-header customClassNewOrderCompanyName">
+                            <i class="fa fa-spinner fa-spin" style="font-size:16px"></i>
                         </h1>
                         <ol class="breadcrumb">
                             <li class="active">
@@ -222,11 +250,6 @@
 
                         </ol>
 
-                        <label class="control-label" for="stockQuickSearch">Stock quick search</label>
-                        <div class="form-group input-group">
-                               <input type="text" class="form-control" placeholder="Search...">
-                               <span class="input-group-btn"><button class="btn btn-default" type="button"><i class="fa fa-search" ></i></button></span>
-                        </div>
                     </div>
                 </div>
                 <!-- /.row -->
@@ -234,251 +257,208 @@
 
                 <!-- /.row -->
 
-                <div class="row">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <div class="row">
 
-                                    <div class="col-xs-3">
 
-                                    </div>
-
-                                    <div class="col-xs-9 text-right">
-
-                                        <div>Accenture</div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <a href="accenture_stock.html">
-                                <div class="panel-footer">
-                                    <span class="pull-left">Details</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-green">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-3">
-
-                                    </div>
-                                    <div class="col-xs-9 text-right">
-
-                                        <div>Apple</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="#">
-                                <div class="panel-footer">
-                                    <span class="pull-left">Details</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-yellow">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-3">
-
-                                    </div>
-                                    <div class="col-xs-9 text-right">
-
-                                        <div>Microsoft</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="#">
-                                <div class="panel-footer">
-                                    <span class="pull-left">Details</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
+                    
+               <div class="row">
+               
+                   <div class="col-lg-3 col-md-6">
                         <div class="panel panel-red">
                             <div class="panel-heading">
                                 <div class="row">
                                     <div class="col-xs-3">
-
+                                        <i class="fa fa-shopping-cart fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-
-                                        <div>Amazon</div>
+                                        <div class="huge customClassNewOrderBuyStockPriceWithoutTaxes customClassBackEndDataLoading"><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></div>
+                                        <div>Availble stocks:&nbsp;<span class="customClassAvaiableStockForPurchase"><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></div>
                                     </div>
                                 </div>
                             </div>
-                            <a href="#">
+
                                 <div class="panel-footer">
-                                    <span class="pull-left">Details</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                                   <label>
+	                                                  <span class="pull-left">Buy &nbsp;</span>
+	                                                  <i class="fa fa-arrow-circle-right"></i></span>
+											          <input type="radio" name="customNameSIDE" id="customIdSideOption1" class="customClassSideOption" value="BUY">
+										          </label>
                                     <div class="clearfix"></div>
                                 </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.row -->
 
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Area Chart</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div id="morris-area-chart"></div>
-                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- /.row -->
+               
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-money fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge customClassNewOrderSellStockPriceWithoutTaxes customClassBackEndDataLoading"><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></div>
+                                        <div>My Stocks:&nbsp;<span class="customClassNumberOfUserPurchaseStock"><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></div>
+                                    </div>
+                                </div>
+                            </div>
 
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-long-arrow-right fa-fw"></i> Donut Chart</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div id="morris-donut-chart"></div>
-                                <div class="text-right">
-                                    <a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
+                                <div class="panel-footer">
+                                                  <label>
+	                                                  <span class="pull-left">Sell &nbsp;</span>
+	                                                  <i class="fa fa-arrow-circle-right"></i></span>
+											          <input type="radio" name="customNameSIDE" id="customIdSideOption2" class="customClassSideOption" value="SELL">
+										          </label>
+										          
+                                    <span class="pull-right">
+                                    <div class="clearfix"></div>
                                 </div>
-                            </div>
+
                         </div>
                     </div>
-                    <div class="col-lg-4">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Tasks Panel</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div class="list-group">
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge">just now</span>
-                                        <i class="fa fa-fw fa-calendar"></i> Calendar updated
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge">4 minutes ago</span>
-                                        <i class="fa fa-fw fa-comment"></i> Commented on a post
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge">23 minutes ago</span>
-                                        <i class="fa fa-fw fa-truck"></i> Order 392 shipped
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge">46 minutes ago</span>
-                                        <i class="fa fa-fw fa-money"></i> Invoice 653 has been paid
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge">1 hour ago</span>
-                                        <i class="fa fa-fw fa-user"></i> A new user has been added
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge">2 hours ago</span>
-                                        <i class="fa fa-fw fa-check"></i> Completed task: "pick up dry cleaning"
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge">yesterday</span>
-                                        <i class="fa fa-fw fa-globe"></i> Saved the world
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge">two days ago</span>
-                                        <i class="fa fa-fw fa-check"></i> Completed task: "fix error on sales page"
-                                    </a>
-                                </div>
-                                <div class="text-right">
-                                    <a href="#">View All Activity <i class="fa fa-arrow-circle-right"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-money fa-fw"></i> Transactions Panel</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered table-hover table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>Order #</th>
-                                                <th>Order Date</th>
-                                                <th>Order Time</th>
-                                                <th>Amount (USD)</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>3326</td>
-                                                <td>10/21/2013</td>
-                                                <td>3:29 PM</td>
-                                                <td>$321.33</td>
-                                            </tr>
-                                            <tr>
-                                                <td>3325</td>
-                                                <td>10/21/2013</td>
-                                                <td>3:20 PM</td>
-                                                <td>$234.34</td>
-                                            </tr>
-                                            <tr>
-                                                <td>3324</td>
-                                                <td>10/21/2013</td>
-                                                <td>3:03 PM</td>
-                                                <td>$724.17</td>
-                                            </tr>
-                                            <tr>
-                                                <td>3323</td>
-                                                <td>10/21/2013</td>
-                                                <td>3:00 PM</td>
-                                                <td>$23.71</td>
-                                            </tr>
-                                            <tr>
-                                                <td>3322</td>
-                                                <td>10/21/2013</td>
-                                                <td>2:49 PM</td>
-                                                <td>$8345.23</td>
-                                            </tr>
-                                            <tr>
-                                                <td>3321</td>
-                                                <td>10/21/2013</td>
-                                                <td>2:23 PM</td>
-                                                <td>$245.12</td>
-                                            </tr>
-                                            <tr>
-                                                <td>3320</td>
-                                                <td>10/21/2013</td>
-                                                <td>2:15 PM</td>
-                                                <td>$5663.54</td>
-                                            </tr>
-                                            <tr>
-                                                <td>3319</td>
-                                                <td>10/21/2013</td>
-                                                <td>2:13 PM</td>
-                                                <td>$943.45</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="text-right">
-                                    <a href="#">View All Transactions <i class="fa fa-arrow-circle-right"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
                 <!-- /.row -->
+				
+				<div class="row">
+
+                    <div class="col-lg-3 text-center">
+                        <ul class="list-group">
+                            <li class="list-group-item active">Τύπος συναλλαγής</li>
+                            <li class="list-group-item">
+                            
+                            	<table class="table" style="margin-bottom: 0px;">
+    								<tr>
+       								 <td>
+	
+				                            	<label>
+												<input type="checkbox" checked="checked" class="customClassMarketTradeOption" value="">Market
+												</label>
+									 </td>
+									  <td>			 <label>
+											   <input type="checkbox" disabled  value="">Limit
+											   </label>
+									 </td>
+									 </tr>
+									    								<tr>
+       								 <td>
+		  
+											   <label>
+											   <input type="checkbox" disabled  value="">Open
+											   </label>
+									</td>
+									 <td>	
+									<label>
+											   <input type="checkbox" disabled  value="">Close
+											   </label>
+									 </td>
+									 </tr>
+
+  									</table>
+							</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="col-lg-3 customClassPickQuantityPanel"  style="display: none;">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-crosshairs fa-fw"></i> Pick quantity of Stocks</h3>
+                            </div>
+                            <div class="panel-body">
+                               						                                
+								  <div class="input-group spinner">
+								    <input type="text" class="form-control customClassPickQuantity" value="42">
+								    <div class="input-group-btn-vertical">
+								      <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
+								      <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
+								    </div>
+								  </div>
+								     
+     
+									<p>
+									  <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+									</p>
+									 
+									<div id="slider-range-min"></div>
+ 
+     
+
+                            </div>
+                        </div>
+                    </div>
+                    
+				</div>   <!-- /.row -->
+				<div class="row">
+
+
+				</div>   <!-- /.row -->      
+				<div class="row">
+                    
+                    <!-- /.col-sm-4 -->
+                    <div class="col-sm-6 customClassOrderDetailsBuy" style="display: none;">
+                        <div class="panel panel-red">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Order Details</h3>
+                            </div>
+                            <div class="panel-body">
+		                       <ul class="list-group">
+		                            <li class="list-group-item list-group-item-danger ">Buy Stocks</li>
+		                            <li class="list-group-item">Price:<strong><span class=" customClassRequestedStockBuyPrice customClassBackEndDataLoading"><i class="fa fa-spinner fa-spin" style="font-size:16px"></i></strong></li>
+		                            <li class="list-group-item">Fees & Taxes:<span class="customClassRequestedStockBuyfeesAndTaxes customClassBackEndDataLoading"><i class="fa fa-spinner fa-spin" style="font-size:16px"></i></li>
+		                        </ul>
+                            </div>
+                            
+                           <div class="alert alert-success customClassBuySuccessMessage" style="display: none;">
+			                    <strong>Συγχρητήρια,</strong> η συναλλαγή ολοκληρώθηκε.
+			                </div>
+                            
+                            <div class="alert alert-danger customClassBuyErrorMessage" style="display: none;">
+			                    <strong>Σφάλμα:</strong> <span class="customClassBuyErrorMessageText"></span>
+			                </div>
+                            
+                            <div class="panel-body">
+			                    <button type="button" class="btn btn-danger customClassBuyButton">Buy / <span class="customClassRequestedStockBuyPrice customClassBackEndDataLoading"><i class="fa fa-spinner fa-spin" style="font-size:16px"></i></button>
+			                </div>
+                            
+                        </div>
+                    </div>
+                   
+                   
+                   <!-- /.col-sm-4 -->
+                    <div class="col-sm-6 customClassOrderDetailsSell" style="display: none;">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Order Details</h3>
+                            </div>
+                            <div class="panel-body">
+		                       <ul class="list-group">
+		                            <li class="list-group-item list-group-item-info">Sell Stocks</li>
+		                            <li class="list-group-item">Price:<strong><span class="customClassRequestedStockSellPrice customClassBackEndDataLoading"><i class="fa fa-spinner fa-spin" style="font-size:16px"></i></strong></li>
+		                            <li class="list-group-item">Fees & Taxes:<span class="customClassRequestedStockSellfeesAndTaxes customClassBackEndDataLoading"><i class="fa fa-spinner fa-spin" style="font-size:16px"></i></li>
+		                        </ul>
+                            </div>
+                                   
+                           <div class="alert alert-success customClassSellSuccessMessage" style="display: none;">
+			                    <strong>Συγχρητήρια,</strong> η συναλλαγή ολοκληρώθηκε.
+			                </div>
+                            
+                            <div class="alert alert-danger customClassSellErrorMessage" style="display: none;">
+			                    <strong>Σφάλμα:</strong> <span class="customClassSellErrorMessageText"></span>
+			                </div>     
+                                   
+                                   
+                            <div class="panel-body">
+			                    <button type="button" class="btn btn-info customClassSellButton">Sell / <span class="customClassRequestedStockSellPrice customClassBackEndDataLoading"><i class="fa fa-spinner fa-spin" style="font-size:16px"></i></button>
+			                </div>
+                            
+                        </div>
+                    </div>
+				
+				
+				</div>
+				
+				
+				<!--  continue here -->
+								
 
             </div>
             <!-- /.container-fluid -->
