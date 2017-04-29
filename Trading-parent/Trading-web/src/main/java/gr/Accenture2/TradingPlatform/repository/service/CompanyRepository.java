@@ -29,6 +29,6 @@ public interface CompanyRepository extends PagingAndSortingRepository<Company, L
 	
 	public Company findByNameStartingWith(String name);
 	
-	@Query("SELECT c FROM Company c WHERE c IN (SELECT s.stock.company FROM UserStockTrade s WHERE s.user = :user1 AND s.stock.company = :company1 AND active = true)" )
-	public Set<Company>getPortofolioCompanies(@Param(value = "company1") Company company, @Param(value = "user1")  User user);
+	@Query("SELECT c FROM Company c WHERE c IN (SELECT s.stock.company FROM UserStockTrade s WHERE s.user = :user1 AND active = true)" )
+	public Set<Company>getPortfolioCompanies(@Param(value = "user1")  User user);
 }

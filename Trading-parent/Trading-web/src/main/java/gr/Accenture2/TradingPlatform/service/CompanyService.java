@@ -20,7 +20,7 @@ public interface CompanyService {
 	
 	public Company getFirstCompany();
 	
-	public Set<Company>getPortofolioCompanies( Company company, User user);
+	public Set<Company>getPortfolioCompanies(User user);
 	
 	
 	

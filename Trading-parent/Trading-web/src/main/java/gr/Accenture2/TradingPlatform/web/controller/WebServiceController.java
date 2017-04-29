@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Iterator;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,6 +23,7 @@ import gr.Accenture2.TradingPlatform.core.exception.TradingPlatformTradeExceptio
 import gr.Accenture2.TradingPlatform.repository.service.CompanyRepository;
 import gr.Accenture2.TradingPlatform.repository.service.StockRepository;
 import gr.Accenture2.TradingPlatform.service.CompanyService;
+import gr.Accenture2.TradingPlatform.service.PortfolioService;
 import gr.Accenture2.TradingPlatform.service.RoleService;
 import gr.Accenture2.TradingPlatform.service.StockService;
 import gr.Accenture2.TradingPlatform.service.TradeService;
@@ -32,6 +34,7 @@ import gr.Accenture2.TradingPlatform.web.enumeration.RestResponseStatus;
 import gr.Accenture2.TradingPlatform.web.json.entity.ApiCompany;
 import gr.Accenture2.TradingPlatform.web.json.entity.ApiNewOrderData;
 import gr.Accenture2.TradingPlatform.web.json.entity.ApiUser;
+import gr.Accenture2.TradingPlatform.web.json.entity.Portfolio;
 import gr.Accenture2.TradingPlatform.web.json.entity.TradeView;
 import gr.Accenture2.TradingPlatform.web.json.response.AuthenticationResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.BuyStocksResponse;
@@ -40,6 +43,7 @@ import gr.Accenture2.TradingPlatform.web.json.response.ForgotResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.GenericResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.GenericRestResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.NewOrderDataResponse;
+import gr.Accenture2.TradingPlatform.web.json.response.PortfolioResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.RegistrationResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.SellStocksResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.UserDataResponse;
@@ -102,6 +106,9 @@ public class WebServiceController {
 	
 	@Autowired
 	UserStockTradeService userStockTradeService;
+
+	@Autowired
+	PortfolioService portfolioService;
 
 	/**
 	 * The authentication API service for login.
@@ -639,4 +646,37 @@ public class WebServiceController {
 		return response;
 	}
 	
+
+
+
+	/**
+	 * The portfolio view data API service
+	 * 
+	 * API endpoint: [host]:[port]/services/portfolio HTTP method: GET
+	 * paramethers: company
+	 * 
+	 * 
+	 * @param model
+	 * @return
+	 * @throws TradingPlatformAuthenticationException
+	 * @throws TradingPlatformTradeException 
+	 */
+	@RequestMapping(value = "/portfolio", method = RequestMethod.GET)
+	@ResponseBody
+	public GenericRestResponse showPortfolio(	Model model, 
+											@RequestParam(value = "company", required = false, defaultValue = "") String company) {
+	
+		final GenericResponse response = new GenericResponse();
+		
+		
+		
+		Set<Portfolio> portfolioView = portfolioService.getPortfolioViews(company, userService.findByUsername(securityService.findLoggedInUsername()));
+		
+		response.setResponseStatus(RestResponseStatus.OK.getName());
+		response.setItem(new PortfolioResponse(PortfolioResponse.Status.OK.getStatus(), null, portfolioView));
+	
+		return response;
+	}
+
 }
+

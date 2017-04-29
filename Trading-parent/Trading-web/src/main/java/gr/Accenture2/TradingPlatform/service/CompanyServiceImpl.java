@@ -79,9 +79,9 @@ public class CompanyServiceImpl implements CompanyService {
 		return companyRepository.findByNameStartingWith(company);
 	}
 
-	public Set<Company>getPortofolioCompanies( Company company, User user){
+	public Set<Company> getPortfolioCompanies(User user){
 		
-		return companyRepository.getPortofolioCompanies(company, user);
+		return companyRepository.getPortfolioCompanies(user);
 	}
 	
 }

@@ -464,7 +464,7 @@ var tradingPlatform = {
 
 								    change: function (e, ui) {
 
-								        alert("changed!");
+								        
 								    },
 								    focus: function() {
 								        // prevent value inserted on focus
