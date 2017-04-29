@@ -446,8 +446,8 @@ var tradingPlatform = {
 								            $('<td>').html(tradingPlatform.utilities.convertDate(row.tradeDate)),
 								            $('<td>').html(row.side),
 								            $('<td>').html(row.quantity),
-								            $('<td>').html('&euro;' + tradingPlatform.utilities.addDecimalDigits(row.orderPriceWithFeeTaxes)),
-								            $('<td>').html('&euro;' + tradingPlatform.utilities.addDecimalDigits(row.unitPrice)),
+								            $('<td>').html(tradingPlatform.utilities.addDecimalDigits(row.orderPriceWithFeeTaxes)),
+								            $('<td>').html(tradingPlatform.utilities.addDecimalDigits(row.unitPrice)),
 								            $('<td>').html(row.status),
 								            $('<td>').html("?")
 								        );
@@ -505,8 +505,8 @@ var tradingPlatform = {
 				return 	[pad(dateObj.getDate()), pad(dateObj.getMonth() + 1), dateObj.getFullYear()].join('-') + " " + 
 						[pad(dateObj.getHours()), pad(dateObj.getMinutes())].join(':');
 			},
-			'addDecimalDigits': function(price) {
-				return price.toFixed(tradingPlatform.utilities.config.digitCount);
+			'addDecimalDigits': function(price, currency = '&euro;') {
+				return currency + price.toFixed(tradingPlatform.utilities.config.digitCount);
 			}
 		}
 		
