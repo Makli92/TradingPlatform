@@ -20,4 +20,8 @@ public interface CompanyService {
 	
 	public Company getFirstCompany();
 	
+	public Set<Company>getPortfolioCompanies(User user);
+	
+	
+	
 }

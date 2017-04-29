@@ -26,8 +26,9 @@ public interface StockRepository extends CrudRepository<Stock, Long>, JpaReposit
 	@Query("SELECT s FROM Stock s WHERE s.company = :company1 AND s.id NOT IN (SELECT ust.stock.id FROM UserStockTrade ust WHERE ust.active = true )")
 	public Page<Stock> findUnpurchasedStocks(@Param(value = "company1") Company company,Pageable pageable);
 	
-	@Query("SELECT s FROM Stock s WHERE s.company = :company1 AND s.id IN (SELECT ust.stock.id FROM UserStockTrade ust WHERE ust.active = true )")
-	public Page<Stock> findPurchasedStocks(@Param(value = "company1") Company company, Pageable pageable);
+	// The following needs correction
+	//@Query("SELECT s FROM Stock s WHERE s.company = :company1 AND s.id IN (SELECT ust.stock.id FROM UserStockTrade ust WHERE ust.active = true )")
+	//public Page<Stock> findPurchasedStocks(@Param(value = "company1") Company company, Pageable pageable);
 
 	@Query("SELECT COUNT(s) FROM Stock s WHERE s.company = :company1 AND s.id NOT IN (SELECT ust.stock.id FROM UserStockTrade ust WHERE ust.active = true )")
 	public Long getAvaiableStockForPurchase(@Param(value = "company1") Company company);

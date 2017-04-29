@@ -8,9 +8,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.query.Param;
 
 import gr.Accenture2.TradingPlatform.core.entity.Company;
 import gr.Accenture2.TradingPlatform.core.entity.Stock;
+import gr.Accenture2.TradingPlatform.core.entity.User;
 
 @Transactional
 public interface CompanyRepository extends PagingAndSortingRepository<Company, Long> {
@@ -26,4 +28,7 @@ public interface CompanyRepository extends PagingAndSortingRepository<Company, L
 	public Page<Company> getFirstCompany(Pageable pageable);
 	
 	public Company findByNameStartingWith(String name);
+	
+	@Query("SELECT c FROM Company c WHERE c IN (SELECT s.stock.company FROM UserStockTrade s WHERE s.user = :user1 AND active = true)" )
+	public Set<Company>getPortfolioCompanies(@Param(value = "user1")  User user);
 }

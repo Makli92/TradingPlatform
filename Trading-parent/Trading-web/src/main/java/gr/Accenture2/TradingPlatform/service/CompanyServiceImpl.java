@@ -6,9 +6,11 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import gr.Accenture2.TradingPlatform.core.entity.Company;
+import gr.Accenture2.TradingPlatform.core.entity.User;
 import gr.Accenture2.TradingPlatform.repository.service.CompanyRepository;
 import gr.Accenture2.TradingPlatform.repository.service.RoleRepository;
 
@@ -77,4 +79,9 @@ public class CompanyServiceImpl implements CompanyService {
 		return companyRepository.findByNameStartingWith(company);
 	}
 
+	public Set<Company> getPortfolioCompanies(User user){
+		
+		return companyRepository.getPortfolioCompanies(user);
+	}
+	
 }

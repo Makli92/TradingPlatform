@@ -29,11 +29,8 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 public class ApiCompany {
 
     private long id;
-	
 
     private String name;
-
-	private Float price;
 	
 	public long getId() {
 		return id;
@@ -51,14 +48,4 @@ public class ApiCompany {
 		this.name = name;
 	}
 
-	public Float getPrice() {
-		return price;
-	}
-
-	public void setPrice(Float price) {
-		this.price = price;
-	}
-	
-	
-	
 }
