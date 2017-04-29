@@ -30,7 +30,12 @@
 	<!-- jQuery -->
     <script src="/resources/template/js/jquery.js"></script>
 		
-	<script src="/resources/js/trading.platform.v1.01.js"></script> 
+	<script src="/resources/js/trading.platform.v1.01.js"></script>
+	
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	
 	<script type="text/javascript">
 		$(document).ready(function () { //this is a closure!
@@ -57,7 +62,7 @@
 			});
 		
 			tradingPlatform.showUserDetails.init();
-			tradingPlatform.autoCompleteSearch.init();
+			tradingPlatform.autoCompleteSearch.init(false);
 			tradingPlatform.portfolio.init();
 		});
 	
@@ -219,14 +224,15 @@
                         </ol>
                         <ol class="breadcrumb form-group input-group">
                         	<li>
-	                    		<div class="form-group input-group">
-	                    		<input type="text" id="portfolioStock" class="form-control customClassAutoCompleteSearchInput" placeholder="Search Stock...">
-	                    		<span class="input-group-btn">
-	                    			<button class="btn btn-default" type="button" id="searchPortfolioBtn">
-	                    				<i class="fa fa-search" ></i>
-	                				</button>
-	            				</span>
-	                    		</div>
+                        		<div class="form-group input-group">
+                        		<input type="text" id="portfolioStock" class="form-control customClassAutoCompleteSearchInput" placeholder="Search Stock...">
+                        		<span class="input-group-btn">
+                        			<button class="btn btn-default" type="button" id="searchTradeBtn">
+                        				<i class="fa fa-search" ></i>
+                    				</button>
+                				</span>
+                        		</div>
+                        		
 								<p class="classErrorMessage small text-danger"></p>
                         	</li>
                         </ol>

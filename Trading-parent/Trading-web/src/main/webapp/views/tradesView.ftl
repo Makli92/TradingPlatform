@@ -58,7 +58,7 @@
 			});
 			
 			tradingPlatform.showUserDetails.init();
-			tradingPlatform.autoCompleteSearch.init();
+			tradingPlatform.autoCompleteSearch.init(false);
 			tradingPlatform.tradeView.init();
 		});
 	
@@ -235,7 +235,7 @@
                         	</li>
                         	<li>
                         		<div class="form-group input-group">
-                        		<input type="text" id="stock" class="form-control customClassAutoCompleteSearchInput" placeholder="Search Stock...">
+                        		<input type="text" id="tradeStock" class="form-control customClassAutoCompleteSearchInput" placeholder="Search Stock...">
                         		<span class="input-group-btn">
                         			<button class="btn btn-default" type="button" id="searchTradeBtn">
                         				<i class="fa fa-search" ></i>
