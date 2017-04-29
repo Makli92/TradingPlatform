@@ -471,7 +471,7 @@ var tradingPlatform = {
 		        var payload = {'from': $("#dateFrom").val(), 'to': $("#dateTo").val()};
 		        
 		        if ($('#sideSelect').val() != "ALL") {
-		            payload.side = $("#side").val(); 
+		            payload.side = $("#sideSelect").val(); 
 		        }
 		        
 		        if ($("#stock").val() != "") {
