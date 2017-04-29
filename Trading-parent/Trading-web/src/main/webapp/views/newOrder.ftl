@@ -332,11 +332,11 @@
                                     </tr>
                                     <tr>
                                         <td><strong>LIMIT UP</strong><br>
-                                        <span class="customClass1" ><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></span></td>
+                                        <span class="customClassLimitUp" ><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></span></td>
                                         <td><strong>LIMIT DOWN</strong><br>
-                                        <span class="customClass1" ><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></span></td>
+                                        <span class="customClassLimitDown" ><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></span></td>
                                         <td><strong>CLOSE</strong><br>
-                                        <span class="customClass1" ><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></span></td>
+                                        <span class="customClassClose" ><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></span></td>
                                     </tr>
                                 </tbody>
                             </table>

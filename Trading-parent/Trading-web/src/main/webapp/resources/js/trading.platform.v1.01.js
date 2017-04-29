@@ -688,7 +688,11 @@ var tradingPlatform = {
 										
 										$(".customClassVolume").text(data.item.item.volume);
 										
-										
+										$(".customClassClose").text("123.03$");
+										$(".customClassLimitDown").text("122.01$");
+										$(".customClassLimitUp").text("125.01$");
+										$(".customClassDayHigh").text("124.56$");
+										$(".customClassDayLow").text("122.01$");
 										
 										if($("input[name=customNameSIDE]:checked").val() == tradingPlatform.constants.SIDE.BUY ){
 											
