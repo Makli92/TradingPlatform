@@ -400,7 +400,7 @@ var tradingPlatform = {
 				'loginEndpoint' : '/services/getCompanies'
 				
 			},
-			'init': function() { /* tradingPlatform.autoCompleteSearch.init - start */
+			'init': function(redirect = true) { /* tradingPlatform.autoCompleteSearch.init - start */
 								
 				console.log('init autoCompleteSearch:');
 
@@ -437,7 +437,7 @@ var tradingPlatform = {
 						    		
 						    		
 						    	}
-											
+						    	
 								$(".customClassAutoCompleteSearchInput").autocomplete({
 								    source: results,
 
@@ -455,8 +455,9 @@ var tradingPlatform = {
 //								        event.preventDefault();
 								        $(".customClassAutoCompleteSearchInput").val(ui.item.label);
 								    	
-								    	
-								    	location = "/newOrder/"+ ui.item.value + "/" + ui.item.label;
+								    	if (redirect) {
+									    	location = "/newOrder/"+ ui.item.value + "/" + ui.item.label;
+								    	}
 								    	
 								        //alert("selected!:"+ JSON.stringify(ui));
 								    	return false;
@@ -815,8 +816,8 @@ var tradingPlatform = {
 		            payload.side = $("#sideSelect").val(); 
 		        }
 		        
-		        if ($("#stock").val() != "") {
-		        	payload.company = $("#stock").val();
+		        if ($("#tradeStock").val() != "") {
+		        	payload.company = $("#tradeStock").val();
 		        }
 		        
 		        return payload;
