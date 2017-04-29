@@ -57,6 +57,7 @@
 			});
 		
 			tradingPlatform.showUserDetails.init();
+			tradingPlatform.autoCompleteSearch.init();
 			tradingPlatform.portfolio.init();
 		});
 	
@@ -241,13 +242,11 @@
                                 <thead>
                                     <tr>
                                         <th>Stock</th>
-                                        <th>Date Time</th>
-                                        <th>Side</th>
                                         <th>Quantity</th>
-                                        <th>Order Price</th>
-                                        <th>Unit Price</th>
-                                        <th>Status</th>
-                                        <th>Order Details</th>
+                                        <th>Nominal Value</th>
+                                        <th>Value EUR</th>
+                                        <th>Portfolio %</th>
+                                        <th>Trade Stock</th>
                                     </tr>
                                 </thead>
                                 <tbody id="portfolioTableBody">
