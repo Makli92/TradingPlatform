@@ -26,4 +26,11 @@ public interface TradeService {
 	public List<Trade> getTrades(Date from, Date to);
 	
 	public List<TradeView> getTradeView(Date from, Date to, String side, String company);
+
+	public Float calculatePriceWithoutFeeTaxes(Company company, int numberOfStocks, TradeSide side);
+	
+	public Float calculatePurchasePriceWithFeeTaxes(Company company, int numberOfStocks);
+	
+	public Float calculateSellPriceWithFeeTaxes(Company company, int numberOfStocks);
+	
 }

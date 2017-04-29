@@ -12,4 +12,5 @@ public interface UserStockTradeService {
 	
 	public Set<UserStockTrade> findUserStockTrades(Company company, User user, Integer numberOfUserStockTrades);
 	
+	public Long getNumberOfUserStockTrades(Company company, User user);
 }

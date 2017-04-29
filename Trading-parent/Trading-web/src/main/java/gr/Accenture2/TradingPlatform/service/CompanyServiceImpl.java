@@ -1,6 +1,11 @@
 package gr.Accenture2.TradingPlatform.service;
 
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import gr.Accenture2.TradingPlatform.core.entity.Company;
@@ -13,15 +18,18 @@ public class CompanyServiceImpl implements CompanyService {
 	@Autowired
 	private CompanyRepository companyRepository;
 	
+	
 	@Autowired
 	StockService stockService;
 	
-	public void createCompany(String name, long price, Integer numberOfStock){
+	public void createCompany(String name, Float buyPrice, Float sellPrice, Integer numberOfStock){
 		
 		Company company = new Company();
 		
 		company.setName(name);
-		company.setPrice(price);
+		company.setBuyPrice(buyPrice);
+		company.setSellprice(sellPrice);
+		
 		
 		company.setStocks(stockService.generateNewCompanyStocks(numberOfStock, company));
 		
@@ -33,6 +41,35 @@ public class CompanyServiceImpl implements CompanyService {
 		
 		return companyRepository.findByName(name);
 		
+	}
+	
+	public Company findById(long id){
+		
+		return companyRepository.findById(id);
+		
+	}
+	
+	public  Iterable<Company> gatAllCompanies(){
+		
+		return companyRepository.findAll();
+
+		
+	}
+	
+	
+	public Company getFirstCompany(){
+		
+		PageRequest pageRequest = new PageRequest(0, 1);
+		
+		Iterator it = companyRepository.getFirstCompany(pageRequest).iterator();
+		
+		while(it.hasNext()){
+			
+			return ((Company)it.next());
+			
+		}
+		
+		return null;
 	}
 
 

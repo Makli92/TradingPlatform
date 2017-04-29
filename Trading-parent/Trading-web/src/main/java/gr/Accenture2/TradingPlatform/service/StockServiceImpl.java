@@ -13,6 +13,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -32,7 +33,13 @@ public class StockServiceImpl implements StockService {
 		
 	}
 	
-	
+	public Long getAvaiableStockForPurchase(Company company){
+		
+		return stockRepository.getAvaiableStockForPurchase(company);
+		
+	}
+
+	/*
 	public Set<Stock> findPurchasedStocks(Company company, Integer numberOfStocks ){
 		
 		PageRequest pageRequest = new PageRequest(0, numberOfStocks);
@@ -43,7 +50,7 @@ public class StockServiceImpl implements StockService {
 		return targetCollection;
 		
 	}
-	
+	*/
 	
 	
 	

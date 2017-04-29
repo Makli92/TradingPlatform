@@ -22,4 +22,7 @@ public interface UserStockTradeRepository extends CrudRepository<UserStockTrade,
 	@Query("SELECT s FROM UserStockTrade s WHERE s.user = :user1 AND s.stock.company = :company1 AND active = true")
 	public Page<UserStockTrade> findUserStockTrades(@Param(value = "company1") Company company,@Param(value = "user1") User user ,Pageable pageable);
 	
+	@Query("SELECT COUNT(s) FROM UserStockTrade s WHERE s.user = :user1 AND s.stock.company = :company1 AND active = true")
+	public Long getNumberOfUserStockTrades(@Param(value = "company1") Company company, @Param(value = "user1")  User user);
+	
 }

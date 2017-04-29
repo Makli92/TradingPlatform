@@ -25,6 +25,10 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
  *
  */
 
+/**
+ * @author Billy
+ *
+ */
 @Entity
 @Table(name = "companies")
 @JsonInclude(Include.NON_EMPTY)
@@ -51,19 +55,28 @@ public class Company {
 		this.name = name;
 	}
 
-	@Column(name = "price", nullable = false)
-	private Float price;
+	@Column(name = "buy_price", nullable = false)
+	private Float buyPrice;
 	
 	
 	@Column(name = "price_Update_Date", columnDefinition = "TIMESTAMP", nullable = false)
 	private Date priceUpdateDate;
 	
 	
+	@Column(name = "sell_Pice", nullable = false)
+	private Float sellprice;
+	
+	
+	@Column(name = "sell_Price_Update_Date", columnDefinition = "TIMESTAMP", nullable = false)
+	private Date sellPriceUpdateDate;
+	
+	
+	
 	@PrePersist
 	void preInsertPriceUpdateDate() {
 		priceUpdateDate = new Date();
+		sellPriceUpdateDate = new Date();
 	}
-	
 
 	public long getId() {
 		return id;
@@ -89,12 +102,38 @@ public class Company {
 		this.stocks = stocks;
 	}
 
-	public Float getPrice() {
-		return price;
+	public Float getBuyPrice() {
+		return buyPrice;
 	}
 
-	public void setPrice(float price) {
-		this.price = price;
+	public void setBuyPrice(Float buyPrice) {
+		this.buyPrice = buyPrice;
 	}
 
+	public Date getPriceUpdateDate() {
+		return priceUpdateDate;
+	}
+
+	public void setPriceUpdateDate(Date priceUpdateDate) {
+		this.priceUpdateDate = priceUpdateDate;
+	}
+
+	public Float getSellprice() {
+		return sellprice;
+	}
+
+	public void setSellprice(Float sellprice) {
+		this.sellprice = sellprice;
+	}
+
+	public Date getSellPriceUpdateDate() {
+		return sellPriceUpdateDate;
+	}
+
+	public void setSellPriceUpdateDate(Date sellPriceUpdateDate) {
+		this.sellPriceUpdateDate = sellPriceUpdateDate;
+	}
+
+
+	
 }

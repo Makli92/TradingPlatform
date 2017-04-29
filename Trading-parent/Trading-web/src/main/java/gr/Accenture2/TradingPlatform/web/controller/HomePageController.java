@@ -28,6 +28,7 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -85,12 +86,32 @@ public class HomePageController {
         return mnv;
     }
 	
-	@RequestMapping("/newOrder")
-	public ModelAndView showNewOrder( Model model) {
+	@RequestMapping(value={"/newOrder/{id:[\\d]+}/{name}"})
+	public ModelAndView showNewOrder( Model model, @PathVariable("id") Long id, @PathVariable("name") String name) {
 	
+		LOGGER.debug("showNewOrder, id:{}, name:{}", id, name );
+		
 		LOGGER.debug("This is a test debug log");
 		
 		ModelAndView mnv = new ModelAndView("newOrder");
+	
+		mnv.addObject("username", securityService.findLoggedInUsername());
+		
+		mnv.addObject("companyId", id);
+
+        return mnv;
+    }
+	
+	@RequestMapping("/newOrder")
+	public ModelAndView showNewOrderWitoutParameters( Model model) {
+	
+		LOGGER.debug("showNewOrder" );
+		
+		LOGGER.debug("This is a test debug log");
+		
+		ModelAndView mnv = new ModelAndView("newOrder");
+		
+		mnv.addObject("companyId", companyService.getFirstCompany().getId());
 	
 		mnv.addObject("username", securityService.findLoggedInUsername());
 
@@ -183,7 +204,11 @@ public class HomePageController {
 		user1.getRoles().add(roleService.findByRole(StringEnumeration.USER.getString()));
 		userService.save(user1);
 		
-		companyService.createCompany("Accenture", 10L, 30);
+		companyService.createCompany("Accenture", 19F, 20.1F,100);
+		
+		companyService.createCompany("Intrasoft", 10F, 10.5F, 100);
+		
+		companyService.createCompany("Agile Actors", 9F, 9.7F, 100);
 	
 		tradeService.purchaseStocks(companyService.findByName("Accenture"), 3, userService.findByUsername("Bill"));
 		
