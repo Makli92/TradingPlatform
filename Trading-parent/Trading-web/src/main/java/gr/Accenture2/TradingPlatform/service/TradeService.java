@@ -2,6 +2,7 @@ package gr.Accenture2.TradingPlatform.service;
 
 import gr.Accenture2.TradingPlatform.core.entity.Company;
 import gr.Accenture2.TradingPlatform.core.entity.User;
+import gr.Accenture2.TradingPlatform.core.enumeration.TradeSide;
 import gr.Accenture2.TradingPlatform.core.exception.TradingPlatformTradeException;
 
 public interface TradeService {
@@ -10,7 +11,7 @@ public interface TradeService {
 	
 	public boolean sellStocks(Company company, Integer numberOfStocks, User user) throws TradingPlatformTradeException;
 	
-	public Float calculatePriceWithoutFeeTaxes(Company company, int numberOfStocks);
+	public Float calculatePriceWithoutFeeTaxes(Company company, int numberOfStocks, TradeSide side);
 	
 	public Float calculatePurchasePriceWithFeeTaxes(Company company, int numberOfStocks);
 	

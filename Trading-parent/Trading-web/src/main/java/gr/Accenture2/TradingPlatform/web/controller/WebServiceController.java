@@ -12,6 +12,7 @@ import gr.Accenture2.TradingPlatform.core.entity.User;
 import gr.Accenture2.TradingPlatform.core.enumeration.BundleKey;
 import gr.Accenture2.TradingPlatform.core.enumeration.StringEnumeration;
 import gr.Accenture2.TradingPlatform.core.enumeration.SupportedLanguage;
+import gr.Accenture2.TradingPlatform.core.enumeration.TradeSide;
 import gr.Accenture2.TradingPlatform.core.exception.TradingPlatformAuthenticationException;
 import gr.Accenture2.TradingPlatform.core.exception.TradingPlatformTradeException;
 import gr.Accenture2.TradingPlatform.repository.service.CompanyRepository;
@@ -304,22 +305,23 @@ public class WebServiceController {
 		
 		Integer requestedStocksInteger = Integer.parseInt(requestedStocks);;
 		
-		apiNewOrderData.setOneStockPriceWithoutFeesAndTaxes(tradeService.calculatePriceWithoutFeeTaxes(company, 1));
-		apiNewOrderData.setRequestedStockPriceWithoutFeesAndTaxes(tradeService.calculatePriceWithoutFeeTaxes(company, requestedStocksInteger));
 		
+		apiNewOrderData.setOneStockBuyPrice(tradeService.calculatePriceWithoutFeeTaxes(company, 1, TradeSide.BUY));
+		apiNewOrderData.setOneStockBuyPriceWithfeesAndTaxes(tradeService.calculatePurchasePriceWithFeeTaxes(company, 1));
+		apiNewOrderData.setOneStockBuyfeesAndTaxes(apiNewOrderData.getOneStockBuyPriceWithfeesAndTaxes()-apiNewOrderData.getOneStockBuyPrice());
+
+		apiNewOrderData.setOneStockSellPrice(tradeService.calculatePriceWithoutFeeTaxes(company, 1, TradeSide.SELL));
+		apiNewOrderData.setOneStockSellPriceWithfeesAndTaxes(tradeService.calculateSellPriceWithFeeTaxes(company, 1));
+		apiNewOrderData.setOneStockSellfeesAndTaxes(apiNewOrderData.getOneStockSellPriceWithfeesAndTaxes() - apiNewOrderData.getOneStockSellPriceWithfeesAndTaxes() );
 		
-		apiNewOrderData.setOneStockBuyPrice(tradeService.calculatePurchasePriceWithFeeTaxes(company, 1));
-		apiNewOrderData.setOneStockBuyfeesAndTaxes(apiNewOrderData.getOneStockBuyPrice() - apiNewOrderData.getOneStockPriceWithoutFeesAndTaxes());
+		apiNewOrderData.setRequestedStockBuyPrice(tradeService.calculatePriceWithoutFeeTaxes(company, requestedStocksInteger, TradeSide.BUY));
+		apiNewOrderData.setRequestedStockBuyPriceWithfeesAndTaxes(tradeService.calculatePurchasePriceWithFeeTaxes(company, requestedStocksInteger));
+		apiNewOrderData.setRequestedStockBuyfeesAndTaxes(apiNewOrderData.getRequestedStockBuyPriceWithfeesAndTaxes() - apiNewOrderData.getRequestedStockBuyPrice());
+
+		apiNewOrderData.setRequestedStockSellPrice(tradeService.calculatePriceWithoutFeeTaxes(company, requestedStocksInteger, TradeSide.SELL));
+		apiNewOrderData.setRequestedStockSellPriceWithfeesAndTaxes(tradeService.calculateSellPriceWithFeeTaxes(company, requestedStocksInteger));
+		apiNewOrderData.setRequestedStockSellfeesAndTaxes(apiNewOrderData.getRequestedStockSellPrice() - apiNewOrderData.getRequestedStockSellPriceWithfeesAndTaxes());
 		
-		apiNewOrderData.setRequestedStockBuyPrice(tradeService.calculatePurchasePriceWithFeeTaxes(company, requestedStocksInteger));
-		apiNewOrderData.setRequestedStockBuyfeesAndTaxes(apiNewOrderData.getRequestedStockBuyPrice()- apiNewOrderData.getRequestedStockPriceWithoutFeesAndTaxes());
-		
-		apiNewOrderData.setOneStockSellPrice(tradeService.calculateSellPriceWithFeeTaxes(company, 1));
-		apiNewOrderData.setOneStockSellfeesAndTaxes(apiNewOrderData.getOneStockPriceWithoutFeesAndTaxes() - apiNewOrderData.getOneStockSellPrice());
-		
-		apiNewOrderData.setRequestedStockSellPrice(tradeService.calculateSellPriceWithFeeTaxes(company, requestedStocksInteger));
-		apiNewOrderData.setRequestedStockSellfeesAndTaxes(tradeService.calculatePriceWithoutFeeTaxes(company, requestedStocksInteger) - apiNewOrderData.getRequestedStockSellPrice());
-	
 		apiNewOrderData.setAvaiableStockForPurchase(stockService.getAvaiableStockForPurchase(company));
 		
 		apiNewOrderData.setNumberOfUserPurchaseStock(userStockTradeService.getNumberOfUserStockTrades(company, userService.findByUsername(securityService.findLoggedInUsername())));

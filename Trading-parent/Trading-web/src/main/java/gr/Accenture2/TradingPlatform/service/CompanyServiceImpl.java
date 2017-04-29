@@ -22,12 +22,14 @@ public class CompanyServiceImpl implements CompanyService {
 	@Autowired
 	StockService stockService;
 	
-	public void createCompany(String name, long price, Integer numberOfStock){
+	public void createCompany(String name, Float buyPrice, Float sellPrice, Integer numberOfStock){
 		
 		Company company = new Company();
 		
 		company.setName(name);
-		company.setPrice(price);
+		company.setBuyPrice(buyPrice);
+		company.setSellprice(sellPrice);
+		
 		
 		company.setStocks(stockService.generateNewCompanyStocks(numberOfStock, company));
 		

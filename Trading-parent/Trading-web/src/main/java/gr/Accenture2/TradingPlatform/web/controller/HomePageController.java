@@ -204,11 +204,11 @@ public class HomePageController {
 		user1.getRoles().add(roleService.findByRole(StringEnumeration.USER.getString()));
 		userService.save(user1);
 		
-		companyService.createCompany("Accenture", 10L, 30);
+		companyService.createCompany("Accenture", 19F, 20.1F,100);
 		
-		companyService.createCompany("Intrasoft", 10L, 32);
+		companyService.createCompany("Intrasoft", 10F, 10.5F, 100);
 		
-		companyService.createCompany("Agile Actors", 10L, 33);
+		companyService.createCompany("Agile Actors", 9F, 9.7F, 100);
 	
 		tradeService.purchaseStocks(companyService.findByName("Accenture"), 3, userService.findByUsername("Bill"));
 		

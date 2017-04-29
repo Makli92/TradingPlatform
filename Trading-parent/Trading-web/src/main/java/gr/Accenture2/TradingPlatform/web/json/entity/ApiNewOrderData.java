@@ -9,104 +9,152 @@ public class ApiNewOrderData {
 	ApiCompany company;
 
 	Float oneStockBuyPrice;
+	Float oneStockBuyPriceWithfeesAndTaxes;
 	Float oneStockBuyfeesAndTaxes;
-	
-	Float requestedStockBuyPrice;
-	Float requestedStockBuyfeesAndTaxes;
-	
+
 	Float oneStockSellPrice;
+	Float oneStockSellPriceWithfeesAndTaxes;
 	Float oneStockSellfeesAndTaxes;
 	
-	Float requestedStockSellPrice;
+	Float requestedStockBuyPrice; // not used
+	Float requestedStockBuyPriceWithfeesAndTaxes;
+	Float requestedStockBuyfeesAndTaxes;
+
+	Float requestedStockSellPrice;  // not used
+	Float requestedStockSellPriceWithfeesAndTaxes;
 	Float requestedStockSellfeesAndTaxes;
-	
-	Float oneStockPriceWithoutFeesAndTaxes;
-	Float requestedStockPriceWithoutFeesAndTaxes;
 	
 	Long avaiableStockForPurchase;
 	
 	Long numberOfUserPurchaseStock;
-	
-	public Long getAvaiableStockForPurchase() {
-		return avaiableStockForPurchase;
-	}
-	public void setAvaiableStockForPurchase(Long avaiableStockForPurchase) {
-		this.avaiableStockForPurchase = avaiableStockForPurchase;
-	}
+
 	public ApiCompany getCompany() {
 		return company;
 	}
+
 	public void setCompany(ApiCompany company) {
 		this.company = company;
 	}
+
 	public Float getOneStockBuyPrice() {
 		return oneStockBuyPrice;
 	}
+
 	public void setOneStockBuyPrice(Float oneStockBuyPrice) {
 		this.oneStockBuyPrice = oneStockBuyPrice;
 	}
+
+	public Float getOneStockBuyPriceWithfeesAndTaxes() {
+		return oneStockBuyPriceWithfeesAndTaxes;
+	}
+
+	public void setOneStockBuyPriceWithfeesAndTaxes(
+			Float oneStockBuyPriceWithfeesAndTaxes) {
+		this.oneStockBuyPriceWithfeesAndTaxes = oneStockBuyPriceWithfeesAndTaxes;
+	}
+
 	public Float getOneStockBuyfeesAndTaxes() {
 		return oneStockBuyfeesAndTaxes;
 	}
+
 	public void setOneStockBuyfeesAndTaxes(Float oneStockBuyfeesAndTaxes) {
 		this.oneStockBuyfeesAndTaxes = oneStockBuyfeesAndTaxes;
 	}
-	public Float getRequestedStockBuyPrice() {
-		return requestedStockBuyPrice;
-	}
-	public void setRequestedStockBuyPrice(Float requestedStockBuyPrice) {
-		this.requestedStockBuyPrice = requestedStockBuyPrice;
-	}
-	public Float getRequestedStockBuyfeesAndTaxes() {
-		return requestedStockBuyfeesAndTaxes;
-	}
-	public void setRequestedStockBuyfeesAndTaxes(Float requestedStockBuyfeesAndTaxes) {
-		this.requestedStockBuyfeesAndTaxes = requestedStockBuyfeesAndTaxes;
-	}
+
 	public Float getOneStockSellPrice() {
 		return oneStockSellPrice;
 	}
+
 	public void setOneStockSellPrice(Float oneStockSellPrice) {
 		this.oneStockSellPrice = oneStockSellPrice;
 	}
+
+	public Float getOneStockSellPriceWithfeesAndTaxes() {
+		return oneStockSellPriceWithfeesAndTaxes;
+	}
+
+	public void setOneStockSellPriceWithfeesAndTaxes(
+			Float oneStockSellPriceWithfeesAndTaxes) {
+		this.oneStockSellPriceWithfeesAndTaxes = oneStockSellPriceWithfeesAndTaxes;
+	}
+
 	public Float getOneStockSellfeesAndTaxes() {
 		return oneStockSellfeesAndTaxes;
 	}
+
 	public void setOneStockSellfeesAndTaxes(Float oneStockSellfeesAndTaxes) {
 		this.oneStockSellfeesAndTaxes = oneStockSellfeesAndTaxes;
 	}
+
+	public Float getRequestedStockBuyPrice() {
+		return requestedStockBuyPrice;
+	}
+
+	public void setRequestedStockBuyPrice(Float requestedStockBuyPrice) {
+		this.requestedStockBuyPrice = requestedStockBuyPrice;
+	}
+
+	public Float getRequestedStockBuyPriceWithfeesAndTaxes() {
+		return requestedStockBuyPriceWithfeesAndTaxes;
+	}
+
+	public void setRequestedStockBuyPriceWithfeesAndTaxes(
+			Float requestedStockBuyPriceWithfeesAndTaxes) {
+		this.requestedStockBuyPriceWithfeesAndTaxes = requestedStockBuyPriceWithfeesAndTaxes;
+	}
+
+	public Float getRequestedStockBuyfeesAndTaxes() {
+		return requestedStockBuyfeesAndTaxes;
+	}
+
+	public void setRequestedStockBuyfeesAndTaxes(Float requestedStockBuyfeesAndTaxes) {
+		this.requestedStockBuyfeesAndTaxes = requestedStockBuyfeesAndTaxes;
+	}
+
 	public Float getRequestedStockSellPrice() {
 		return requestedStockSellPrice;
 	}
+
 	public void setRequestedStockSellPrice(Float requestedStockSellPrice) {
 		this.requestedStockSellPrice = requestedStockSellPrice;
 	}
+
+	public Float getRequestedStockSellPriceWithfeesAndTaxes() {
+		return requestedStockSellPriceWithfeesAndTaxes;
+	}
+
+	public void setRequestedStockSellPriceWithfeesAndTaxes(
+			Float requestedStockSellPriceWithfeesAndTaxes) {
+		this.requestedStockSellPriceWithfeesAndTaxes = requestedStockSellPriceWithfeesAndTaxes;
+	}
+
 	public Float getRequestedStockSellfeesAndTaxes() {
 		return requestedStockSellfeesAndTaxes;
 	}
+
 	public void setRequestedStockSellfeesAndTaxes(
 			Float requestedStockSellfeesAndTaxes) {
 		this.requestedStockSellfeesAndTaxes = requestedStockSellfeesAndTaxes;
 	}
-	public Float getOneStockPriceWithoutFeesAndTaxes() {
-		return oneStockPriceWithoutFeesAndTaxes;
+
+	public Long getAvaiableStockForPurchase() {
+		return avaiableStockForPurchase;
 	}
-	public void setOneStockPriceWithoutFeesAndTaxes(
-			Float oneStockPriceWithoutFeesAndTaxes) {
-		this.oneStockPriceWithoutFeesAndTaxes = oneStockPriceWithoutFeesAndTaxes;
+
+	public void setAvaiableStockForPurchase(Long avaiableStockForPurchase) {
+		this.avaiableStockForPurchase = avaiableStockForPurchase;
 	}
-	public Float getRequestedStockPriceWithoutFeesAndTaxes() {
-		return requestedStockPriceWithoutFeesAndTaxes;
-	}
-	public void setRequestedStockPriceWithoutFeesAndTaxes(
-			Float requestedStockPriceWithoutFeesAndTaxes) {
-		this.requestedStockPriceWithoutFeesAndTaxes = requestedStockPriceWithoutFeesAndTaxes;
-	}
+
 	public Long getNumberOfUserPurchaseStock() {
 		return numberOfUserPurchaseStock;
 	}
+
 	public void setNumberOfUserPurchaseStock(Long numberOfUserPurchaseStock) {
 		this.numberOfUserPurchaseStock = numberOfUserPurchaseStock;
 	}
+	
+	
 
+	
+	
 }

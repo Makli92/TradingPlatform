@@ -7,7 +7,7 @@ import gr.Accenture2.TradingPlatform.core.entity.User;
 
 public interface CompanyService {
 
-	public void createCompany(String name, long price, Integer numberOfStock);
+	public void createCompany(String name, Float price, Float sellPrice, Integer numberOfStock);
 
 	public Company findByName(String name);
 	

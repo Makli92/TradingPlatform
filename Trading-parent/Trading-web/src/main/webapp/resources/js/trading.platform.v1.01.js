@@ -670,20 +670,20 @@ var tradingPlatform = {
 										
 										$(".customClassNewOrderCompanyName").text(data.item.item.company.name);
 										
-										$(".customClassNewOrderBuyStockPriceWithoutTaxes").text($.formatNumber(data.item.item.oneStockPriceWithoutFeesAndTaxes, tradingPlatform.constants.numberFormatGreek) + '$');
-										$(".customClassNewOrderSellStockPriceWithoutTaxes").text($.formatNumber(data.item.item.oneStockPriceWithoutFeesAndTaxes, tradingPlatform.constants.numberFormatGreek) + '$');
+										$(".customClassNewOrderBuyStockPriceWithoutTaxes").text($.formatNumber(data.item.item.oneStockBuyPrice, tradingPlatform.constants.numberFormatGreek) + '$');
+										$(".customClassNewOrderSellStockPriceWithoutTaxes").text($.formatNumber(data.item.item.oneStockSellPrice, tradingPlatform.constants.numberFormatGreek) + '$');
 								
-										$(".customClassRequestedStockBuyPrice").text($.formatNumber(data.item.item.requestedStockBuyPrice, tradingPlatform.constants.numberFormatGreek) + '$');
+										$(".customClassRequestedStockBuyPrice").text($.formatNumber(data.item.item.requestedStockBuyPriceWithfeesAndTaxes, tradingPlatform.constants.numberFormatGreek) + '$');
 										$(".customClassRequestedStockBuyfeesAndTaxes").text($.formatNumber(data.item.item.requestedStockBuyfeesAndTaxes, tradingPlatform.constants.numberFormatGreek) + '$');
 										
-										$(".customClassRequestedStockSellPrice").text($.formatNumber(data.item.item.requestedStockSellPrice, tradingPlatform.constants.numberFormatGreek) + '$');
+										$(".customClassRequestedStockSellPrice").text($.formatNumber(data.item.item.requestedStockSellPriceWithfeesAndTaxes, tradingPlatform.constants.numberFormatGreek) + '$');
 										$(".customClassRequestedStockSellfeesAndTaxes").text($.formatNumber(data.item.item.requestedStockSellfeesAndTaxes, tradingPlatform.constants.numberFormatGreek) + '$');
 										
 										
-										tradingPlatform.getNewOrderData.variables.maxValue = data.item.item.avaiableStockForPurchase;
-										$(".customClassAvaiableStockForPurchase").text(data.item.item.avaiableStockForPurchase);
+										tradingPlatform.getNewOrderData.variables.maxValue = data.item.item.avaiableStockForPurchase; //ok
+										$(".customClassAvaiableStockForPurchase").text(data.item.item.avaiableStockForPurchase); //ok
 										
-										$(".customClassNumberOfUserPurchaseStock").text(data.item.item.numberOfUserPurchaseStock);
+										$(".customClassNumberOfUserPurchaseStock").text(data.item.item.numberOfUserPurchaseStock); //ok
 										
 										
 										
