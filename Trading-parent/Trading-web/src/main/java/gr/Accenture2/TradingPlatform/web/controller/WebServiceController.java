@@ -1,6 +1,9 @@
 package gr.Accenture2.TradingPlatform.web.controller;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import gr.Accenture2.TradingPlatform.core.entity.Company;
 import gr.Accenture2.TradingPlatform.core.entity.Fault;
 import gr.Accenture2.TradingPlatform.core.entity.Role;
+import gr.Accenture2.TradingPlatform.core.entity.Trade;
 import gr.Accenture2.TradingPlatform.core.entity.User;
 import gr.Accenture2.TradingPlatform.core.enumeration.BundleKey;
 import gr.Accenture2.TradingPlatform.core.enumeration.StringEnumeration;
@@ -28,6 +32,7 @@ import gr.Accenture2.TradingPlatform.web.enumeration.RestResponseStatus;
 import gr.Accenture2.TradingPlatform.web.json.entity.ApiCompany;
 import gr.Accenture2.TradingPlatform.web.json.entity.ApiNewOrderData;
 import gr.Accenture2.TradingPlatform.web.json.entity.ApiUser;
+import gr.Accenture2.TradingPlatform.web.json.entity.TradeView;
 import gr.Accenture2.TradingPlatform.web.json.response.AuthenticationResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.BuyStocksResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.CompaniesResponse;
@@ -38,6 +43,7 @@ import gr.Accenture2.TradingPlatform.web.json.response.NewOrderDataResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.RegistrationResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.SellStocksResponse;
 import gr.Accenture2.TradingPlatform.web.json.response.UserDataResponse;
+import gr.Accenture2.TradingPlatform.web.json.response.TradeViewResponse;
 import gr.Accenture2.TradingPlatform.web.post.request.RegistrationForm;
 import gr.Accenture2.TradingPlatform.web.service.FormValidationService;
 
@@ -47,6 +53,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.MessageSource;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
@@ -68,7 +75,7 @@ public class WebServiceController {
 	/** The logger in use by this controller. */
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(WebServiceController.class);
-
+	
 	@Autowired
 	SecurityService securityService;
 
@@ -76,8 +83,7 @@ public class WebServiceController {
 	UserService userService; 
 	
 	@Autowired
-	RoleService roleService; 
-	
+	RoleService roleService;
 	
 	@Autowired
 	private CompanyService companyService;
@@ -602,4 +608,35 @@ public class WebServiceController {
 		return result;
 	}
 
+	/**
+	 * The trade view data API service, for global trades presentation
+	 * 
+	 * API endpoint: [host]:[port]/services/trades HTTP method: GET
+	 * paramethers: none
+	 * 
+	 * 
+	 * @param model
+	 * @return
+	 * @throws TradingPlatformAuthenticationException
+	 * @throws TradingPlatformTradeException 
+	 */
+	@RequestMapping(value = "/trades", method = RequestMethod.GET)
+	@ResponseBody
+	public GenericRestResponse showTrades(	Model model, 
+											@RequestParam("from") @DateTimeFormat(pattern="yyyy-MM-dd") Date from,
+											@RequestParam("to") @DateTimeFormat(pattern="yyyy-MM-dd") Date to,
+											@RequestParam(value = "side", required = false, defaultValue = "") String side,
+											@RequestParam(value = "company", required = false, defaultValue = "") String company)
+			throws TradingPlatformAuthenticationException, TradingPlatformTradeException {
+
+		final GenericResponse response = new GenericResponse();
+		
+		List<TradeView> tradeViews = tradeService.getTradeView(from, to, side, company);
+		
+		response.setResponseStatus(RestResponseStatus.OK.getName());
+		response.setItem(new TradeViewResponse(TradeViewResponse.Status.OK.getStatus(), null, tradeViews));
+
+		return response;
+	}
+	
 }

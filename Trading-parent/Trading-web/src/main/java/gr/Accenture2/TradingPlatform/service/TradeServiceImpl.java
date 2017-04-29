@@ -1,8 +1,12 @@
 package gr.Accenture2.TradingPlatform.service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +20,7 @@ import gr.Accenture2.TradingPlatform.core.enumeration.FaultId;
 import gr.Accenture2.TradingPlatform.core.enumeration.TradeSide;
 import gr.Accenture2.TradingPlatform.core.exception.TradingPlatformTradeException;
 import gr.Accenture2.TradingPlatform.repository.service.TradeRepository;
-import gr.Accenture2.TradingPlatform.repository.service.UserRepository;
+import gr.Accenture2.TradingPlatform.web.json.entity.TradeView;
 
 @Service
 public class TradeServiceImpl implements TradeService {
@@ -31,6 +35,9 @@ public class TradeServiceImpl implements TradeService {
 	@Autowired
 	private TradeRepository tradeRepository;
 	
+	@Autowired
+	private CompanyService companyService;
+
 	/**
 	 * Price * Number of stocks
 	 * 
@@ -86,9 +93,6 @@ public class TradeServiceImpl implements TradeService {
 
 	}
 	
-	
-	
-	
 	public boolean purchaseStocks(Company company, Integer numberOfStocks, User user) throws TradingPlatformTradeException{
 		
 		Set<Stock> stocks = stockService.findUnpurchasedStocks(company, numberOfStocks);
@@ -107,10 +111,12 @@ public class TradeServiceImpl implements TradeService {
 		
 		Trade trade = new Trade();
 		trade.setSide(TradeSide.BUY);
-		trade.setUnit_price(company.getBuyPrice());
+		trade.setUnitPrice(company.getBuyPrice());
 		trade.setQuantity(stocks.size());
 		trade.setOrderPriceWithoutFeeTaxes(calculatePriceWithoutFeeTaxes(company,stocks.size(), TradeSide.BUY));
 		trade.setOrderPriceWithFeeTaxes(calculatePurchasePriceWithFeeTaxes(company,stocks.size()));
+		trade.setUser(user);
+		trade.setCompany(company);
 
 		if(user.getCashBalance() < trade.getOrderPriceWithFeeTaxes()){
 			
@@ -129,7 +135,7 @@ public class TradeServiceImpl implements TradeService {
 		
 		UserStockTrade userStockTrade;
 		
-		Iterator iter = stocks.iterator();
+		Iterator<Stock> iter = stocks.iterator();
 		
 		while (iter.hasNext()) {
 			
@@ -166,16 +172,18 @@ public class TradeServiceImpl implements TradeService {
 		
 		Trade trade = new Trade();
 		trade.setSide(TradeSide.SELL);
-		trade.setUnit_price(company.getSellprice());
+		trade.setUnitPrice(company.getSellprice());
 		trade.setQuantity(userStockTrades.size());
 		trade.setOrderPriceWithoutFeeTaxes(calculatePriceWithoutFeeTaxes(company,userStockTrades.size(), TradeSide.SELL));
 		trade.setOrderPriceWithFeeTaxes(calculateSellPriceWithFeeTaxes(company,userStockTrades.size()));
+		trade.setUser(user);
+		trade.setCompany(company);
 		user.setCashBalance(new Float(user.getCashBalance() + trade.getOrderPriceWithFeeTaxes()));
 		
 		
 		UserStockTrade userStockTrade;
 		
-		Iterator iter = userStockTrades.iterator();
+		Iterator<UserStockTrade> iter = userStockTrades.iterator();
 		while (iter.hasNext()) {
 			
 			userStockTrade = (UserStockTrade)iter.next();
@@ -190,4 +198,50 @@ public class TradeServiceImpl implements TradeService {
 		return true;
 	}
 
+
+	public List<Trade> getTrades(Date from, Date to) {
+		return tradeRepository.findByTradeDateBetween(from, to);
+	}
+	
+	public List<Trade> getTrades(Date from, Date to, Company company) {
+		return tradeRepository.findByTradeDateBetweenAndCompany(from, to, company);
+	}
+
+	public List<Trade> getTrades(Date from, Date to, TradeSide side) {
+		return tradeRepository.findByTradeDateBetweenAndSide(from, to, side);
+	}
+
+	public List<Trade> getTrades(Date from, Date to, Company company, TradeSide side) {
+		return tradeRepository.findByTradeDateBetweenAndCompanyAndSide(from, to, company, side);
+	}
+
+
+	public List<TradeView> getTradeView(Date from, Date to, String side, String company) {
+		List<Trade> trades;
+		List<TradeView> tradeViews = new ArrayList<TradeView>();
+		
+		if (company.isEmpty() && side.isEmpty()) {
+			trades = this.getTrades(from, to);
+		} else if (company.isEmpty()) {
+			trades = this.getTrades(from, to, TradeSide.valueOf(side));
+		} else if (side.isEmpty()) {
+			trades = this.getTrades(from, to, companyService.findByNameStartingWith(company));
+		} else {
+			trades = this.getTrades(from, to, companyService.findByNameStartingWith(company), TradeSide.valueOf(side));
+		}
+		
+		/*trades.forEach(trade->{
+			TradeView view = new TradeView();
+			BeanUtils.copyProperties(trade, view);
+			tradeViews.add(view);
+		});*/
+		
+		for(Trade trade : trades) {
+			TradeView view = new TradeView();
+			BeanUtils.copyProperties(trade, view);
+			tradeViews.add(view);
+		}
+		
+		return tradeViews;
+	}
 }

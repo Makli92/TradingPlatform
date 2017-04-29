@@ -744,7 +744,156 @@ var tradingPlatform = {
 				 	}, 1000);
 			} 
 		},
-		
+		/*Trade View*/
+		'tradeView' : {
+			'config' : {
+				'tradeViewEndpoint' : '/services/trades'
+			},
+			'init': function() {
+				$( ".datepicker" ).datepicker({
+		  			changeMonth: true,
+		  			changeYear: true,
+		  			dateFormat: 'yy-mm-dd'
+		  		});
+		  		
+		  		$("#dateFrom").datepicker( "setDate", new Date() );
+		  		$("#dateTo").datepicker( "setDate", new Date() );
+
+				$('#searchTradeBtn').bind( "click", function( event ) {
+					tradingPlatform.tradeView.tradeViewRetrieve();
+				});
+				
+				tradingPlatform.tradeView.tradeViewRetrieve();
+			},
+			
+			'tradeViewRetrieve': function() {
+				// Empty table contents
+		        $('#tradeViewTable tbody > tr').remove();
+
+		        var payload = tradingPlatform.tradeView.tradeViewPreparePayload();
+		        
+				// Send request
+				$.ajax({
+					type : 'GET',
+					url : tradingPlatform.tradeView.config.tradeViewEndpoint,
+					cache : false,
+					data : payload,
+					success : function(data) {
+						console.log('tradesView:' + JSON.stringify(data));
+						
+						if(data.responseStatus == tradingPlatform.constants.responseStatuses.OK) {
+							if(data.item.tradeViewStatus == tradingPlatform.constants.responseStatuses.OK) {
+								$.each(data.item.item, function(index, row) {
+							        var $tr = 
+							        	$('<tr>').append(
+								            $('<td>').html(row.company),
+								            $('<td>').html(tradingPlatform.utilities.convertDate(row.tradeDate)),
+								            $('<td>').html(row.side),
+								            $('<td>').html(row.quantity),
+								            $('<td>').html(tradingPlatform.utilities.addDecimalDigits(row.orderPriceWithFeeTaxes)),
+								            $('<td>').html(tradingPlatform.utilities.addDecimalDigits(row.unitPrice)),
+								            $('<td>').html(row.status),
+								            $('<td>').html("?")
+								        );
+							        $tr.appendTo('#tradeViewTableBody');
+							    });
+							}
+						} else {
+							tradingPlatform.tradeView.tradeViewMessage(data.responseStatusMessage);
+						}
+					},
+					error : function() {
+						tradingPlatform.tradeView.tradeViewMessage(tradingPlatform.constants.generalErrorMessage);
+					}
+				});
+			},
+			'tradeViewPreparePayload' : function() {
+				// Prepare request payload
+		        var payload = {'from': $("#dateFrom").val(), 'to': $("#dateTo").val()};
+		        
+		        if ($('#sideSelect').val() != "ALL") {
+		            payload.side = $("#sideSelect").val(); 
+		        }
+		        
+		        if ($("#stock").val() != "") {
+		        	payload.company = $("#stock").val();
+		        }
+		        
+		        return payload;
+			},
+			'tradeViewMessage' : function(msg) {
+				$(".classErrorMessage").fadeIn(tradingPlatform.constants.fadeinDelay);
+				$('.classErrorMessage').text(msg)
+				$(".classErrorMessage").fadeOut(tradingPlatform.constants.fadeoutDelay);
+			}
+		},
+		/*Portfolio*/
+		'portfolio' : {
+			'config' : {
+				'portfolioEndpoint' : '/services/portfolio'
+			},
+			'init': function() {
+				$('#searchPortfolioBtn').bind( "click", function( event ) {
+					tradingPlatform.portfolio.portfolioRetrieve();
+				});
+				
+				tradingPlatform.portfolio.portfolioRetrieve();
+			},
+			'portfolioRetrieve': function() {
+//				// Empty table contents
+//		        $('#portfolioTable tbody > tr').remove();
+//
+//		        var payload = tradingPlatform.portfolio.portfolioPreparePayload();
+//		        
+//				// Send request
+//				$.ajax({
+//					type : 'GET',
+//					url : tradingPlatform.portfolio.config.portfolioEndpoint,
+//					cache : false,
+//					data : payload,
+//					success : function(data) {
+//						if(data.responseStatus == tradingPlatform.constants.responseStatuses.OK) {
+//							if(data.item.tradeViewStatus == tradingPlatform.constants.responseStatuses.OK) {
+//								$.each(data.item.item, function(index, row) {
+//							        var $tr = 
+//							        	$('<tr>').append(
+//								            $('<td>').html(row.company),
+//								            $('<td>').html(tradingPlatform.utilities.convertDate(row.tradeDate)),
+//								            $('<td>').html(row.side),
+//								            $('<td>').html(row.quantity),
+//								            $('<td>').html(tradingPlatform.utilities.addDecimalDigits(row.orderPriceWithFeeTaxes)),
+//								            $('<td>').html(tradingPlatform.utilities.addDecimalDigits(row.unitPrice)),
+//								            $('<td>').html(row.status),
+//								            $('<td>').html("?")
+//								        );
+//							        $tr.appendTo('#tradeViewTableBody');
+//							    });
+//							}
+//						} else {
+//							tradingPlatform.tradeView.tradeViewMessage(data.responseStatusMessage);
+//						}
+//					},
+//					error : function() {
+//						tradingPlatform.tradeView.tradeViewMessage(tradingPlatform.constants.generalErrorMessage);
+//					}
+//				});
+			},
+			'portfolioPreparePayload' : function() {
+				// Prepare request payload
+		        var payload = {};
+		        
+		        if ($("#portfolioStock").val() != "") {
+		        	payload.company = $("#portfolioStock").val();
+		        }
+		        
+		        return payload;
+			},
+			'portfolioMessage' : function(msg) {
+				$(".classErrorMessage").fadeIn(tradingPlatform.constants.fadeinDelay);
+				$('.classErrorMessage').text(msg)
+				$(".classErrorMessage").fadeOut(tradingPlatform.constants.fadeoutDelay);
+			}
+		},
 		'buyStocks' : { /* tradingPlatform.buyStocks - Start */
 			'config' : {
 				
@@ -939,5 +1088,22 @@ var tradingPlatform = {
 			    return  false;
 			});
 			
-		} /* tradingPlatform.init - end */
+		}, /* tradingPlatform.init - end */
+		
+		/*Utilities*/
+		'utilities' : {
+			'config' : {
+				'dateFormat' : 'dd/MM/yyyy hh:mm',
+				'digitCount' : 2
+			},
+			'convertDate': function(millisecs) {
+				function pad(month) { return (month < 10) ? '0' + month : month; }
+				var dateObj = new Date(millisecs);
+				return 	[pad(dateObj.getDate()), pad(dateObj.getMonth() + 1), dateObj.getFullYear()].join('-') + " " + 
+						[pad(dateObj.getHours()), pad(dateObj.getMinutes())].join(':');
+			},
+			'addDecimalDigits': function(price, currency = '&euro;') {
+				return currency + price.toFixed(tradingPlatform.utilities.config.digitCount);
+			}
+		}
 };

@@ -72,4 +72,9 @@ public class CompanyServiceImpl implements CompanyService {
 		return null;
 	}
 
+
+	public Company findByNameStartingWith(String company) {
+		return companyRepository.findByNameStartingWith(company);
+	}
+
 }

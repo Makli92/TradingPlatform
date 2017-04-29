@@ -15,6 +15,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
@@ -35,7 +37,7 @@ public class Trade {
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "trade_date", columnDefinition = "DATETIME")
-	private Date trade_date;
+	private Date tradeDate;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
@@ -45,7 +47,7 @@ public class Trade {
 	
 	private Float orderPriceWithoutFeeTaxes;
 
-	private Float unit_price;
+	private Float unitPrice;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
@@ -56,25 +58,33 @@ public class Trade {
 	@OneToMany(mappedBy = "trade", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, orphanRemoval = true)
 	private Set<UserStockTrade> userStockTrade;
 
+	@ManyToOne(optional = false)
+    @JoinColumn(name = "user_id", nullable = false, updatable = false)
+	private User user;
+	
+	@ManyToOne(optional = false)
+    @JoinColumn(name = "company_id", nullable = false, updatable = false)
+	private Company company;
+	
 	public long getId() {
 		return id;
 	}
 
 	@PrePersist
-	void preInserttrade_date() {
-		this.setTrade_date(new Date());
+	void preInserttradeDate() {
+		this.setTradeDate(new Date());
 	}
 	
 	public void setId(long id) {
 		this.id = id;
 	}
 
-	public Date getTrade_date() {
-		return trade_date;
+	public Date getTradeDate() {
+		return tradeDate;
 	}
 
-	public void setTrade_date(Date trade_date) {
-		this.trade_date = trade_date;
+	public void setTradeDate(Date trade_date) {
+		this.tradeDate = trade_date;
 	}
 
 	public Float getOrderPriceWithFeeTaxes() {
@@ -93,12 +103,12 @@ public class Trade {
 		this.orderPriceWithoutFeeTaxes = orderPriceWithoutFeeTaxes;
 	}
 
-	public Float getUnit_price() {
-		return unit_price;
+	public Float getUnitPrice() {
+		return unitPrice;
 	}
 
-	public void setUnit_price(Float unit_price) {
-		this.unit_price = unit_price;
+	public void setUnitPrice(Float unit_price) {
+		this.unitPrice = unit_price;
 	}
 
 	public TradeStatus getStatus() {
@@ -133,9 +143,19 @@ public class Trade {
 		this.side = side;
 	}
 	
-	
-	
-	
-	
-	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
+	}
 }

@@ -25,5 +25,5 @@ public interface CompanyRepository extends PagingAndSortingRepository<Company, L
 	@Query("SELECT c FROM Company c" )
 	public Page<Company> getFirstCompany(Pageable pageable);
 	
-	
+	public Company findByNameStartingWith(String name);
 }
