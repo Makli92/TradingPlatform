@@ -440,17 +440,16 @@ var tradingPlatform = {
 						if(data.responseStatus == tradingPlatform.constants.responseStatuses.OK) {
 							if(data.item.tradeViewStatus == tradingPlatform.constants.responseStatuses.OK) {
 								$.each(data.item.item, function(index, row) {
-									var date = new Date(row.tradeDate);
 							        var $tr = 
 							        	$('<tr>').append(
-								            $('<td>').text(row.company),
-								            $('<td>').text(date),
-								            $('<td>').text(row.side),
-								            $('<td>').text(row.quantity),
-								            $('<td>').text(row.orderPriceWithoutFeeTaxes),
-								            $('<td>').text(row.unitPrice),
-								            $('<td>').text(row.status),
-								            $('<td>').text("?")
+								            $('<td>').html(row.company),
+								            $('<td>').html(tradingPlatform.utilities.convertDate(row.tradeDate)),
+								            $('<td>').html(row.side),
+								            $('<td>').html(row.quantity),
+								            $('<td>').html(row.orderPriceWithFeeTaxes + ' &euro;'),
+								            $('<td>').html(row.unitPrice),
+								            $('<td>').html(row.status),
+								            $('<td>').html("?")
 								        );
 							        $tr.appendTo('#tradeViewTableBody');
 							    });
@@ -494,5 +493,19 @@ var tradingPlatform = {
 			    return  false;
 			});
 			
+		},
+		
+		/*Trade View*/
+		'utilities' : {
+			'config' : {
+				'dateFormat' : 'dd-MM-yyyy hh:mm:ss'
+			},
+			'convertDate': function(millisecs) {
+				function pad(month) { return (month < 10) ? '0' + month : month; }
+				var dateObj = new Date(millisecs);
+				return 	[pad(dateObj.getDate()), pad(dateObj.getMonth() + 1), dateObj.getFullYear()].join('-') + " " + 
+						[pad(dateObj.getHours()), pad(dateObj.getMinutes()), pad(dateObj.getSeconds())].join(':');
+			}
 		}
+		
 };

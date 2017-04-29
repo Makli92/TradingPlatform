@@ -15,7 +15,7 @@ public class TradeView {
 	
 	private int quantity;
 	
-	private Float orderPriceWithoutFeeTaxes;
+	private Float orderPriceWithFeeTaxes;
 	
 	private Float unitPrice;
 	
@@ -53,12 +53,12 @@ public class TradeView {
 		this.quantity = quantity;
 	}
 
-	public Float getOrderPriceWithoutFeeTaxes() {
-		return orderPriceWithoutFeeTaxes;
+	public Float getOrderPriceWithFeeTaxes() {
+		return orderPriceWithFeeTaxes;
 	}
 
-	public void setOrderPriceWithoutFeeTaxes(Float orderPriceWithoutFeeTaxes) {
-		this.orderPriceWithoutFeeTaxes = orderPriceWithoutFeeTaxes;
+	public void setOrderPriceWithFeeTaxes(Float orderPriceWithFeeTaxes) {
+		this.orderPriceWithFeeTaxes = orderPriceWithFeeTaxes;
 	}
 
 	public Float getUnitPrice() {
