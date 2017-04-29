@@ -58,7 +58,7 @@
 			});
 			
 			tradingPlatform.showUserDetails.init();
-			tradingPlatform.autoCompleteSearch.init();
+			/* tradingPlatform.autoCompleteSearch.init(); */
 			tradingPlatform.tradeView.init();
 		});
 	

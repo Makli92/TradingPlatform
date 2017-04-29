@@ -361,7 +361,7 @@ var tradingPlatform = {
 									
 									$('.customClassLoggedInUsername').text(data.item.item.username);
 									
-									$('.customClassLoggedInCash').html(data.item.item.cashBalance + '&euro;');
+									$('.customClassLoggedInCash').html(tradingPlatform.utilities.addDecimalDigits(data.item.item.cashBalance));
 									
 								}, 1000 );
 								
@@ -827,8 +827,7 @@ var tradingPlatform = {
 				$(".classErrorMessage").fadeOut(tradingPlatform.constants.fadeoutDelay);
 			}
 		},
-		/*Portfolio*/
-		'portfolio' : {
+		'portfolio' : {			/* Portfolio - Start */
 			'config' : {
 				'portfolioEndpoint' : '/services/portfolio'
 			},
@@ -857,14 +856,18 @@ var tradingPlatform = {
 								$.each(data.item.item, function(index, row) {
 							        var $tr = 
 							        	$('<tr>').append(
-								            $('<td>').html(row.company),
+								            $('<td>').html(row.company.name),
 								            $('<td>').html(row.quantity),
 								            $('<td>').html(tradingPlatform.utilities.addDecimalDigits(row.nominalValue)),
 								            $('<td>').html(tradingPlatform.utilities.addDecimalDigits(row.value)),
-								            $('<td>').html(row.portfolioPercentage),
-								            $('<td>').html("<button>" + row.newOrderUrl + "</button>")
+								            $('<td>').html(tradingPlatform.utilities.addDecimalDigits(row.portfolioPercentage, ' %')),
+								            $('<td>').html("<button class='btn btn-info customClassOpenNewOrder' id='" + row.company.id + "' companyLabel='" + row.company.name + "'>New Order</button>")
 								        );
 							        $tr.appendTo('#portfolioTableBody');
+							        
+						            $('.customClassOpenNewOrder').click(function() {
+					            	   window.location = "newOrder/" + this.id + "/" + this.getAttribute('companyLabel');
+					            	});
 							    });
 							}
 						} else {
@@ -887,7 +890,7 @@ var tradingPlatform = {
 				$('.classErrorMessage').text(msg)
 				$(".classErrorMessage").fadeOut(tradingPlatform.constants.fadeoutDelay);
 			}
-		},
+		},	/* Portfolio - End */
 		'buyStocks' : { /* tradingPlatform.buyStocks - Start */
 			'config' : {
 				
