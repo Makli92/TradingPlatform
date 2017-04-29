@@ -241,6 +241,8 @@
                     				</button>
                 				</span>
                         		</div>
+                        		
+								<p class="classErrorMessage small text-danger"></p>
                         	</li>
                         </ol>
                     </div>

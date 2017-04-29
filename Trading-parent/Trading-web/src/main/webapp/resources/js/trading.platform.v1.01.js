@@ -446,22 +446,20 @@ var tradingPlatform = {
 								            $('<td>').html(tradingPlatform.utilities.convertDate(row.tradeDate)),
 								            $('<td>').html(row.side),
 								            $('<td>').html(row.quantity),
-								            $('<td>').html(row.orderPriceWithFeeTaxes + ' &euro;'),
-								            $('<td>').html(row.unitPrice),
+								            $('<td>').html('&euro;' + tradingPlatform.utilities.addDecimalDigits(row.orderPriceWithFeeTaxes)),
+								            $('<td>').html('&euro;' + tradingPlatform.utilities.addDecimalDigits(row.unitPrice)),
 								            $('<td>').html(row.status),
 								            $('<td>').html("?")
 								        );
 							        $tr.appendTo('#tradeViewTableBody');
 							    });
-//								tradingPlatform.forgotPass.forgotPassMessage(data.item.forgotStatusMessage);
 							}
 						} else {
-//							tradingPlatform.forgotPass.forgotPassMessage(data.responseStatusMessage);
+							tradingPlatform.tradeView.tradeViewMessage(data.responseStatusMessage);
 						}
 					},
 					error : function() {
-						tradingPlatform.tradeView.loginMessage(tradingPlatform.constants.generalErrorMessage);
-						console.log ('TradeView error');
+						tradingPlatform.tradeView.tradeViewMessage(tradingPlatform.constants.generalErrorMessage);
 					}
 				});
 			},
@@ -480,9 +478,9 @@ var tradingPlatform = {
 		        return payload;
 			},
 			'tradeViewMessage' : function(msg) {
-//				$(".customclassForgotPassMessage").fadeIn(tradingPlatform.constants.fadeinDelay);
-//				$('.customclassForgotPassMessage').text(msg)
-//				$(".customclassForgotPassMessage").fadeOut(tradingPlatform.constants.fadeoutDelay);
+				$(".classErrorMessage").fadeIn(tradingPlatform.constants.fadeinDelay);
+				$('.classErrorMessage').text(msg)
+				$(".classErrorMessage").fadeOut(tradingPlatform.constants.fadeoutDelay);
 			}
 		},
 		'init': function() {
@@ -495,16 +493,20 @@ var tradingPlatform = {
 			
 		},
 		
-		/*Trade View*/
+		/*Utilities*/
 		'utilities' : {
 			'config' : {
-				'dateFormat' : 'dd-MM-yyyy hh:mm:ss'
+				'dateFormat' : 'dd/MM/yyyy hh:mm',
+				'digitCount' : 2
 			},
 			'convertDate': function(millisecs) {
 				function pad(month) { return (month < 10) ? '0' + month : month; }
 				var dateObj = new Date(millisecs);
 				return 	[pad(dateObj.getDate()), pad(dateObj.getMonth() + 1), dateObj.getFullYear()].join('-') + " " + 
-						[pad(dateObj.getHours()), pad(dateObj.getMinutes()), pad(dateObj.getSeconds())].join(':');
+						[pad(dateObj.getHours()), pad(dateObj.getMinutes())].join(':');
+			},
+			'addDecimalDigits': function(price) {
+				return price.toFixed(tradingPlatform.utilities.config.digitCount);
 			}
 		}
 		
