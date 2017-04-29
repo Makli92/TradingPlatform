@@ -483,6 +483,73 @@ var tradingPlatform = {
 				$(".classErrorMessage").fadeOut(tradingPlatform.constants.fadeoutDelay);
 			}
 		},
+		/*Portfolio*/
+		'portfolio' : {
+			'config' : {
+				'portfolioEndpoint' : '/services/portfolio'
+			},
+			'init': function() {
+				$('#searchPortfolioBtn').bind( "click", function( event ) {
+					tradingPlatform.portfolio.portfolioRetrieve();
+				});
+				
+				tradingPlatform.portfolio.portfolioRetrieve();
+			},
+			'portfolioRetrieve': function() {
+//				// Empty table contents
+//		        $('#portfolioTable tbody > tr').remove();
+//
+//		        var payload = tradingPlatform.portfolio.portfolioPreparePayload();
+//		        
+//				// Send request
+//				$.ajax({
+//					type : 'GET',
+//					url : tradingPlatform.portfolio.config.portfolioEndpoint,
+//					cache : false,
+//					data : payload,
+//					success : function(data) {
+//						if(data.responseStatus == tradingPlatform.constants.responseStatuses.OK) {
+//							if(data.item.tradeViewStatus == tradingPlatform.constants.responseStatuses.OK) {
+//								$.each(data.item.item, function(index, row) {
+//							        var $tr = 
+//							        	$('<tr>').append(
+//								            $('<td>').html(row.company),
+//								            $('<td>').html(tradingPlatform.utilities.convertDate(row.tradeDate)),
+//								            $('<td>').html(row.side),
+//								            $('<td>').html(row.quantity),
+//								            $('<td>').html(tradingPlatform.utilities.addDecimalDigits(row.orderPriceWithFeeTaxes)),
+//								            $('<td>').html(tradingPlatform.utilities.addDecimalDigits(row.unitPrice)),
+//								            $('<td>').html(row.status),
+//								            $('<td>').html("?")
+//								        );
+//							        $tr.appendTo('#tradeViewTableBody');
+//							    });
+//							}
+//						} else {
+//							tradingPlatform.tradeView.tradeViewMessage(data.responseStatusMessage);
+//						}
+//					},
+//					error : function() {
+//						tradingPlatform.tradeView.tradeViewMessage(tradingPlatform.constants.generalErrorMessage);
+//					}
+//				});
+			},
+			'portfolioPreparePayload' : function() {
+				// Prepare request payload
+		        var payload = {};
+		        
+		        if ($("#portfolioStock").val() != "") {
+		        	payload.company = $("#portfolioStock").val();
+		        }
+		        
+		        return payload;
+			},
+			'portfolioMessage' : function(msg) {
+				$(".classErrorMessage").fadeIn(tradingPlatform.constants.fadeinDelay);
+				$('.classErrorMessage').text(msg)
+				$(".classErrorMessage").fadeOut(tradingPlatform.constants.fadeoutDelay);
+			}
+		},
 		'init': function() {
 
 			// Prevent submitting  form

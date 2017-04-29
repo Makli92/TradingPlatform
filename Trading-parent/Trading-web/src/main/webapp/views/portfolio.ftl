@@ -57,7 +57,7 @@
 			});
 		
 			tradingPlatform.showUserDetails.init();
-		
+			tradingPlatform.portfolio.init();
 		});
 	
 	</script>
@@ -216,6 +216,19 @@
                                 <i class="fa fa-dashboard"></i> Cash: <span class="customClassLoggedInCash"><span class="customClassLoggedInCash"><i class="fa fa-spinner fa-spin" style="font-size:16px"></i></i></span>
                             </li>
                         </ol>
+                        <ol class="breadcrumb form-group input-group">
+                        	<li>
+	                    		<div class="form-group input-group">
+	                    		<input type="text" id="portfolioStock" class="form-control customClassAutoCompleteSearchInput" placeholder="Search Stock...">
+	                    		<span class="input-group-btn">
+	                    			<button class="btn btn-default" type="button" id="searchPortfolioBtn">
+	                    				<i class="fa fa-search" ></i>
+	                				</button>
+	            				</span>
+	                    		</div>
+								<p class="classErrorMessage small text-danger"></p>
+                        	</li>
+                        </ol>
                     </div>
                 </div>
                 <!-- /.row -->
@@ -224,7 +237,7 @@
                     <div class="col-lg-6">
 
 
-                            <table class="table table-bordered table-hover">
+                            <table class="table table-bordered table-hover" id="portfolioTable">
                                 <thead>
                                     <tr>
                                         <th>Stock</th>
@@ -237,36 +250,7 @@
                                         <th>Order Details</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Accenture</td>
-                                        <td>23/04/2017 19:30 PM</td>
-                                        <td>Buy</td>
-                                        <td>220</td>
-                                        <td>€220,0</td>
-                                        <td>2,2€</td>
-                                        <td>Completed</td>
-                                        <td> - </td>
-
-                                    </tr>
-                                    <tr>
-
-                                    </tr>
-                                    <tr>
-
-                                    </tr>
-                                    <tr>
-
-                                    </tr>
-                                    <tr>
-
-                                    </tr>
-                                    <tr>
-
-                                    </tr>
-                                    <tr>
-
-                                    </tr>
+                                <tbody id="portfolioTableBody">
                                 </tbody>
                             </table>
                         </div>
