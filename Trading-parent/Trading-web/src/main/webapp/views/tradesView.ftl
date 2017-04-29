@@ -58,6 +58,7 @@
 			});
 			
 			tradingPlatform.showUserDetails.init();
+			tradingPlatform.autoCompleteSearch.init();
 			tradingPlatform.tradeView.init();
 		});
 	
@@ -226,7 +227,7 @@
                         		Date to : <input type="text" class="datepicker form-control" id="dateTo">
                         	</li>
                         	<li>
-                        		Side :  <select "id"="sideSelect" name="sideSelect" class="form-control">
+                        		Side :  <select id="sideSelect" name="sideSelect" class="form-control">
 											<option value="ALL" selected="selected">-</option> 
 											<option value="BUY">Buy</option>
 											<option value="SELL">Sell</option>
@@ -234,7 +235,12 @@
                         	</li>
                         	<li>
                         		<div class="form-group input-group">
-                        		<input type="text" id="stock" class="form-control" placeholder="Search Stock..."><span class="input-group-btn"><button class="btn btn-default" type="button" id="searchTradeBtn"><i class="fa fa-search" ></i></button></span>
+                        		<input type="text" id="stock" class="form-control customClassAutoCompleteSearchInput" placeholder="Search Stock...">
+                        		<span class="input-group-btn">
+                        			<button class="btn btn-default" type="button" id="searchTradeBtn">
+                        				<i class="fa fa-search" ></i>
+                    				</button>
+                				</span>
                         		</div>
                         	</li>
                         </ol>
@@ -260,17 +266,6 @@
                                     </tr>
                                 </thead>
                                 <tbody id="tradeViewTableBody">
-                                    <!-- <tr>
-                                        <td>Accenture</td>
-                                        <td>23/04/2017 19:30 PM</td>
-                                        <td>Buy</td>
-                                        <td>220</td>
-                                        <td>€220,0</td>
-                                        <td>2,2€</td>
-                                        <td>Completed</td>
-                                        <td> - </td>
-
-                                    </tr> -->
 								</tbody>
                             </table>
                         </div>

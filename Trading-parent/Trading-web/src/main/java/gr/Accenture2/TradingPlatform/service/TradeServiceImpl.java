@@ -179,11 +179,17 @@ public class TradeServiceImpl implements TradeService {
 			trades = this.getTrades(from, to, companyService.findByNameStartingWith(company), TradeSide.valueOf(side));
 		}
 		
-		trades.forEach(trade->{
+		/*trades.forEach(trade->{
 			TradeView view = new TradeView();
 			BeanUtils.copyProperties(trade, view);
 			tradeViews.add(view);
-		});
+		});*/
+		
+		for(Trade trade : trades) {
+			TradeView view = new TradeView();
+			BeanUtils.copyProperties(trade, view);
+			tradeViews.add(view);
+		}
 		
 		return tradeViews;
 	}

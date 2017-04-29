@@ -426,9 +426,8 @@ var tradingPlatform = {
 				// Empty table contents
 		        $('#tradeViewTable tbody > tr').remove();
 
-//		        console.log("Before ");
 		        var payload = tradingPlatform.tradeView.tradeViewPreparePayload();
-//		        console.log("After ");
+		        
 				// Send request
 				$.ajax({
 					type : 'GET',
@@ -454,7 +453,6 @@ var tradingPlatform = {
 								            $('<td>').text("?")
 								        );
 							        $tr.appendTo('#tradeViewTableBody');
-//							        console.log($tr.wrap('<p>').html());
 							    });
 //								tradingPlatform.forgotPass.forgotPassMessage(data.item.forgotStatusMessage);
 							}
@@ -469,11 +467,10 @@ var tradingPlatform = {
 				});
 			},
 			'tradeViewPreparePayload' : function() {
-				console.log("INSIDE ");
 				// Prepare request payload
 		        var payload = {'from': $("#dateFrom").val(), 'to': $("#dateTo").val()};
 		        
-		        if ($('#sideSelect').find(":selected").val() != "ALL") {
+		        if ($('#sideSelect').val() != "ALL") {
 		            payload.side = $("#side").val(); 
 		        }
 		        
