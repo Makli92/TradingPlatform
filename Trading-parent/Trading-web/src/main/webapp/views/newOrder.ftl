@@ -270,7 +270,7 @@
                                         <i class="fa fa-shopping-cart fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge customClassNewOrderBuyStockPriceWithoutTaxes customClassBackEndDataLoading"><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></div>
+                                        <div style="font-size:32px" class=" customClassNewOrderBuyStockPriceWithoutTaxes customClassBackEndDataLoading"><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></div>
                                         <div>Availble stocks:&nbsp;<span class="customClassAvaiableStockForPurchase"><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></div>
                                     </div>
                                 </div>
@@ -296,7 +296,7 @@
                                         <i class="fa fa-money fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge customClassNewOrderSellStockPriceWithoutTaxes customClassBackEndDataLoading"><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></div>
+                                        <div  style="font-size:32px"  class=" customClassNewOrderSellStockPriceWithoutTaxes customClassBackEndDataLoading"><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></div>
                                         <div>My Stocks:&nbsp;<span class="customClassNumberOfUserPurchaseStock"><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></div>
                                     </div>
                                 </div>
@@ -315,6 +315,36 @@
 
                         </div>
                     </div>
+
+
+					<div class="col-lg-6" text-center>
+                         <!-- <h2>Statistics</h2> -->
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover table-striped" style="text-align: center;">
+                                <tbody>
+                                    <tr>
+                                        <td><strong>DAY LOW</strong><br>
+                                        <span class="customClass1" ><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></span></td>
+                                        <td><strong>DAY HIGH</strong><br>
+                                        <span class="customClass1" ><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></span></td>
+                                        <td><strong>VOLUME</strong><br>
+                                        <span class="customClass1" ><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>LIMIT UP</strong><br>
+                                        <span class="customClass1" ><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></span></td>
+                                        <td><strong>LIMIT DOWN</strong><br>
+                                        <span class="customClass1" ><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></span></td>
+                                        <td><strong>CLOSE</strong><br>
+                                        <span class="customClass1" ><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+
 
                 </div>
                 <!-- /.row -->
@@ -385,6 +415,33 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <div class="col-lg-6 pull-right">
+                         <!-- <h2>Statistics</h2> -->
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover table-striped" style="text-align: center;">
+                                <tbody>
+                                    <tr>
+                                        <td><strong>BUY </strong> / Size</td>
+                                        <td><strong>SELL </strong> / Size</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong><span class="customClass1" ><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></td>                                
+                                        <td><strong><span class="customClass1" ><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></td>  
+                                    </tr>
+                                    <tr>
+                                        <td><strong><span class="customClass1" ><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></td>                                
+                                        <td><strong><span class="customClass1" ><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></td>  
+                                    </tr>
+                                    <tr>
+                                        <td><strong><span class="customClass1" ><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></td>                                
+                                        <td><strong><span class="customClass1" ><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></td>  
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
                     
 				</div>   <!-- /.row -->
 				<div class="row">
