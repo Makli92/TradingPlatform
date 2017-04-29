@@ -27,6 +27,8 @@ public class ApiNewOrderData {
 	Long avaiableStockForPurchase;
 	
 	Long numberOfUserPurchaseStock;
+	
+	Integer volume;
 
 	public ApiCompany getCompany() {
 		return company;
@@ -151,6 +153,14 @@ public class ApiNewOrderData {
 
 	public void setNumberOfUserPurchaseStock(Long numberOfUserPurchaseStock) {
 		this.numberOfUserPurchaseStock = numberOfUserPurchaseStock;
+	}
+
+	public Integer getVolume() {
+		return volume;
+	}
+
+	public void setVolume(Integer volume) {
+		this.volume = volume;
 	}
 	
 	

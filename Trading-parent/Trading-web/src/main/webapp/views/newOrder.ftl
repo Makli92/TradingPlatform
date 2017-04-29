@@ -324,11 +324,11 @@
                                 <tbody>
                                     <tr>
                                         <td><strong>DAY LOW</strong><br>
-                                        <span class="customClass1" ><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></span></td>
+                                        <span class="customClassDayLow" ><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></span></td>
                                         <td><strong>DAY HIGH</strong><br>
-                                        <span class="customClass1" ><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></span></td>
+                                        <span class="customClassDayHigh" ><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></span></td>
                                         <td><strong>VOLUME</strong><br>
-                                        <span class="customClass1" ><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></span></td>
+                                        <span class="customClassVolume"  ><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></span></td>
                                     </tr>
                                     <tr>
                                         <td><strong>LIMIT UP</strong><br>

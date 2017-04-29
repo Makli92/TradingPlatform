@@ -686,6 +686,8 @@ var tradingPlatform = {
 										
 										$(".customClassNumberOfUserPurchaseStock").text(data.item.item.numberOfUserPurchaseStock); //ok
 										
+										$(".customClassVolume").text(data.item.item.volume);
+										
 										
 										
 										if($("input[name=customNameSIDE]:checked").val() == tradingPlatform.constants.SIDE.BUY ){

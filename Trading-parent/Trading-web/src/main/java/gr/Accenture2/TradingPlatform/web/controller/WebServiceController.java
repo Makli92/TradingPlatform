@@ -1,6 +1,8 @@
 package gr.Accenture2.TradingPlatform.web.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -338,6 +340,18 @@ public class WebServiceController {
 		apiNewOrderData.setAvaiableStockForPurchase(stockService.getAvaiableStockForPurchase(company));
 		
 		apiNewOrderData.setNumberOfUserPurchaseStock(userStockTradeService.getNumberOfUserStockTrades(company, userService.findByUsername(securityService.findLoggedInUsername())));
+		
+
+		
+		 Calendar cal = Calendar.getInstance();
+		 cal.set(Calendar.HOUR_OF_DAY, 0);
+		 cal.set(Calendar.MINUTE, 0);
+		 cal.set(Calendar.SECOND, 0);
+		 cal.set(Calendar.MILLISECOND,0);
+		 Date fromDate = cal.getTime();
+		 Date toDate = new Date();
+		
+		 apiNewOrderData.setVolume(tradeService.getTrades(fromDate, toDate).size());
 		
 		tradeService.calculatePurchasePriceWithFeeTaxes(company, 1);
 
