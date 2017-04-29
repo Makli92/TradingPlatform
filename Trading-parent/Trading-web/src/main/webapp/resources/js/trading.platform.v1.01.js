@@ -452,7 +452,7 @@ var tradingPlatform = {
 								    	
 								    	//alert("selected!:"+ JSON.stringify(ui));
 								    	
-								        event.preventDefault();
+//								        event.preventDefault();
 								        $(".customClassAutoCompleteSearchInput").val(ui.item.label);
 								    	
 								    	
@@ -840,51 +840,45 @@ var tradingPlatform = {
 				tradingPlatform.portfolio.portfolioRetrieve();
 			},
 			'portfolioRetrieve': function() {
-//				// Empty table contents
-//		        $('#portfolioTable tbody > tr').remove();
-//
-//		        var payload = tradingPlatform.portfolio.portfolioPreparePayload();
-//		        
-//				// Send request
-//				$.ajax({
-//					type : 'GET',
-//					url : tradingPlatform.portfolio.config.portfolioEndpoint,
-//					cache : false,
-//					data : payload,
-//					success : function(data) {
-//						if(data.responseStatus == tradingPlatform.constants.responseStatuses.OK) {
-//							if(data.item.tradeViewStatus == tradingPlatform.constants.responseStatuses.OK) {
-//								$.each(data.item.item, function(index, row) {
-//							        var $tr = 
-//							        	$('<tr>').append(
-//								            $('<td>').html(row.company),
-//								            $('<td>').html(tradingPlatform.utilities.convertDate(row.tradeDate)),
-//								            $('<td>').html(row.side),
-//								            $('<td>').html(row.quantity),
-//								            $('<td>').html(tradingPlatform.utilities.addDecimalDigits(row.orderPriceWithFeeTaxes)),
-//								            $('<td>').html(tradingPlatform.utilities.addDecimalDigits(row.unitPrice)),
-//								            $('<td>').html(row.status),
-//								            $('<td>').html("?")
-//								        );
-//							        $tr.appendTo('#tradeViewTableBody');
-//							    });
-//							}
-//						} else {
-//							tradingPlatform.tradeView.tradeViewMessage(data.responseStatusMessage);
-//						}
-//					},
-//					error : function() {
-//						tradingPlatform.tradeView.tradeViewMessage(tradingPlatform.constants.generalErrorMessage);
-//					}
-//				});
+				// Empty table contents
+		        $('#portfolioTable tbody > tr').remove();
+
+		        var payload = tradingPlatform.portfolio.portfolioPreparePayload();
+		        
+				// Send request
+				$.ajax({
+					type : 'GET',
+					url : tradingPlatform.portfolio.config.portfolioEndpoint,
+					cache : false,
+					data : payload,
+					success : function(data) {
+						if(data.responseStatus == tradingPlatform.constants.responseStatuses.OK) {
+							if(data.item.portfolioStatus == tradingPlatform.constants.responseStatuses.OK) {
+								$.each(data.item.item, function(index, row) {
+							        var $tr = 
+							        	$('<tr>').append(
+								            $('<td>').html(row.company),
+								            $('<td>').html(row.quantity),
+								            $('<td>').html(tradingPlatform.utilities.addDecimalDigits(row.nominalValue)),
+								            $('<td>').html(tradingPlatform.utilities.addDecimalDigits(row.value)),
+								            $('<td>').html(row.portfolioPercentage),
+								            $('<td>').html("<button>" + row.newOrderUrl + "</button>")
+								        );
+							        $tr.appendTo('#portfolioTableBody');
+							    });
+							}
+						} else {
+							tradingPlatform.portfolio.portfolioMessage(data.responseStatusMessage);
+						}
+					},
+					error : function() {
+						tradingPlatform.portfolio.portfolioMessage(tradingPlatform.constants.generalErrorMessage);
+					}
+				});
 			},
 			'portfolioPreparePayload' : function() {
 				// Prepare request payload
-		        var payload = {};
-		        
-		        if ($("#portfolioStock").val() != "") {
-		        	payload.company = $("#portfolioStock").val();
-		        }
+		        var payload = {'company': $("#portfolioStock").val()};
 		        
 		        return payload;
 			},
