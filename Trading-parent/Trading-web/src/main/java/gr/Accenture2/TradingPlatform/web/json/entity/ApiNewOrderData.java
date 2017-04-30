@@ -1,5 +1,14 @@
 package gr.Accenture2.TradingPlatform.web.json.entity;
 
+import gr.Accenture2.TradingPlatform.core.entity.Trade;
+
+import java.util.List;
+import java.util.Set;
+
+/**
+ * @author Billy
+ *
+ */
 /**
  * @author Billy
  *
@@ -27,6 +36,24 @@ public class ApiNewOrderData {
 	Long avaiableStockForPurchase;
 	
 	Long numberOfUserPurchaseStock;
+	
+	List<Trade> buyLastTrades;
+	
+	List<Trade> sellLastTrades;
+	
+	Integer volume;
+	
+	ApiLastTrades buyLastTrade1;
+	
+	ApiLastTrades buyLastTrade2;
+
+	ApiLastTrades buyLastTrade3;
+	
+	ApiLastTrades sellLastTrade1;
+	
+	ApiLastTrades sellLastTrade2;
+	
+	ApiLastTrades sellLastTrade3;
 
 	public ApiCompany getCompany() {
 		return company;
@@ -152,8 +179,80 @@ public class ApiNewOrderData {
 	public void setNumberOfUserPurchaseStock(Long numberOfUserPurchaseStock) {
 		this.numberOfUserPurchaseStock = numberOfUserPurchaseStock;
 	}
-	
-	
+
+	public Integer getVolume() {
+		return volume;
+	}
+
+	public void setVolume(Integer volume) {
+		this.volume = volume;
+	}
+
+	public List<Trade> getBuyLastTrades() {
+		return buyLastTrades;
+	}
+
+	public void setBuyLastTrades(List<Trade> buyLastTrades) {
+		this.buyLastTrades = buyLastTrades;
+	}
+
+	public List<Trade> getSellLastTrades() {
+		return sellLastTrades;
+	}
+
+	public void setSellLastTrades(List<Trade> sellLastTrades) {
+		this.sellLastTrades = sellLastTrades;
+	}
+
+	public ApiLastTrades getBuyLastTrade1() {
+		return buyLastTrade1;
+	}
+
+	public void setBuyLastTrade1(ApiLastTrades buyLastTrade1) {
+		this.buyLastTrade1 = buyLastTrade1;
+	}
+
+	public ApiLastTrades getBuyLastTrade2() {
+		return buyLastTrade2;
+	}
+
+	public void setBuyLastTrade2(ApiLastTrades buyLastTrade2) {
+		this.buyLastTrade2 = buyLastTrade2;
+	}
+
+	public ApiLastTrades getBuyLastTrade3() {
+		return buyLastTrade3;
+	}
+
+	public void setBuyLastTrade3(ApiLastTrades buyLastTrade3) {
+		this.buyLastTrade3 = buyLastTrade3;
+	}
+
+	public ApiLastTrades getSellLastTrade1() {
+		return sellLastTrade1;
+	}
+
+	public void setSellLastTrade1(ApiLastTrades sellLastTrade1) {
+		this.sellLastTrade1 = sellLastTrade1;
+	}
+
+	public ApiLastTrades getSellLastTrade2() {
+		return sellLastTrade2;
+	}
+
+	public void setSellLastTrade2(ApiLastTrades sellLastTrade2) {
+		this.sellLastTrade2 = sellLastTrade2;
+	}
+
+	public ApiLastTrades getSellLastTrade3() {
+		return sellLastTrade3;
+	}
+
+	public void setSellLastTrade3(ApiLastTrades sellLastTrade3) {
+		this.sellLastTrade3 = sellLastTrade3;
+	}
+
+
 
 	
 	

@@ -686,7 +686,98 @@ var tradingPlatform = {
 										
 										$(".customClassNumberOfUserPurchaseStock").text(data.item.item.numberOfUserPurchaseStock); //ok
 										
+										$(".customClassVolume").text(data.item.item.volume);
 										
+										$(".customClassClose").text("123.03$");
+										$(".customClassLimitDown").text("122.01$");
+										$(".customClassLimitUp").text("125.01$");
+										$(".customClassDayHigh").text("124.56$");
+										$(".customClassDayLow").text("122.01$");
+										
+										
+										if(data.item.item.buyLastTrade1 == null){
+											
+											$(".customClassBuyLast1").html( "");
+											
+										}else{
+											
+											$(".customClassBuyLast1").html( "<strong>" + tradingPlatform.utilities.addDecimalDigits(data.item.item.buyLastTrade1.price) + "</strong>  / " + data.item.item.buyLastTrade1.quantity);
+
+										}
+										
+										if(data.item.item.buyLastTrade2 == null){
+											
+											$(".customClassBuyLast2").html( "");
+											
+										}else{
+											
+											$(".customClassBuyLast2").html( "<strong>" + tradingPlatform.utilities.addDecimalDigits(data.item.item.buyLastTrade2.price) + "</strong>  / " + data.item.item.buyLastTrade2.quantity);
+
+										}
+										
+										if(data.item.item.buyLastTrade3 == null){
+											
+											$(".customClassBuyLast3").html( "");
+											
+										}else{
+											
+											$(".customClassBuyLast3").html( "<strong>" + tradingPlatform.utilities.addDecimalDigits(data.item.item.buyLastTrade3.price) + "</strong>  / " + data.item.item.buyLastTrade3.quantity);
+
+										}
+										
+									if(data.item.item.sellLastTrade1 == null){
+											
+											$(".customClassSellLast1").html( "");
+											
+										}else{
+											
+											$(".customClassSellLast1").html( "<strong>" + tradingPlatform.utilities.addDecimalDigits(data.item.item.sellLastTrade1.price) + "</strong>  / " + data.item.item.sellLastTrade1.quantity);
+
+										}
+										
+										if(data.item.item.sellLastTrade2 == null){
+											
+											$(".customClassSellLast2").html( "");
+											
+										}else{
+											
+											$(".customClassSellLast2").html( "<strong>" + tradingPlatform.utilities.addDecimalDigits(data.item.item.sellLastTrade2.price) + "</strong>  / " + data.item.item.sellLastTrade2.quantity);
+
+										}
+										
+										if(data.item.item.sellLastTrade3 == null){
+											
+											$(".customClassSellLast3").html( "");
+											
+										}else{
+											
+											$(".customClassSellLast3").html( "<strong>" + tradingPlatform.utilities.addDecimalDigits(data.item.item.sellLastTrade3.price) + "</strong>  / " + data.item.item.sellLastTrade3.quantity);
+
+										}
+										
+			/*
+						
+										for (var i = 0; i < data.item.item.buyLastTrades.length; i++) {
+
+											$(".customClassBuyLast1").html( "<strong>" + tradingPlatform.utilities.addDecimalDigits(data.item.item.buyLastTrades[i].unitPrice) + "</strong>  / " + data.item.item.buyLastTrades[i].quantity);
+
+											$(".customClassBuyLast2").html( "<strong>" + tradingPlatform.utilities.addDecimalDigits(data.item.item.buyLastTrades[i].unitPrice) + "</strong>  / " + data.item.item.buyLastTrades[i].quantity);
+
+											$(".customClassBuyLast3").html( "<strong>" + tradingPlatform.utilities.addDecimalDigits(data.item.item.buyLastTrades[i].unitPrice) + "</strong>  / " + data.item.item.buyLastTrades[i].quantity);
+
+										}
+										
+										for (var i = 0; i < data.item.item.sellLastTrades.length; i++) {
+
+											$(".customClassSellLast1").html( "<strong>" + tradingPlatform.utilities.addDecimalDigits(data.item.item.sellLastTrades[i].unitPrice) + "</strong>  / " + data.item.item.sellLastTrades[i].quantity);
+
+											$(".customClassSellLast2").html( "<strong>" + tradingPlatform.utilities.addDecimalDigits(data.item.item.sellLastTrades[i].unitPrice) + "</strong>  / " + data.item.item.sellLastTrades[i].quantity);
+
+											$(".customClassSellLast3").html( "<strong>" + tradingPlatform.utilities.addDecimalDigits(data.item.item.sellLastTrades[i].unitPrice) + "</strong>  / " + data.item.item.sellLastTrades[i].quantity);
+
+										}
+										
+										*/
 										
 										if($("input[name=customNameSIDE]:checked").val() == tradingPlatform.constants.SIDE.BUY ){
 											
@@ -761,6 +852,7 @@ var tradingPlatform = {
 		  		$("#dateTo").datepicker( "setDate", new Date() );
 
 				$('#searchTradeBtn').bind( "click", function( event ) {
+				
 					tradingPlatform.tradeView.tradeViewRetrieve();
 				});
 				
@@ -794,7 +886,7 @@ var tradingPlatform = {
 								            $('<td>').html(tradingPlatform.utilities.addDecimalDigits(row.orderPriceWithFeeTaxes)),
 								            $('<td>').html(tradingPlatform.utilities.addDecimalDigits(row.unitPrice)),
 								            $('<td>').html(row.status),
-								            $('<td>').html("?")
+								            $('<td>').html("<i class=\"fa fa-file-text-o fa-2x\"></i>")
 								        );
 							        $tr.appendTo('#tradeViewTableBody');
 							    });
@@ -833,7 +925,8 @@ var tradingPlatform = {
 				'portfolioEndpoint' : '/services/portfolio'
 			},
 			'init': function() {
-				$('#searchPortfolioBtn').bind( "click", function( event ) {
+				$('#searchTradeBtn').bind( "click", function( event ) {
+					//alert("Vasilis");
 					tradingPlatform.portfolio.portfolioRetrieve();
 				});
 				

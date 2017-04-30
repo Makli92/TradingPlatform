@@ -10,7 +10,10 @@ public enum StringEnumeration {
 	/** String "1"  */
 	ONE("1"),
 	/** role User  */
-	USER("User");
+	USER("User"),
+	USER_ALREADY_EXISTS("userAlreadyExists");
+	
+	;
 	
 	private String string;
 

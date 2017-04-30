@@ -244,4 +244,11 @@ public class TradeServiceImpl implements TradeService {
 		
 		return tradeViews;
 	}
+	
+	public List<Trade> findTop3BySideOrderByIdDesc(TradeSide side){
+		
+		return tradeRepository.findFirst3BySideOrderByIdDesc(side);
+	}
+	
+	
 }
