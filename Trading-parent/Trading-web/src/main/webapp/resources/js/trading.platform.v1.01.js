@@ -669,15 +669,15 @@ var tradingPlatform = {
 										
 										
 										$(".customClassNewOrderCompanyName").text(data.item.item.company.name);
-										
-										$(".customClassNewOrderBuyStockPriceWithoutTaxes").text($.formatNumber(data.item.item.oneStockBuyPrice, tradingPlatform.constants.numberFormatGreek) + '$');
-										$(".customClassNewOrderSellStockPriceWithoutTaxes").text($.formatNumber(data.item.item.oneStockSellPrice, tradingPlatform.constants.numberFormatGreek) + '$');
+//										addDecimalDigits('number', 'currency')
+										$(".customClassNewOrderBuyStockPriceWithoutTaxes").text(tradingPlatform.utilities.addDecimalDigits(data.item.item.oneStockBuyPrice));
+										$(".customClassNewOrderSellStockPriceWithoutTaxes").text(tradingPlatform.utilities.addDecimalDigits(data.item.item.oneStockSellPrice));
 								
-										$(".customClassRequestedStockBuyPrice").text($.formatNumber(data.item.item.requestedStockBuyPriceWithfeesAndTaxes, tradingPlatform.constants.numberFormatGreek) + '$');
-										$(".customClassRequestedStockBuyfeesAndTaxes").text($.formatNumber(data.item.item.requestedStockBuyfeesAndTaxes, tradingPlatform.constants.numberFormatGreek) + '$');
+										$(".customClassRequestedStockBuyPrice").text(tradingPlatform.utilities.addDecimalDigits(data.item.item.requestedStockBuyPriceWithfeesAndTaxes));
+										$(".customClassRequestedStockBuyfeesAndTaxes").text(tradingPlatform.utilities.addDecimalDigits(data.item.item.requestedStockBuyfeesAndTaxes));
 										
-										$(".customClassRequestedStockSellPrice").text($.formatNumber(data.item.item.requestedStockSellPriceWithfeesAndTaxes, tradingPlatform.constants.numberFormatGreek) + '$');
-										$(".customClassRequestedStockSellfeesAndTaxes").text($.formatNumber(data.item.item.requestedStockSellfeesAndTaxes, tradingPlatform.constants.numberFormatGreek) + '$');
+										$(".customClassRequestedStockSellPrice").text(tradingPlatform.utilities.addDecimalDigits(data.item.item.requestedStockSellPriceWithfeesAndTaxes));
+										$(".customClassRequestedStockSellfeesAndTaxes").text(tradingPlatform.utilities.addDecimalDigits(data.item.item.requestedStockSellfeesAndTaxes));
 										
 										
 										tradingPlatform.getNewOrderData.variables.maxValue = data.item.item.avaiableStockForPurchase; //ok
@@ -811,7 +811,7 @@ var tradingPlatform = {
 				// Prepare request payload
 		        var payload = {'from': $("#dateFrom").val(), 'to': $("#dateTo").val()};
 		        
-		        if ($('#sideSelect').val() != "ALL") {
+		        if ($('#sideSelect').val() in tradingPlatform.constants.SIDE) {
 		            payload.side = $("#sideSelect").val(); 
 		        }
 		        
@@ -1102,8 +1102,8 @@ var tradingPlatform = {
 				return 	[pad(dateObj.getDate()), pad(dateObj.getMonth() + 1), dateObj.getFullYear()].join('-') + " " + 
 						[pad(dateObj.getHours()), pad(dateObj.getMinutes())].join(':');
 			},
-			'addDecimalDigits': function(price, currency = '&euro;') {
-				return currency + price.toFixed(tradingPlatform.utilities.config.digitCount);
+			'addDecimalDigits': function(price, currency = '$') {
+				return price.toFixed(tradingPlatform.utilities.config.digitCount) + currency;
 			}
 		}
 };
