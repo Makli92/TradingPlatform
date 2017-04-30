@@ -453,7 +453,7 @@ public class WebServiceController {
 		 Date fromDate = cal.getTime();
 		 Date toDate = new Date();
 		
-		 apiNewOrderData.setVolume(tradeService.getTrades(fromDate, toDate).size());
+		 apiNewOrderData.setVolume(tradeService.getTrades(fromDate, toDate, company).size());
 		
 		tradeService.calculatePurchasePriceWithFeeTaxes(company, 1);
 
