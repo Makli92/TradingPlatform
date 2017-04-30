@@ -34,6 +34,8 @@
 	
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	
+	<link rel="stylesheet" href="/resources/css/customCss.css">
+	
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
@@ -251,10 +253,10 @@
                 <!-- /.row -->
 
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-11">
 
 
-                            <table class="table table-bordered table-hover" id="tradeViewTable">
+                            <table class="table table-bordered table-hover Classtableid" id="tradeViewTable">
                                 <thead>
                                     <tr>
                                         <th>Stock</th>

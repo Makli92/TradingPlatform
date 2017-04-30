@@ -43,7 +43,7 @@
 		  <input type="text" class="customClassRegisterLastname" placeholder="last name"/>
 		  <input type="date" class="customClassRegisterBirthDate" id="datepicker" placeholder="date of birth"/>
 		  <input type="text" class="customClassRegisterMobile" placeholder="mobile"/>
-		  <input type="text" class="customClassRegisterUsername" placeholder="username"/>
+		  <input type="text" class="customClassRegisterUsername" placeholder="username" title="at least 3 characters and maximum"/>
 		  <input type="password" data-toggle="tooltip" data-placement="top"  class="customClassRegisterPassword" placeholder="password" title="must contains one digit from 0-9, one lowercase characters, one uppercase characters, one special symbols in the list @#$%, at least 6 characters and maximum"/>
 		  <input type="password" data-toggle="tooltip" data-placement="top"  class="customClassRegisterPasswordConfirm" placeholder="confirm password" title="must contains one digit from 0-9, one lowercase characters, one uppercase characters, one special symbols in the list @#$%, at least 6 characters and maximum"/>
 		  <input type="text" class="customClassRegisterEmail" placeholder="email address"/>

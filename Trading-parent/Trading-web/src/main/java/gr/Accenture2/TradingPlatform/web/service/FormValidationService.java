@@ -29,7 +29,7 @@ public class FormValidationService  implements Validator {
              {3,15}  # Length at least 3 characters and maximum length of 15
 $                    # End of the line
 	 */
-	private Pattern usernamePattern = Pattern.compile("^[a-z0-9_-]{3,15}$");
+	private Pattern usernamePattern = Pattern.compile("^[a-zA-Z0-9_-]{3,15}$");
 	
 	
 	/**

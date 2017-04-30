@@ -422,20 +422,20 @@
                             <table class="table table-bordered table-hover table-striped" style="text-align: center;">
                                 <tbody>
                                     <tr>
-                                        <td><strong>BUY </strong> / Size</td>
-                                        <td><strong>SELL </strong> / Size</td>
+                                        <th><strong>BUY </strong> / Size</th>
+                                        <th><strong>SELL </strong> / Size</th>
                                     </tr>
                                     <tr>
-                                        <td><strong><span class="customClass1" ><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></td>                                
-                                        <td><strong><span class="customClass1" ><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></td>  
+                                        <td><strong><span class="customClassBuyLast1" ><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></td>                                
+                                        <td><strong><span class="customClassSellLast1" ><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></td>  
                                     </tr>
                                     <tr>
-                                        <td><strong><span class="customClass1" ><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></td>                                
-                                        <td><strong><span class="customClass1" ><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></td>  
+                                        <td><strong><span class="customClassBuyLast2" ><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></td>                                
+                                        <td><strong><span class="customClassSellLast2" ><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></td>  
                                     </tr>
                                     <tr>
-                                        <td><strong><span class="customClass1" ><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></td>                                
-                                        <td><strong><span class="customClass1" ><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></td>  
+                                        <td><strong><span class="customClassBuyLast3" ><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></td>                                
+                                        <td><strong><span class="customClassSellLast3" ><i class="fa fa-spinner fa-spin" style="font-size:18px"></i></td>  
                                     </tr>
                                 </tbody>
                             </table>

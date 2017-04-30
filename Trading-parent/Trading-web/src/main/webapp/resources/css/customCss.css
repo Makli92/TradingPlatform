@@ -4,6 +4,14 @@
 	
 }
 
+.Classtableid tr td:nth-child(1){
+    width:150px !important;
+}
+
+.Classtableid tr th:nth-child(1){
+    width:150px !important;
+}
+
 /* Spinner start css  */
 .spinner {
   width: 100px;

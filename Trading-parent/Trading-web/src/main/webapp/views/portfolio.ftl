@@ -241,7 +241,7 @@
                 <!-- /.row -->
 
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-11">
 
 
                             <table class="table table-bordered table-hover" id="portfolioTable">

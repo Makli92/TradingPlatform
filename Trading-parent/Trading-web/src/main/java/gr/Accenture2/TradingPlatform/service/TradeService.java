@@ -33,4 +33,6 @@ public interface TradeService {
 	
 	public Float calculateSellPriceWithFeeTaxes(Company company, int numberOfStocks);
 	
+	public List<Trade> findTop3BySideOrderByIdDesc(TradeSide side);
+	
 }

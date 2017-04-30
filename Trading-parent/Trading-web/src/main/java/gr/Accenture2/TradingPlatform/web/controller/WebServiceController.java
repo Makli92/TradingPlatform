@@ -34,6 +34,7 @@ import gr.Accenture2.TradingPlatform.service.UserStockTradeService;
 import gr.Accenture2.TradingPlatform.web.auth.service.SecurityService;
 import gr.Accenture2.TradingPlatform.web.enumeration.RestResponseStatus;
 import gr.Accenture2.TradingPlatform.web.json.entity.ApiCompany;
+import gr.Accenture2.TradingPlatform.web.json.entity.ApiLastTrades;
 import gr.Accenture2.TradingPlatform.web.json.entity.ApiNewOrderData;
 import gr.Accenture2.TradingPlatform.web.json.entity.ApiUser;
 import gr.Accenture2.TradingPlatform.web.json.entity.Portfolio;
@@ -200,7 +201,7 @@ public class WebServiceController {
 	@ResponseBody
 	public GenericRestResponse showRegistration(
 			RegistrationForm registrationForm, BindingResult bindingResult,
-			Model model) throws TradingPlatformAuthenticationException {
+			Model model) throws TradingPlatformAuthenticationException, Exception {
 
 		final GenericResponse response = new GenericResponse();
 
@@ -223,16 +224,45 @@ public class WebServiceController {
 			}
 
 		} else {
+			
+			User user = userService.findByUsername(registrationForm.getUsername());
 
+			if (user != null){
+				
+				registrationResponse.addRegistrationStatusMessage(messageSource
+						.getMessage("userAlreadyExists", null,
+								SupportedLanguage.GREEK.getLocale()));
+				
+				response.setResponseStatus(RestResponseStatus.ERROR.getName());
+				response.setItem(registrationResponse);
+				
+				
+				return response;
+			}
+			
 			// TODO register user
 			
-			User user = new User();
+			user = new User();
 			
+	        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+	        String dateInString = "7-Jun-2013";
+
+
+	            Date date = formatter.parse(registrationForm.getBirthDate());
+	            System.out.println(date);
+	            System.out.println(formatter.format(date));
+
+
+			
+			user.setFirstName(registrationForm.getFirstname());
+			user.setLastName(registrationForm.getLastname());
+			user.setMobile(registrationForm.getMobile());
 			user.setEmail(registrationForm.getEmail());
+			user.setBirthDate(date);
 			user.setEnabled(true);
 			user.setPassword(registrationForm.getPassword());
 			user.setUsername(registrationForm.getUsername());
-			
+			user.setCashBalance(1000F);
 			user.setRoles(new HashSet<Role>());
 		
 			user.getRoles().add(roleService.findByRole(StringEnumeration.USER.getString()));
@@ -341,7 +371,79 @@ public class WebServiceController {
 		
 		apiNewOrderData.setNumberOfUserPurchaseStock(userStockTradeService.getNumberOfUserStockTrades(company, userService.findByUsername(securityService.findLoggedInUsername())));
 		
-
+		//apiNewOrderData.setBuyLastTrades( tradeService.findTop3BySideOrderByIdDesc(TradeSide.BUY));
+		
+		//apiNewOrderData.setSellLastTrades(tradeService.findTop3BySideOrderByIdDesc(TradeSide.SELL));
+		
+		
+		Iterator it;
+		Iterator it2;
+		Trade tempTradeTrade;
+		
+		//apiNewOrderData.setBuyLastTrades(new HashSet()) ;
+		
+		
+		it = tradeService.findTop3BySideOrderByIdDesc(TradeSide.BUY).iterator();
+		
+		LOGGER.debug("test1:{}" + tradeService.findTop3BySideOrderByIdDesc(TradeSide.BUY).size());
+		
+		int i  = 1;
+		
+		while(it.hasNext()){
+			
+			tempTradeTrade = (Trade)it.next();
+			
+			if(i == 1){
+				apiNewOrderData.setBuyLastTrade1(new ApiLastTrades(tempTradeTrade.getId(), tempTradeTrade.getUnitPrice(), tempTradeTrade.getQuantity()));
+					
+			}else if(i == 2){
+				
+				apiNewOrderData.setBuyLastTrade2(new ApiLastTrades(tempTradeTrade.getId(), tempTradeTrade.getUnitPrice(), tempTradeTrade.getQuantity()));
+				
+			}else if(i == 3){
+				
+				apiNewOrderData.setBuyLastTrade3(new ApiLastTrades(tempTradeTrade.getId(), tempTradeTrade.getUnitPrice(), tempTradeTrade.getQuantity()));
+				
+			}
+			/*
+			
+		
+			LOGGER.debug("test2:{}" + tempTradeTrade.getId());
+			
+			apiNewOrderData.getBuyLastTrades().add(new ApiLastTrades(tempTradeTrade.getId(), tempTradeTrade.getUnitPrice(), tempTradeTrade.getQuantity()));
+*/
+			i++;
+		}
+		
+		
+		//LOGGER.debug("test3:{}" + apiNewOrderData.getBuyLastTrades().size());
+		
+		//apiNewOrderData.setSellLastTrades(new HashSet()) ;
+		
+		it2 =  tradeService.findTop3BySideOrderByIdDesc(TradeSide.SELL).iterator();
+		i  = 1;
+		
+		while(it2.hasNext()){
+			
+			tempTradeTrade = (Trade)it2.next();
+			
+			if(i == 1){
+				apiNewOrderData.setSellLastTrade1(new ApiLastTrades(tempTradeTrade.getId(), tempTradeTrade.getUnitPrice(), tempTradeTrade.getQuantity()));
+					
+			}else if(i == 2){
+				
+				apiNewOrderData.setSellLastTrade2(new ApiLastTrades(tempTradeTrade.getId(), tempTradeTrade.getUnitPrice(), tempTradeTrade.getQuantity()));
+				
+			}else if(i == 3){
+				
+				apiNewOrderData.setSellLastTrade3(new ApiLastTrades(tempTradeTrade.getId(), tempTradeTrade.getUnitPrice(), tempTradeTrade.getQuantity()));
+				
+			}
+			
+			//apiNewOrderData.getSellLastTrades().add(new ApiLastTrades(tempTradeTrade.getId(),tempTradeTrade.getUnitPrice(), tempTradeTrade.getQuantity()));
+			i++;
+		}
+		
 		
 		 Calendar cal = Calendar.getInstance();
 		 cal.set(Calendar.HOUR_OF_DAY, 0);
@@ -652,7 +754,11 @@ public class WebServiceController {
 
 		final GenericResponse response = new GenericResponse();
 		
-		List<TradeView> tradeViews = tradeService.getTradeView(from, to, side, company);
+		Calendar c = Calendar.getInstance(); 
+		c.setTime(to); 
+		c.add(Calendar.DATE, 1);
+		
+		List<TradeView> tradeViews = tradeService.getTradeView(from, c.getTime(), side, company);
 		
 		response.setResponseStatus(RestResponseStatus.OK.getName());
 		response.setItem(new TradeViewResponse(TradeViewResponse.Status.OK.getStatus(), null, tradeViews));
