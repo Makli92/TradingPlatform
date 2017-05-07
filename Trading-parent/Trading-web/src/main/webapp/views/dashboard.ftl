@@ -238,7 +238,7 @@
                             <a href="#" class="list-group-item active">Designed and Developed by</a>
                             <a href="#" class="list-group-item">Βασίλης Τσάμης</a>
                             <a href="#" class="list-group-item">Κωνσταντίνος Ταχίρη</a>
-                            <a href="#" class="list-group-item">Θέμη Αποστόλογλου</a>
+                            <a href="#" class="list-group-item">Θέμης Αποστόλογλου</a>
                       
                         </div>
                     </div>
